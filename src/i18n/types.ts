@@ -24,8 +24,10 @@ export interface UIStrings {
     prev: string;
     next: string;
     page: string;
+    pageWithNumber: string;
   };
   home: {
+    greeting: string;
     socialLinks: string;
     featured: string;
     recentPosts: string;
@@ -60,6 +62,16 @@ export interface UIStrings {
     noResults: string;
     goToPreviousPage: string;
     goToNextPage: string;
+    rssFeed: string;
+    sendEmail: string;
+    socialProfile: string;
+    searchClear: string;
+    searchLoadMore: string;
+    searchLabel: string;
+    searchZeroResults: string;
+    searchManyResults: string;
+    searchOneResult: string;
+    searchSearching: string;
   };
   notFound: {
     title: string;
