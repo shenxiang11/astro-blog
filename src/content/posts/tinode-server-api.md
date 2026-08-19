@@ -1,7 +1,7 @@
 ---
 title: Tinode Server API 中文译本
 description: 翻译 Tinode 官方 Server API。会话、用户、主题、ACL、消息协议，以及客户端与服务端之间的 JSON 报文。
-pubDatetime: 2026-08-19T22:30:00Z
+pubDatetime: 2026-08-19T14:30:00Z
 featured: false
 draft: false
 tags:
