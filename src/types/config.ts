@@ -59,6 +59,13 @@ interface FeaturesConfig {
    * Set to false to disable search entirely.
    */
   search?: "pagefind" | false;
+  /**
+   * Table of contents placement on post pages.
+   * "sidebar" pins it beside the article on wide screens.
+   * "inline" keeps the Markdown `## Table of contents` / `## 目录` block.
+   * Set to false to hide the TOC.
+   */
+  toc?: "sidebar" | "inline" | false;
 }
 
 interface SocialLink {

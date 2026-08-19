@@ -16,7 +16,7 @@ timezone: Asia/Shanghai
 
 [NestedPaging](https://github.com/shenxiang11/NestedPaging) 是一套无第三方依赖的 UIKit 容器，专门处理这件事。源码不长，核心文件大约四百行。它没有发明新的滚动物理，而是把「谁在滚」从手势竞争里抽出来，交给 `contentOffset` 裁决。
 
-## Table of contents
+## 目录
 
 ## 这个页面到底难在哪
 

@@ -34,7 +34,7 @@ const homePath = getRelativeLocaleUrl(locale, "");
     class="app-layout my-1"
   >
     <section id="hero" class="border-border border-b pt-8 pb-6">
-      <h1 class="my-4 inline-block text-4xl font-bold sm:my-8 sm:text-5xl">
+      <h1 class="my-4 inline-block text-4xl font-semibold tracking-tight sm:my-8 sm:text-5xl">
         {t.home.greeting}
       </h1>
       <a
@@ -53,19 +53,10 @@ const homePath = getRelativeLocaleUrl(locale, "");
       </a>
 
       <p>
-        这是一个简洁、响应式、无障碍且对 SEO 友好的博客。默认支持浅色 /
-        深色模式，也可以继续配置配色方案。
+        星曜是一个简洁、响应式、无障碍且对 SEO 友好的博客。默认支持浅色 /
+        深色模式。
       </p>
-      <p class="mt-2">
-        阅读文章，或查看{" "}
-        <LinkButton
-          class="hover:text-accent underline decoration-dashed underline-offset-4"
-          href="https://github.com/satnaing/astro-paper#readme"
-        >
-          README
-        </LinkButton>{" "}
-        了解更多。
-      </p>
+      <p class="mt-2">阅读文章，或从上方导航开始浏览。</p>
       {
         socials.length > 0 && (
           <div class="mt-4 flex max-sm:flex-col sm:items-center">

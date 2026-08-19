@@ -14,7 +14,7 @@
     }
 
     h3 {
-      @apply italic;
+      @apply not-italic;
     }
 
     p,
@@ -28,7 +28,7 @@
     }
 
     a {
-      @apply text-foreground hover:text-accent wrap-break-word decoration-dashed underline-offset-4 focus-visible:no-underline;
+      @apply text-accent wrap-break-word decoration-solid underline-offset-4 hover:opacity-80 focus-visible:no-underline;
     }
 
     ul {
@@ -86,7 +86,7 @@
     }
 
     code {
-      @apply bg-muted/75 text-foreground rounded p-1 wrap-break-word before:content-none after:content-none;
+      @apply bg-muted text-foreground rounded-md p-1 font-mono text-[0.92em] wrap-break-word before:content-none after:content-none;
     }
 
     .astro-code code {
@@ -99,6 +99,15 @@
 
     details:not(.callout) {
       @apply text-foreground inline-block cursor-pointer select-none [&_p]:hidden [&_ul]:my-0!;
+    }
+
+    /* Sidebar TOC replaces the inline remark-toc block. */
+    &[data-toc="sidebar"] details:not(.callout) {
+      display: none;
+    }
+
+    &[data-toc="off"] details:not(.callout) {
+      display: none;
     }
 
     summary {

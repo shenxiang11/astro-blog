@@ -3,7 +3,7 @@ import { defineAstroPaperConfig } from "./src/types/config";
 export default defineAstroPaperConfig({
   site: {
     url: "https://astro-paper.pages.dev/",
-    title: "AstroPaper",
+    title: "星曜",
     description: "一个简洁、响应式、对 SEO 友好的博客。",
     author: "Sat Naing",
     profile: "https://satna.ing",
@@ -27,6 +27,7 @@ export default defineAstroPaperConfig({
       url: "https://github.com/satnaing/astro-paper/edit/main/",
     },
     search: "pagefind",
+    toc: "sidebar",
   },
   socials: [
     { name: "github",   url: "https://github.com/satnaing/astro-paper" },

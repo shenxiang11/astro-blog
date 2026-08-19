@@ -38,13 +38,13 @@ export default defineConfig({
   markdown: {
     processor: unified({
       remarkPlugins: [
-        remarkToc,
-        [remarkCollapse, { test: "Table of contents" }],
+        [remarkToc, { heading: "table[ -]of[ -]contents|toc|目录" }],
+        [remarkCollapse, { test: /^(Table of contents|目录)$/ }],
       ],
       rehypePlugins: [rehypeCallouts],
     }),
     shikiConfig: {
-      themes: { light: "min-light", dark: "night-owl" },
+      themes: { light: "github-light", dark: "github-dark" },
       defaultColor: false,
       wrap: false,
       transformers: [
