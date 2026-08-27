@@ -5,6 +5,7 @@ export interface UIStrings {
     tags: string;
     about: string;
     privacy: string;
+    support: string;
     archives: string;
     search: string;
   };
@@ -39,6 +40,7 @@ export interface UIStrings {
     copyright: string;
     allRightsReserved: string;
     privacy: string;
+    support: string;
   };
   pages: {
     tagTitle: string;

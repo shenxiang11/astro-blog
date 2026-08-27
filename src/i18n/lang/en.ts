@@ -7,6 +7,7 @@ export default {
     tags: "Tags",
     about: "About",
     privacy: "Privacy",
+    support: "Support",
     archives: "Archives",
     search: "Search",
   },
@@ -41,6 +42,7 @@ export default {
     copyright: "Copyright",
     allRightsReserved: "All rights reserved.",
     privacy: "Privacy Policy",
+    support: "Support",
   },
   pages: {
     tagTitle: "Tag",

@@ -30,6 +30,13 @@ const currentYear = new Date().getFullYear();
       <span>{t.footer.allRightsReserved}</span>
       <span class="hidden sm:inline">&nbsp;|&nbsp;</span>
       <a
+        href={getRelativeLocaleUrl(locale, "support")}
+        class="hover:text-accent underline-offset-4 hover:underline"
+      >
+        {t.footer.support}
+      </a>
+      <span class="hidden sm:inline">&nbsp;|&nbsp;</span>
+      <a
         href={getRelativeLocaleUrl(locale, "privacy")}
         class="hover:text-accent underline-offset-4 hover:underline"
       >

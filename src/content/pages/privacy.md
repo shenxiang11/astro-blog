@@ -7,7 +7,7 @@ description: "妙贴（MyPaste）隐私政策。本 App 不收集、不上传剪
 
 生效日期：2026 年 8 月 27 日
 
-如有问题，请通过本站页脚的邮件链接联系。
+如有问题，请发邮件至 [863461783@qq.com](mailto:863461783@qq.com)。
 
 ## 我们是谁
 
@@ -83,7 +83,7 @@ This page is the privacy policy for **MyPaste** (妙贴). Use this URL as the Ap
 
 Effective date: August 27, 2026
 
-Questions: use the email link in the site footer.
+Questions: [863461783@qq.com](mailto:863461783@qq.com)
 
 ### Who we are
 
