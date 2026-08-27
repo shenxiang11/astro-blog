@@ -6,6 +6,7 @@ export default {
     posts: "文章",
     tags: "标签",
     about: "关于",
+    privacy: "隐私政策",
     archives: "归档",
     search: "搜索",
   },
@@ -39,6 +40,7 @@ export default {
   footer: {
     copyright: "版权所有",
     allRightsReserved: "保留所有权利。",
+    privacy: "隐私政策",
   },
   pages: {
     tagTitle: "标签",

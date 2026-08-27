@@ -6,6 +6,7 @@ export default {
     posts: "Posts",
     tags: "Tags",
     about: "About",
+    privacy: "Privacy",
     archives: "Archives",
     search: "Search",
   },
@@ -39,6 +40,7 @@ export default {
   footer: {
     copyright: "Copyright",
     allRightsReserved: "All rights reserved.",
+    privacy: "Privacy Policy",
   },
   pages: {
     tagTitle: "Tag",

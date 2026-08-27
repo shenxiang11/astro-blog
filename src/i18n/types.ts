@@ -4,6 +4,7 @@ export interface UIStrings {
     posts: string;
     tags: string;
     about: string;
+    privacy: string;
     archives: string;
     search: string;
   };
@@ -37,6 +38,7 @@ export interface UIStrings {
   footer: {
     copyright: string;
     allRightsReserved: string;
+    privacy: string;
   };
   pages: {
     tagTitle: string;
