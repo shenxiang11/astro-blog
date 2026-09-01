@@ -3,6 +3,7 @@ import type { HTMLAttributes } from "astro/types";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import Socials from "./Socials.astro";
 import { useTranslations } from "@/i18n";
+import { stripBase, stripLocale } from "@/utils/withBase";
 import config from "@/config";
 
 type Props = {
@@ -14,6 +15,16 @@ const { noMarginTop = false, class: className, ...attrs } = Astro.props;
 const locale = Astro.currentLocale ?? config.site.lang;
 const t = useTranslations(locale);
 const currentYear = new Date().getFullYear();
+const currentPath = stripLocale(stripBase(Astro.url.pathname), locale);
+const isTiaoTiao = currentPath === "/tiaotiao" || currentPath.startsWith("/tiaotiao/");
+const supportHref = getRelativeLocaleUrl(
+  locale,
+  isTiaoTiao ? "tiaotiao/support" : "support"
+);
+const privacyHref = getRelativeLocaleUrl(
+  locale,
+  isTiaoTiao ? "tiaotiao/privacy" : "privacy"
+);
 ---
 
 <footer
@@ -30,14 +41,14 @@ const currentYear = new Date().getFullYear();
       <span>{t.footer.allRightsReserved}</span>
       <span class="hidden sm:inline">&nbsp;|&nbsp;</span>
       <a
-        href={getRelativeLocaleUrl(locale, "support")}
+        href={supportHref}
         class="hover:text-accent underline-offset-4 hover:underline"
       >
         {t.footer.support}
       </a>
       <span class="hidden sm:inline">&nbsp;|&nbsp;</span>
       <a
-        href={getRelativeLocaleUrl(locale, "privacy")}
+        href={privacyHref}
         class="hover:text-accent underline-offset-4 hover:underline"
       >
         {t.footer.privacy}
