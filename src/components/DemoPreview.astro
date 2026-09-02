@@ -1,0 +1,151 @@
+---
+import type { DemoKind } from "@/data/demoPreviews";
+import LogoXingyao from "@/assets/icons/LogoXingyao.svg";
+
+type Props = {
+  kind: DemoKind;
+};
+
+const { kind } = Astro.props;
+
+const albums = [
+  "linear-gradient(135deg, #7c5cfc, #312e81)",
+  "linear-gradient(135deg, #22c55e, #14532d)",
+  "linear-gradient(135deg, #38bdf8, #1e3a8a)",
+  "linear-gradient(135deg, #fb7185, #9f1239)",
+  "linear-gradient(135deg, #fbbf24, #92400e)",
+  "linear-gradient(135deg, #a78bfa, #4c1d95)",
+];
+
+const pixelDelays = Array.from({ length: 36 }, (_, i) => {
+  const col = i % 6;
+  const row = Math.floor(i / 6);
+  return `${col * 70 + row * 55}ms`;
+});
+---
+
+{
+  kind === "circular-reveal" && (
+    <div class="demo-screen">
+      <div class="demo-reveal-bg">
+        <LogoXingyao class="demo-reveal-star" />
+      </div>
+      <div class="demo-reveal-layer">
+        <LogoXingyao class="demo-reveal-star" />
+      </div>
+    </div>
+  )
+}
+
+{
+  kind === "clip-stack" && (
+    <div class="demo-screen">
+      <div class="demo-clips">
+        <div class="demo-clip">
+          <small>刚刚复制</small>
+          <strong>xingyao.app</strong>
+        </div>
+        <div class="demo-clip">
+          <small>图片 · PNG</small>
+          <strong>色卡 12.png</strong>
+        </div>
+        <div class="demo-clip">
+          <small>文本</small>
+          <strong>会议纪要要点</strong>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+{
+  kind === "jump-ring" && (
+    <div class="demo-screen">
+      <div class="demo-jump">
+        <svg viewBox="0 0 100 100" aria-hidden="true">
+          <circle class="track" cx="50" cy="50" r="40" />
+          <circle class="progress" cx="50" cy="50" r="40" />
+        </svg>
+        <div class="demo-jump-count">
+          <b>128</b>
+          <span>jumps</span>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+{
+  kind === "flip-card" && (
+    <div class="demo-screen">
+      <div class="demo-flip">
+        <div class="demo-flip-inner">
+          <div class="demo-flip-face demo-flip-front">星</div>
+          <div class="demo-flip-face demo-flip-back">曜</div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+{
+  kind === "ripple" && (
+    <div class="demo-screen">
+      <div class="demo-ripple">
+        <span class="demo-ripple-ring" />
+        <span class="demo-ripple-ring" />
+        <span class="demo-ripple-ring" />
+        <span class="demo-ripple-dot" />
+      </div>
+    </div>
+  )
+}
+
+{
+  kind === "streaming" && (
+    <div class="demo-screen">
+      <div class="demo-stream">
+        <p class="demo-stream-line">先记下刚才复制的那段</p>
+        <p class="demo-stream-line">圆环会跟着每一次跳跃走</p>
+        <p class="demo-stream-line">
+          星曜
+          <span class="demo-stream-cursor" />
+        </p>
+      </div>
+    </div>
+  )
+}
+
+{
+  kind === "carousel" && (
+    <div class="demo-screen">
+      <div class="demo-carousel">
+        {[...albums, ...albums].map(background => (
+          <div class="demo-album" style={`background: ${background}`} />
+        ))}
+      </div>
+    </div>
+  )
+}
+
+{
+  kind === "liquid-glass" && (
+    <div class="demo-screen">
+      <div class="demo-glass-scene">
+        <div class="demo-glass-btn">Open</div>
+      </div>
+    </div>
+  )
+}
+
+{
+  kind === "pixel-wave" && (
+    <div class="demo-screen">
+      <div class="demo-pixels">
+        {pixelDelays.map(delay => (
+          <span style={`animation-delay: ${delay}`} />
+        ))}
+      </div>
+    </div>
+  )
+}

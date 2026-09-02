@@ -30,9 +30,8 @@ const t = useTranslations(locale);
 <Layout title={`${t.pages.searchTitle} | ${config.site.title}`}>
   <Header />
 
-  <Breadcrumb />
-
   <Main pageTitle={t.pages.searchTitle} pageDesc={t.pages.searchDesc}>
+    <Breadcrumb slot="lead" class="mb-6" />
     <div
       id="pagefind-search"
       transition:persist

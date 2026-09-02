@@ -40,7 +40,10 @@ const rssHref = getRelativeLocaleUrl(
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/svg+xml" href={getAssetPath("favicon.svg")} />
     <link rel="icon" href={getAssetPath("favicon.ico")} />
-    <link rel="canonical" href={canonicalURL} />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&display=swap"
+    />
     <meta name="generator" content={Astro.generator} />
 
     <!-- Primary meta -->
@@ -110,7 +113,7 @@ const rssHref = getRelativeLocaleUrl(
     <ClientRouter />
   </head>
   <body
-    class="bg-background font-app text-foreground selection:bg-accent/25 selection:text-foreground flex min-h-svh flex-col"
+    class="bg-background font-app text-foreground selection:bg-foreground/20 selection:text-foreground relative flex min-h-svh flex-col"
   >
     <slot />
     <script>

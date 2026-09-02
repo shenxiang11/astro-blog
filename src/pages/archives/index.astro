@@ -30,9 +30,8 @@ const monthFormatter = new Intl.DateTimeFormat(locale, { month: "long" });
 <Layout title={`${t.pages.archivesTitle} | ${config.site.title}`}>
   <Header />
 
-  <Breadcrumb />
-
   <Main pageTitle={t.pages.archivesTitle} pageDesc={t.pages.archivesDesc}>
+    <Breadcrumb slot="lead" class="mb-6" />
     {
       Object.entries(
         getPostsByGroupCondition(filteredPosts, post =>

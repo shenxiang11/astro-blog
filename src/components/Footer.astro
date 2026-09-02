@@ -1,58 +1,27 @@
 ---
 import type { HTMLAttributes } from "astro/types";
-import { getRelativeLocaleUrl } from "astro:i18n";
-import Socials from "./Socials.astro";
-import { useTranslations } from "@/i18n";
-import { stripBase, stripLocale } from "@/utils/withBase";
 import config from "@/config";
+import { useTranslations } from "@/i18n";
 
 type Props = {
   noMarginTop?: boolean;
 } & HTMLAttributes<"footer">;
 
 const { noMarginTop = false, class: className, ...attrs } = Astro.props;
-
-const locale = Astro.currentLocale ?? config.site.lang;
-const t = useTranslations(locale);
+const t = useTranslations(Astro.currentLocale ?? config.site.lang);
 const currentYear = new Date().getFullYear();
-const currentPath = stripLocale(stripBase(Astro.url.pathname), locale);
-const isTiaoTiao = currentPath === "/tiaotiao" || currentPath.startsWith("/tiaotiao/");
-const supportHref = getRelativeLocaleUrl(
-  locale,
-  isTiaoTiao ? "tiaotiao/support" : "support"
-);
-const privacyHref = getRelativeLocaleUrl(
-  locale,
-  isTiaoTiao ? "tiaotiao/privacy" : "privacy"
-);
 ---
 
 <footer
-  class:list={["app-layout", { "mt-auto": !noMarginTop }, className]}
+  class:list={["site-layout", { "mt-auto": !noMarginTop }, className]}
   {...attrs}
 >
   <div
-    class="border-border flex flex-col items-center justify-between border-t py-6 sm:flex-row-reverse sm:py-4"
+    class="border-border/70 text-muted-foreground flex justify-center border-t py-8 text-sm"
   >
-    <Socials />
-    <div class="my-2 flex flex-col items-center whitespace-nowrap sm:flex-row">
-      <span>{t.footer.copyright} &#169; {currentYear}</span>
-      <span class="hidden sm:inline">&nbsp;|&nbsp;</span>
-      <span>{t.footer.allRightsReserved}</span>
-      <span class="hidden sm:inline">&nbsp;|&nbsp;</span>
-      <a
-        href={supportHref}
-        class="hover:text-accent underline-offset-4 hover:underline"
-      >
-        {t.footer.support}
-      </a>
-      <span class="hidden sm:inline">&nbsp;|&nbsp;</span>
-      <a
-        href={privacyHref}
-        class="hover:text-accent underline-offset-4 hover:underline"
-      >
-        {t.footer.privacy}
-      </a>
-    </div>
+    <span>
+      {t.footer.copyright} &#169; {currentYear}
+      {config.site.author}
+    </span>
   </div>
 </footer>

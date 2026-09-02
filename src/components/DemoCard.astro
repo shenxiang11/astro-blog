@@ -1,0 +1,93 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { Image } from "astro:assets";
+import DemoPreview from "@/components/DemoPreview.astro";
+import { resolveDemoVideo } from "@/utils/resolveDemoVideo";
+import "@/styles/demos.css";
+
+type Props = {
+  demo: CollectionEntry<"demos">;
+};
+
+const { demo } = Astro.props;
+const { title, subtitle, cover, preview } = demo.data;
+const videoSrc = resolveDemoVideo(demo);
+const hasMedia = Boolean(cover || videoSrc);
+---
+
+<figure class="m-0">
+  <div
+    class:list={[
+      "demo-stage border-border relative aspect-square w-full overflow-hidden rounded-2xl border p-6",
+      { "demo-stage-playable": videoSrc },
+    ]}
+  >
+    {
+      hasMedia ? (
+        <div
+          class="demo-media relative grid h-full w-full place-items-center"
+          data-demo-player={videoSrc ? "" : undefined}
+        >
+          {typeof cover === "string" ? (
+            <img src={cover} alt="" class="demo-poster" />
+          ) : cover ? (
+            <Image src={cover} alt="" class="demo-poster" />
+          ) : null}
+          {videoSrc && (
+            <video
+              class="demo-video"
+              src={videoSrc}
+              loop
+              muted
+              playsinline
+              preload="none"
+            />
+          )}
+          {videoSrc && (
+            <span class="demo-play" aria-hidden="true">
+              <svg viewBox="0 0 100 100" fill="currentColor">
+                <path d="M35 18.2c-5.8-3.4-13 .8-13 7.5v48.6c0 6.7 7.2 10.9 13 7.5l41.7-24.3c5.8-3.4 5.8-11.7 0-15.1L35 18.2Z" />
+              </svg>
+            </span>
+          )}
+        </div>
+      ) : preview ? (
+        <div class="relative grid h-full w-full place-items-center">
+          <div class="demo-phone relative" aria-hidden="true">
+            <div class="demo-island" />
+            <DemoPreview kind={preview} />
+            <div class="demo-home" />
+          </div>
+        </div>
+      ) : null
+    }
+  </div>
+  <figcaption class="mt-4">
+    <h3 class="text-2xl font-semibold tracking-tight">{title}</h3>
+    <p class="text-muted-foreground mt-2 text-base sm:text-lg">{subtitle}</p>
+  </figcaption>
+</figure>
+
+<script>
+  function initDemoPlayers() {
+    document.querySelectorAll<HTMLElement>("[data-demo-player]").forEach(el => {
+      if (el.dataset.ready) return;
+      el.dataset.ready = "1";
+      const video = el.querySelector("video");
+      if (!video) return;
+
+      el.addEventListener("click", () => {
+        if (video.paused) {
+          void video.play();
+          el.classList.add("is-playing");
+        } else {
+          video.pause();
+          el.classList.remove("is-playing");
+        }
+      });
+    });
+  }
+
+  initDemoPlayers();
+  document.addEventListener("astro:after-swap", initDemoPlayers);
+</script>

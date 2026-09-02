@@ -1,11 +1,6 @@
 ---
 import { getEntry, render } from "astro:content";
-import Layout from "@/layouts/Layout.astro";
-import Header from "@/components/Header.astro";
-import Breadcrumb from "@/components/Breadcrumb.astro";
-import Main from "@/components/Main.astro";
-import Footer from "@/components/Footer.astro";
-import config from "@/config";
+import LegalLayout from "@/layouts/LegalLayout.astro";
 
 const privacy = await getEntry("pages", "tiaotiao-privacy");
 
@@ -18,19 +13,11 @@ if (!privacy) {
 const { Content } = await render(privacy);
 ---
 
-<Layout
-  title={`${privacy.data.title} | ${config.site.title}`}
+<LegalLayout
+  title={privacy.data.title}
   description={privacy.data.description}
   ogImage={privacy.data.ogImage}
   canonicalURL={privacy.data.canonicalURL}
 >
-  <Header />
-
-  <Breadcrumb />
-
-  <Main pageTitle={privacy.data.title} class="app-prose">
-    <Content />
-  </Main>
-
-  <Footer />
-</Layout>
+  <Content />
+</LegalLayout>

@@ -4,11 +4,12 @@ import { getCollection } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/Header.astro";
 import Breadcrumb from "@/components/Breadcrumb.astro";
-import Main from "@/components/Main.astro";
 import Card from "@/components/Card.astro";
 import Footer from "@/components/Footer.astro";
 import Pagination from "@/components/Pagination.astro";
+import IconSearch from "@/assets/icons/IconSearch.svg";
 import { getSortedPosts } from "@/utils/getSortedPosts";
+import { getRelativeLocaleUrl } from "astro:i18n";
 import { useTranslations } from "@/i18n";
 import config from "@/config";
 
@@ -21,20 +22,61 @@ const { page } = Astro.props;
 
 const locale = Astro.currentLocale ?? config.site.lang;
 const t = useTranslations(locale);
+
+const backUrl = config.features.showBackButton
+  ? Astro.url.pathname
+  : getRelativeLocaleUrl(locale, "");
 ---
 
 <Layout title={`${t.pages.postsTitle} | ${config.site.title}`}>
   <Header />
 
-  <Breadcrumb />
+  <main id="main-content" class="flex-1" data-backUrl={backUrl}>
+    <section class="site-layout pt-16 pb-10 sm:pt-20">
+      <Breadcrumb class="mb-8" />
+      <div
+        class="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between"
+      >
+        <div>
+          <h1 class="text-4xl font-semibold tracking-tight sm:text-5xl">
+            {t.pages.postsTitle}
+          </h1>
+          <p class="text-muted-foreground mt-3 max-w-xl text-lg">
+            {t.pages.postsDesc}
+          </p>
+        </div>
+        {
+          config.features.search === "pagefind" && (
+            <a
+              href={getRelativeLocaleUrl(locale, "search")}
+              class="border-border bg-card/50 hover:border-foreground/25 hover:text-foreground text-muted-foreground inline-flex h-11 w-full max-w-sm shrink-0 items-center gap-2.5 rounded-full border px-4 text-sm transition-colors sm:w-64"
+            >
+              <IconSearch class="size-4 shrink-0" />
+              <span>{t.a11y.searchPlaceholder}</span>
+            </a>
+          )
+        }
+      </div>
+    </section>
 
-  <Main pageTitle={t.pages.postsTitle} pageDesc={t.pages.postsDesc}>
-    <ul>
-      {page.data.map(data => <Card {...data} />)}
-    </ul>
-  </Main>
-
-  <Pagination {page} />
+    <section class="site-layout pb-24">
+      <ul class="max-w-4xl">
+        {page.data.map(data => <Card {...data} />)}
+      </ul>
+      <Pagination {page} />
+    </section>
+  </main>
 
   <Footer noMarginTop={page.lastPage > 1} />
 </Layout>
+
+<script>
+  document.addEventListener("astro:page-load", () => {
+    const mainContent: HTMLElement | null =
+      document.querySelector("#main-content");
+    const backUrl = mainContent?.dataset?.backurl;
+    if (backUrl) {
+      sessionStorage.setItem("backUrl", backUrl);
+    }
+  });
+</script>

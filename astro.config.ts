@@ -57,8 +57,16 @@ export default defineConfig({
   },
   vite: {
     plugins: [tailwindcss()],
+    assetsInclude: ["**/*.mp4", "**/*.webm", "**/*.mov"],
   },
   fonts: [
+    {
+      name: "Caveat",
+      cssVariable: "--font-caveat",
+      provider: fontProviders.google(),
+      fallbacks: ["cursive"],
+      weights: [400, 500, 600, 700],
+    },
     {
       name: "Google Sans Code",
       cssVariable: "--font-google-sans-code",

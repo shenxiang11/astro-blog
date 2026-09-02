@@ -7,34 +7,43 @@
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
   --color-border: var(--border);
+  --color-nav: var(--nav);
+  --color-card: var(--card);
   --font-app:
     -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display",
     "SF Pro", "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB",
     "Segoe UI", "Microsoft YaHei UI", "Microsoft YaHei", Arial, sans-serif;
+  --font-hand: "Caveat", "Segoe Script", "Apple Chancery", cursive;
   --font-mono:
-    "SF Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-    "Liberation Mono", "Courier New", monospace;
+    var(--font-google-sans-code), "SF Mono", ui-monospace, SFMono-Regular,
+    Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
-/* Apple light: white canvas, graphite text, system blue */
+/* Dark canvas — primary taste */
 :root,
-[data-theme="light"] {
-  --background: #ffffff;
-  --foreground: #1d1d1f;
-  --accent: #0071e3;
-  --accent-foreground: #ffffff;
-  --muted: #f5f5f7;
-  --muted-foreground: #6e6e73;
-  --border: #d2d2d7;
+[data-theme="dark"] {
+  --background: #0b0b0d;
+  --foreground: #f4f4f5;
+  --accent: #fafafa;
+  --accent-foreground: #0b0b0d;
+  --muted: #18181b;
+  --muted-foreground: #a1a1aa;
+  --border: rgb(255 255 255 / 0.1);
+  --nav: rgb(24 24 27 / 0.72);
+  --card: #141416;
+  --dot: rgb(255 255 255 / 0.14);
 }
 
-/* Apple dark: true black, elevated graphite, brighter blue */
-[data-theme="dark"] {
-  --background: #000000;
-  --foreground: #f5f5f7;
-  --accent: #2997ff;
-  --accent-foreground: #000000;
-  --muted: #1d1d1f;
-  --muted-foreground: #86868b;
-  --border: #424245;
+/* Paper light */
+[data-theme="light"] {
+  --background: #f3efe6;
+  --foreground: #1c1917;
+  --accent: #1c1917;
+  --accent-foreground: #f3efe6;
+  --muted: #e7e1d6;
+  --muted-foreground: #78716c;
+  --border: rgb(28 25 23 / 0.12);
+  --nav: rgb(255 255 255 / 0.72);
+  --card: #fffdf8;
+  --dot: rgb(28 25 23 / 0.12);
 }

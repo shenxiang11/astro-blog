@@ -1,127 +1,81 @@
 ---
 import { getCollection } from "astro:content";
 import { getRelativeLocaleUrl } from "astro:i18n";
-import IconRss from "@/assets/icons/IconRss.svg";
-import IconArrowRight from "@/assets/icons/IconArrowRight.svg";
 import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
-import Socials from "@/components/Socials.astro";
+import ProfileCard from "@/components/ProfileCard.astro";
+import ProductSection from "@/components/ProductSection.astro";
 import Card from "@/components/Card.astro";
-import LinkButton from "@/components/LinkButton.astro";
 import { getSortedPosts } from "@/utils/getSortedPosts";
 import { useTranslations } from "@/i18n";
+import { profile } from "@/data/profile";
+import { products } from "@/data/products";
 import config from "@/config";
-
-const { socials, posts: postsConfig } = config;
 
 const locale = Astro.currentLocale ?? config.site.lang;
 const t = useTranslations(locale);
 
 const posts = await getCollection("posts");
-const sortedPosts = getSortedPosts(posts);
-const featuredPosts = sortedPosts.filter(({ data }) => data.featured);
-const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
-const homePath = getRelativeLocaleUrl(locale, "");
+const recentPosts = getSortedPosts(posts).slice(0, 4);
 ---
 
 <Layout>
   <Header />
-  <main
-    id="main-content"
-    data-layout="index"
-    data-home-path={homePath}
-    class="app-layout my-1"
-  >
-    <section id="hero" class="border-border border-b pt-8 pb-6">
-      <h1 class="my-4 inline-block text-4xl font-semibold tracking-tight sm:my-8 sm:text-5xl">
-        {t.home.greeting}
-      </h1>
-      <a
-        target="_blank"
-        href={`${import.meta.env.BASE_URL.replace(/\/?$/, "/")}rss.xml`}
-        class="inline-block"
-        aria-label={t.a11y.rssFeed}
-        title={t.a11y.rssFeed}
-      >
-        <IconRss
-          width={20}
-          height={20}
-          class="stroke-accent scale-125 stroke-3 rtl:-rotate-90"
-        />
-        <span class="sr-only">{t.a11y.rssFeed}</span>
-      </a>
 
-      <p>
-        星曜是一个简洁、响应式、无障碍且对 SEO 友好的博客。默认支持浅色 /
-        深色模式。
-      </p>
-      <p class="mt-2">阅读文章，或从上方导航开始浏览。</p>
-      {
-        socials.length > 0 && (
-          <div class="mt-4 flex max-sm:flex-col sm:items-center">
-            <div class="me-2 mb-1 whitespace-nowrap sm:mb-0">
-              {t.home.socialLinks}:
-            </div>
-            <Socials />
-          </div>
-        )
-      }
+  <main id="main-content">
+    <section
+      class="site-layout grid items-center gap-12 pt-8 pb-16 lg:grid-cols-2 lg:gap-20 lg:pt-12 lg:pb-24"
+    >
+      <div>
+        <h1 class="font-hand text-5xl leading-none sm:text-7xl">
+          {profile.aboutTitle}
+        </h1>
+        <ul class="mt-10 space-y-4 text-base sm:text-lg">
+          {
+            profile.lines.map(line => (
+              <li class="flex items-start gap-3">
+                <span class="text-muted-foreground w-6 shrink-0 text-center">
+                  {line.icon}
+                </span>
+                {line.text.includes("@") ? (
+                  <a href={`mailto:${profile.email}`} class="hover:underline">
+                    {line.text}
+                  </a>
+                ) : (
+                  <span>{line.text}</span>
+                )}
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+      <div class="flex justify-center lg:justify-end">
+        <ProfileCard />
+      </div>
     </section>
 
     {
-      featuredPosts.length > 0 && (
-        <section
-          id="featured"
-          class:list={[
-            "pt-12 pb-6",
-            { "border-border border-b": recentPosts.length > 0 },
-          ]}
+      products.map((product, index) => (
+        <ProductSection product={product} flip={index % 2 === 1} />
+      ))
+    }
+
+    <section class="site-layout pb-24">
+      <div class="mb-8 flex items-end justify-between gap-4">
+        <h2 class="font-hand text-4xl sm:text-5xl"># Writing.</h2>
+        <a
+          href={getRelativeLocaleUrl(locale, "posts")}
+          class="text-muted-foreground hover:text-foreground text-sm"
         >
-          <h2 class="text-2xl font-semibold tracking-wide">
-            {t.home.featured}
-          </h2>
-          <ul>
-            {featuredPosts.map(data => (
-              <Card variant="h3" {...data} />
-            ))}
-          </ul>
-        </section>
-      )
-    }
-
-    {
-      recentPosts.length > 0 && (
-        <section id="recent-posts" class="pt-12 pb-6">
-          <h2 class="text-2xl font-semibold tracking-wide">
-            {t.home.recentPosts}
-          </h2>
-          <ul>
-            {recentPosts.slice(0, postsConfig.perIndex).map(data => (
-              <Card variant="h3" {...data} />
-            ))}
-          </ul>
-        </section>
-      )
-    }
-
-    <div class="my-8 text-center">
-      <LinkButton href={getRelativeLocaleUrl(locale, "posts")}>
-        {t.home.allPosts}
-        <IconArrowRight class="inline-block rtl:-rotate-180" />
-      </LinkButton>
-    </div>
+          {t.home.allPosts}
+        </a>
+      </div>
+      <ul>
+        {recentPosts.map(data => <Card {...data} />)}
+      </ul>
+    </section>
   </main>
+
   <Footer />
 </Layout>
-
-<script>
-  document.addEventListener("astro:page-load", () => {
-    const indexLayout = (document.querySelector("#main-content") as HTMLElement)
-      ?.dataset;
-    const baseRoot = import.meta.env.BASE_URL.replace(/\/?$/, "/");
-    if (indexLayout?.layout) {
-      sessionStorage.setItem("backUrl", indexLayout.homePath ?? baseRoot);
-    }
-  });
-</script>

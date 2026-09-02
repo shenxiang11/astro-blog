@@ -10,22 +10,32 @@ type Props = {
 
 const { variant: Heading = "h2", id, data, filePath } = Astro.props;
 
-const { title, description, ...props } = data;
+const { title, description, pubDatetime, modDatetime, timezone } = data;
 ---
 
-<li class="my-6">
+<li>
   <a
     href={getPostUrl(id, filePath, Astro.currentLocale)}
-    class:list={[
-      "text-foreground hover:text-accent inline-block text-lg font-semibold",
-      "underline-offset-4 hover:underline",
-      "focus-visible:no-underline focus-visible:underline-offset-0",
-    ]}
+    class="group border-border/50 grid gap-2 border-b py-8 last:border-b-0 sm:grid-cols-[7.5rem_minmax(0,1fr)] sm:gap-10"
   >
-    <Heading transition:name={toTransitionName(id)}>
-      {title}
-    </Heading>
+    <Datetime
+      class="text-sm sm:pt-1.5"
+      {pubDatetime}
+      {modDatetime}
+      {timezone}
+    />
+    <div>
+      <Heading
+        transition:name={toTransitionName(id)}
+        class="text-xl font-semibold tracking-tight transition-colors group-hover:text-muted-foreground sm:text-2xl"
+      >
+        {title}
+      </Heading>
+      <p
+        class="text-muted-foreground mt-2 line-clamp-2 text-[15px] leading-relaxed"
+      >
+        {description}
+      </p>
+    </div>
   </a>
-  <Datetime {...props} />
-  <p>{description}</p>
 </li>

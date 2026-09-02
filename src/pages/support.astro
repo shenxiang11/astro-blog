@@ -1,11 +1,6 @@
 ---
 import { getEntry, render } from "astro:content";
-import Layout from "@/layouts/Layout.astro";
-import Header from "@/components/Header.astro";
-import Breadcrumb from "@/components/Breadcrumb.astro";
-import Main from "@/components/Main.astro";
-import Footer from "@/components/Footer.astro";
-import config from "@/config";
+import LegalLayout from "@/layouts/LegalLayout.astro";
 
 const support = await getEntry("pages", "support");
 
@@ -18,19 +13,11 @@ if (!support) {
 const { Content } = await render(support);
 ---
 
-<Layout
-  title={`${support.data.title} | ${config.site.title}`}
+<LegalLayout
+  title={support.data.title}
   description={support.data.description}
   ogImage={support.data.ogImage}
   canonicalURL={support.data.canonicalURL}
 >
-  <Header />
-
-  <Breadcrumb />
-
-  <Main pageTitle={support.data.title} class="app-prose">
-    <Content />
-  </Main>
-
-  <Footer />
-</Layout>
+  <Content />
+</LegalLayout>

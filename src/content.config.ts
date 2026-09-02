@@ -2,8 +2,10 @@ import { defineCollection } from "astro:content";
 import { z } from "astro/zod";
 import { glob } from "astro/loaders";
 import config from "@/config";
+import { DEMO_PREVIEWS } from "./data/demoPreviews";
 
 export const BLOG_PATH = "src/content/posts";
+export const DEMOS_PATH = "src/content/demos";
 
 const posts = defineCollection({
   loader: glob({ pattern: "**/[^_]*.{md,mdx}", base: `./${BLOG_PATH}` }),
@@ -34,4 +36,19 @@ const pages = defineCollection({
   }),
 });
 
-export const collections = { posts, pages };
+const demos = defineCollection({
+  loader: glob({ pattern: "**/[^_]*.{md,mdx}", base: `./${DEMOS_PATH}` }),
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      subtitle: z.string(),
+      pubDatetime: z.date(),
+      cover: image().or(z.string()).optional(),
+      video: z.string().optional(),
+      preview: z.enum(DEMO_PREVIEWS).optional(),
+      order: z.number().optional(),
+      draft: z.boolean().optional(),
+    }),
+});
+
+export const collections = { posts, pages, demos };

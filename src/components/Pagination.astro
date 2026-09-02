@@ -18,14 +18,14 @@ const t = useTranslations(Astro.currentLocale);
 {
   page.lastPage > 1 && (
     <nav
-      class="mt-auto mb-8 flex justify-center gap-4"
+      class="text-muted-foreground mt-12 mb-8 flex justify-center gap-6 text-sm"
       role="navigation"
       aria-label="Pagination Navigation"
     >
       <LinkButton
         disabled={!page.url.prev}
         href={page.url.prev as string}
-        class:list={["select-none", { "opacity-50": !page.url.prev }]}
+        class:list={["select-none", { "opacity-40": !page.url.prev }]}
         aria-label={t.a11y.goToPreviousPage}
       >
         <IconArrowLeft class="inline-block rtl:rotate-180" />
@@ -35,7 +35,7 @@ const t = useTranslations(Astro.currentLocale);
       <LinkButton
         disabled={!page.url.next}
         href={page.url.next as string}
-        class:list={["select-none", { "opacity-50": !page.url.next }]}
+        class:list={["select-none", { "opacity-40": !page.url.next }]}
         aria-label={t.a11y.goToNextPage}
       >
         {t.pagination.next}

@@ -20,9 +20,8 @@ const t = useTranslations(locale);
 <Layout title={`${t.pages.tagsTitle} | ${config.site.title}`}>
   <Header />
 
-  <Breadcrumb />
-
   <Main pageTitle={t.pages.tagsTitle} pageDesc={t.pages.tagsDesc}>
+    <Breadcrumb slot="lead" class="mb-6" />
     <ul class="flex flex-wrap gap-6">
       {tags.map(({ tag, tagName }) => <Tag {tag} {tagName} />)}
     </ul>

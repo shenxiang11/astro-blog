@@ -26,9 +26,8 @@ const { Content } = await render(about);
 >
   <Header />
 
-  <Breadcrumb />
-
   <Main pageTitle={about.data.title} class="app-prose">
+    <Breadcrumb slot="lead" class="mb-6" />
     <Content />
   </Main>
 

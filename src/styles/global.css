@@ -5,6 +5,10 @@
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
+@utility font-hand {
+  font-family: "Caveat", "Segoe Script", "Apple Chancery", cursive;
+}
+
 @layer base {
   html {
     -webkit-font-smoothing: antialiased;
@@ -13,6 +17,46 @@
 
   body {
     letter-spacing: -0.011em;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image:
+      radial-gradient(circle, var(--dot) 1px, transparent 1.2px),
+      radial-gradient(
+        ellipse 80% 50% at 18% 12%,
+        rgb(255 80 60 / 0.08),
+        transparent 55%
+      ),
+      radial-gradient(
+        ellipse 60% 40% at 82% 18%,
+        rgb(80 140 255 / 0.07),
+        transparent 50%
+      );
+    background-size:
+      22px 22px,
+      auto,
+      auto;
+    mask-image: radial-gradient(ellipse at 50% 0%, black 18%, transparent 72%);
+  }
+
+  [data-theme="light"] body::before {
+    background-image:
+      radial-gradient(circle, var(--dot) 1px, transparent 1.2px),
+      radial-gradient(
+        ellipse 80% 50% at 18% 12%,
+        rgb(255 120 80 / 0.12),
+        transparent 55%
+      ),
+      radial-gradient(
+        ellipse 60% 40% at 82% 18%,
+        rgb(80 140 255 / 0.08),
+        transparent 50%
+      );
   }
 
   h1,
@@ -53,8 +97,96 @@
   @apply max-w-app mx-auto w-full px-4;
 }
 
+@utility site-layout {
+  @apply mx-auto w-full max-w-6xl px-5 sm:px-8;
+}
+
 @utility active-nav {
-  @apply underline decoration-solid decoration-1 underline-offset-8;
+  @apply text-foreground;
+}
+
+.site-nav ~ main {
+  padding-top: 6.5rem;
+}
+
+.ios-glass {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-width: 200px;
+  border-radius: 9999px;
+}
+
+.ios-glass-blur,
+.ios-glass-border {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.ios-glass-blur {
+  z-index: 0;
+  background: rgb(221 221 221 / 0.05);
+  backdrop-filter: blur(12px) saturate(160%);
+  -webkit-backdrop-filter: blur(12px) saturate(160%);
+}
+
+.ios-glass-border {
+  z-index: 1;
+  border: 1px solid rgb(255 255 255 / 0.16);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.28),
+    inset 0 -1px 0 rgb(0 0 0 / 0.2),
+    0 8px 24px rgb(0 0 0 / 0.08);
+}
+
+.ios-glass-content {
+  position: relative;
+  z-index: 2;
+  color: rgb(255 255 255 / 0.6);
+}
+
+.ios-glass-content a,
+.ios-glass-content button {
+  color: inherit;
+  transition: color 0.3s;
+}
+
+.ios-glass-content a:hover,
+.ios-glass-content button:hover,
+.ios-glass-content .is-active {
+  color: rgb(255 255 255);
+}
+
+.ios-glass-brand {
+  color: rgb(255 255 255 / 0.92);
+}
+
+[data-theme="light"] .ios-glass-blur {
+  background: rgb(255 255 255 / 0.42);
+}
+
+[data-theme="light"] .ios-glass-border {
+  border-color: rgb(255 255 255 / 0.55);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.7),
+    inset 0 -1px 0 rgb(0 0 0 / 0.06),
+    0 8px 24px rgb(0 0 0 / 0.06);
+}
+
+[data-theme="light"] .ios-glass-content {
+  color: rgb(28 25 23 / 0.5);
+}
+
+[data-theme="light"] .ios-glass-content a:hover,
+[data-theme="light"] .ios-glass-content button:hover,
+[data-theme="light"] .ios-glass-content .is-active {
+  color: rgb(28 25 23 / 0.92);
+}
+
+[data-theme="light"] .ios-glass-brand {
+  color: rgb(28 25 23 / 0.9);
 }
 
 :target {

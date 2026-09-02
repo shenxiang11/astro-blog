@@ -1,0 +1,40 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import DemoCard from "@/components/DemoCard.astro";
+import { getSortedDemos } from "@/utils/getSortedDemos";
+import { useTranslations } from "@/i18n";
+import config from "@/config";
+
+const locale = Astro.currentLocale ?? config.site.lang;
+const t = useTranslations(locale);
+const demos = getSortedDemos(await getCollection("demos"));
+---
+
+<Layout
+  title={`${t.pages.demosTitle} | ${config.site.title}`}
+  description={t.pages.demosDesc}
+>
+  <Header />
+
+  <main id="main-content" class="flex-1">
+    <section class="site-layout pt-8 pb-2 text-center sm:pt-12">
+      <h1 class="text-4xl font-semibold tracking-tight sm:text-5xl">
+        {t.pages.demosTitle}
+      </h1>
+      <p class="text-muted-foreground mx-auto mt-5 max-w-2xl text-lg">
+        {t.pages.demosDesc}
+      </p>
+    </section>
+
+    <section class="site-layout pt-10 pb-24">
+      <div class="grid grid-cols-1 gap-x-6 gap-y-12 md:grid-cols-2 lg:grid-cols-3">
+        {demos.map(demo => <DemoCard demo={demo} />)}
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>
