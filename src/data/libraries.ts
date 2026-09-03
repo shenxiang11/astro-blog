@@ -10,6 +10,15 @@ export type Library = {
 
 export const libraries: Library[] = [
   {
+    id: "vapkit-web",
+    name: "VAPKit Web",
+    description:
+      "Web 上的 VAP 礼物动画播放器。读 MP4 里的 vapc，用浏览器解码，WebGL 按同一帧里的 RGB 和灰阶 Alpha 合成透明动画。",
+    platforms: ["TypeScript", "WebGL"],
+    repo: "https://github.com/shenxiang11/vapkit-web",
+    order: 1,
+  },
+  {
     id: "vapkit",
     name: "VAPKit",
     description:
@@ -17,7 +26,16 @@ export const libraries: Library[] = [
     platforms: ["SwiftUI", "UIKit", "Metal"],
     repo: "https://github.com/shenxiang11/vapkit",
     article: "posts/vapkit-same-frame-alpha",
-    order: 1,
+    order: 2,
+  },
+  {
+    id: "vapkit-android",
+    name: "VAPKit Android",
+    description:
+      "Android 上的 VAP 礼物动画播放器。读 MP4 里的 vapc，用 MediaCodec 解码，OpenGL ES 按同一帧里的 RGB 和灰阶 Alpha 合成透明动画。",
+    platforms: ["Kotlin", "MediaCodec", "OpenGL ES"],
+    repo: "https://github.com/shenxiang11/vapkit-android",
+    order: 3,
   },
   {
     id: "nested-paging",
@@ -27,7 +45,7 @@ export const libraries: Library[] = [
     platforms: ["UIKit", "Swift"],
     repo: "https://github.com/shenxiang11/NestedPaging",
     article: "posts/nested-paging-offset-locking",
-    order: 2,
+    order: 4,
   },
 ];
 
