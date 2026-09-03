@@ -1,0 +1,18 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import { ElasticSliderDemo } from "@/components/elastic-slider/ElasticSlider";
+import config from "@/config";
+import "@/styles/elastic-slider.css";
+---
+
+<Layout
+  title={`Elastic Slider | ${config.site.title}`}
+  description="拖过两端，看看回弹。"
+>
+  <Header />
+
+  <main id="main-content" class="es-page flex-1">
+    <ElasticSliderDemo client:only="react" />
+  </main>
+</Layout>

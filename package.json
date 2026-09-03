@@ -29,6 +29,7 @@
     "gsap": "^3.15.0",
     "lodash.kebabcase": "^4.1.1",
     "meshline": "^3.3.1",
+    "motion": "^13.2.0",
     "ogl": "^1.0.11",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",

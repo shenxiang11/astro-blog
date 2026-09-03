@@ -61,7 +61,7 @@ export default defineConfig({
     plugins: [tailwindcss()],
     assetsInclude: ["**/*.mp4", "**/*.webm", "**/*.mov", "**/*.glb"],
     optimizeDeps: {
-      include: ["ogl", "gsap"],
+      include: ["ogl", "gsap", "motion"],
       exclude: ["@dimforge/rapier3d-compat"],
     },
     ssr: {

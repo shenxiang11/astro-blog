@@ -4,6 +4,7 @@ export const DEMO_PREVIEWS = [
   "text-animations",
   "height-slider",
   "weight-slider",
+  "elastic-slider",
 ] as const;
 
 export type DemoKind = (typeof DEMO_PREVIEWS)[number];
