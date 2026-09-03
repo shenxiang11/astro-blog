@@ -101,12 +101,15 @@ const rssHref = getRelativeLocaleUrl(
         const prefersDark = window.matchMedia(
           "(prefers-color-scheme: dark)"
         ).matches;
-        const theme = stored ?? (prefersDark ? "dark" : "light");
+        const preferred = stored ?? (prefersDark ? "dark" : "light");
+        const forceDark = /(?:^|\/)demos\/s65\/?$/.test(location.pathname);
+        const theme = forceDark ? "dark" : preferred;
         const root = document.firstElementChild;
         root?.setAttribute("data-theme", theme);
         root?.classList.toggle("dark", theme === "dark");
-        // Expose value so theme.ts can skip re-detection.
-        window.__theme = { value: theme };
+        root?.classList.toggle("theme-locked", forceDark);
+        // Keep the user's real preference. S65 only paints dark for this page.
+        window.__theme = { value: preferred };
       })();
     </script>
 

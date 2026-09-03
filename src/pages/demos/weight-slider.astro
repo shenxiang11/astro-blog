@@ -1,0 +1,18 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import WeightDemo from "@/components/weight-slider/WeightArcSlider";
+import config from "@/config";
+import "@/styles/weight-slider.css";
+---
+
+<Layout
+  title={`Weight Slider | ${config.site.title}`}
+  description="拖动弧形刻度，选出体重。"
+>
+  <Header />
+
+  <main id="main-content" class="ws-page flex-1">
+    <WeightDemo client:only="react" />
+  </main>
+</Layout>

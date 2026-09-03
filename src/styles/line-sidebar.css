@@ -1,0 +1,209 @@
+.line-sidebar {
+  --accent-color: var(--foreground);
+  --text-color: var(--foreground);
+  --marker-color: color-mix(in srgb, var(--foreground) 45%, transparent);
+  --hover-gradient: linear-gradient(
+    90deg,
+    #ff3e3e 0%,
+    #ffd549 40%,
+    var(--foreground) 60%,
+    #3c9aff 100%
+  );
+  --font-weight: 400;
+  --marker-length: 20px;
+  --marker-gap: 10px;
+  --tick-scale: 0.5;
+  --max-shift: 40px;
+  --item-gap: 50px;
+  --font-size: 1.125rem;
+  --smoothing: 320ms;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  position: relative;
+  display: flex;
+  justify-content: flex-start;
+}
+
+@media (min-width: 768px) {
+  .line-sidebar {
+    --font-size: 1.5rem;
+  }
+}
+
+.line-sidebar--markers {
+  padding-left: calc(var(--marker-length) + var(--marker-gap));
+  padding-right: calc(var(--max-shift) + 0.75rem);
+}
+
+.line-sidebar__list {
+  list-style: none;
+  margin: 0;
+  padding: 1rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--item-gap);
+}
+
+.line-sidebar__item {
+  position: relative;
+  cursor: pointer;
+  outline: none;
+  contain: layout style;
+}
+
+.line-sidebar__item:focus-visible .line-sidebar__label {
+  outline: 2px dashed var(--accent);
+  outline-offset: 4px;
+}
+
+.line-sidebar__item::before {
+  content: "";
+  position: absolute;
+  inset: -6px -3rem;
+}
+
+.line-sidebar__label {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  font-size: var(--font-size);
+  font-weight: var(--font-weight);
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-break: break-word;
+  color: var(--text-color);
+  transform: translateX(0) scale(1);
+  transform-origin: left center;
+  transition: transform var(--smoothing) var(--ease);
+  will-change: transform;
+}
+
+.line-sidebar__item:is(:hover, :focus-visible, [aria-current="true"])
+  .line-sidebar__label {
+  transform: translateX(var(--max-shift)) scale(1.05);
+}
+
+.line-sidebar__index {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  margin-right: 0.6rem;
+  font-size: 0.85em;
+  opacity: 0.55;
+  transition: opacity var(--smoothing) var(--ease);
+}
+
+.line-sidebar__item:is(:hover, :focus-visible, [aria-current="true"])
+  .line-sidebar__index {
+  opacity: 1;
+}
+
+.line-sidebar__text {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0 1rem;
+  color: inherit;
+  text-decoration: none;
+}
+
+.line-sidebar__lead {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.line-sidebar__emoji {
+  flex-shrink: 0;
+  color: inherit;
+  -webkit-text-fill-color: initial;
+}
+
+.line-sidebar__copy {
+  background-image: var(--hover-gradient);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: var(--text-color);
+  -webkit-text-fill-color: var(--text-color);
+  transition: -webkit-text-fill-color var(--smoothing) var(--ease);
+}
+
+.line-sidebar__item:is(:hover, :focus-visible, [aria-current="true"])
+  .line-sidebar__copy {
+  -webkit-text-fill-color: transparent;
+}
+
+.line-sidebar__mark {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.line-sidebar__mark:hover {
+  opacity: 0.8;
+}
+
+.line-sidebar__mark-image {
+  width: 2.25rem;
+  height: 2.25rem;
+  object-fit: contain;
+  border-radius: 0.5rem;
+  -webkit-text-fill-color: initial;
+}
+
+.line-sidebar__marker {
+  position: absolute;
+  top: 50%;
+  left: calc(-1 * var(--marker-length) - var(--marker-gap));
+  height: 1.2px;
+  width: var(--marker-length);
+  background-color: var(--marker-color);
+  transform: translateY(-50%) scaleX(0.8);
+  transform-origin: left center;
+  transition:
+    transform var(--smoothing) var(--ease),
+    background-color var(--smoothing) var(--ease);
+}
+
+.line-sidebar__item:is(:hover, :focus-visible, [aria-current="true"])
+  .line-sidebar__marker {
+  background-color: var(--accent-color);
+  transform: translateY(-50%) scaleX(1.8);
+}
+
+.line-sidebar--markers .line-sidebar__item:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: calc(100% + var(--item-gap) / 2);
+  left: calc(-1 * var(--marker-length) - var(--marker-gap));
+  height: 1.1px;
+  width: calc(var(--marker-length) * var(--tick-scale));
+  background-color: var(--marker-color);
+  opacity: 0.5;
+  transform: translateY(-50%);
+}
+
+.line-sidebar--scale-tick .line-sidebar__item:not(:last-child)::after {
+  transform-origin: left center;
+  transform: translateY(-50%) scaleX(0.8);
+  transition: transform var(--smoothing) var(--ease);
+}
+
+.line-sidebar--scale-tick
+  .line-sidebar__item:is(:hover, :focus-visible, [aria-current="true"]):not(
+    :last-child
+  )::after {
+  transform: translateY(-50%) scaleX(1.8);
+}
+
+@media (max-width: 640px) {
+  .line-sidebar {
+    --max-shift: 24px;
+    --item-gap: 36px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .line-sidebar {
+    --smoothing: 1ms;
+  }
+}

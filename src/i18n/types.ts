@@ -2,6 +2,7 @@ export interface UIStrings {
   nav: {
     home: string;
     demos: string;
+    libraries: string;
     posts: string;
     tags: string;
     about: string;
@@ -56,6 +57,9 @@ export interface UIStrings {
     demosTitle: string;
     demosDesc: string;
 
+    librariesTitle: string;
+    librariesDesc: string;
+
     archivesTitle: string;
     archivesDesc: string;
 
@@ -86,5 +90,12 @@ export interface UIStrings {
     title: string;
     message: string;
     goHome: string;
+  };
+  store: {
+    downloadOnAppStore: string;
+    downloadOnAppStoreLine1: string;
+    downloadOnAppStoreLine2: string;
+    comingSoon: string;
+    comingSoonHint: string;
   };
 }

@@ -4,14 +4,23 @@ import { getRelativeLocaleUrl } from "astro:i18n";
 import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
-import ProfileCard from "@/components/ProfileCard.astro";
 import ProductSection from "@/components/ProductSection.astro";
 import Card from "@/components/Card.astro";
 import { getSortedPosts } from "@/utils/getSortedPosts";
+import { getAssetPath } from "@/utils/withBase";
 import { useTranslations } from "@/i18n";
+import LineSidebar from "@/components/line-sidebar/LineSidebar";
+import ProfileCard from "@/components/profile-card/ProfileCard";
+import TechLogoLoop from "@/components/logo-loop/TechLogoLoop";
 import { profile } from "@/data/profile";
 import { products } from "@/data/products";
 import config from "@/config";
+import avatarUrl from "@/assets/profile/person.webp?url";
+import grainUrl from "@/assets/profile/grain.webp?url";
+import "@/styles/line-sidebar.css";
+import "@/styles/profile-card.css";
+import "@/styles/galaxy.css";
+import "@/styles/logo-loop.css";
 
 const locale = Astro.currentLocale ?? config.site.lang;
 const t = useTranslations(locale);
@@ -21,61 +30,117 @@ const recentPosts = getSortedPosts(posts).slice(0, 4);
 ---
 
 <Layout>
-  <Header />
+  <div class="home-shell">
+    <div id="home-galaxy" class="home-galaxy" aria-hidden="true"></div>
+    <Header />
 
-  <main id="main-content">
-    <section
-      class="site-layout grid items-center gap-12 pt-8 pb-16 lg:grid-cols-2 lg:gap-20 lg:pt-12 lg:pb-24"
-    >
-      <div>
-        <h1 class="font-hand text-5xl leading-none sm:text-7xl">
-          {profile.aboutTitle}
-        </h1>
-        <ul class="mt-10 space-y-4 text-base sm:text-lg">
-          {
-            profile.lines.map(line => (
-              <li class="flex items-start gap-3">
-                <span class="text-muted-foreground w-6 shrink-0 text-center">
-                  {line.icon}
-                </span>
-                {line.text.includes("@") ? (
-                  <a href={`mailto:${profile.email}`} class="hover:underline">
-                    {line.text}
-                  </a>
-                ) : (
-                  <span>{line.text}</span>
-                )}
-              </li>
-            ))
-          }
+    <main id="main-content">
+      <section
+        class="site-layout grid items-center gap-10 pt-16 pb-16 lg:grid-cols-2 lg:justify-between lg:gap-8 lg:pt-24 lg:pb-20"
+      >
+        <div class="w-full min-w-0 md:max-w-lg lg:max-w-xl">
+          <h1 class="font-hand text-3xl leading-none md:text-4xl">
+            {profile.aboutTitle}
+          </h1>
+          <LineSidebar
+            client:idle
+            className="mt-4 md:mt-6"
+            items={[
+              ...profile.lines,
+              ...(profile.schools.length
+                ? [
+                    {
+                      label: "🎓  ",
+                      marks: profile.schools.map(school => ({
+                        src: getAssetPath(school.src),
+                        alt: school.name,
+                        href: school.href,
+                      })),
+                    },
+                  ]
+                : []),
+              ...(profile.contacts.length
+                ? [
+                    {
+                      label: "🌟  ",
+                      marks: profile.contacts.map(contact => ({
+                        src: getAssetPath(contact.src),
+                        alt: contact.name,
+                        href: contact.href,
+                      })),
+                    },
+                  ]
+                : []),
+            ]}
+            accentColor="var(--foreground)"
+            textColor="var(--foreground)"
+            markerColor="color-mix(in srgb, var(--foreground) 45%, transparent)"
+            showIndex={false}
+            showMarker
+            proximityRadius={140}
+            maxShift={40}
+            falloff="smooth"
+            markerLength={20}
+            markerGap={10}
+            tickScale={0.5}
+            scaleTick={false}
+            itemGap={50}
+            smoothing={320}
+            stickyActive={false}
+          />
+        </div>
+        <div class="flex w-full justify-center lg:w-auto lg:justify-end">
+          <ProfileCard
+            client:load
+            name={profile.name}
+            title={profile.role}
+            handle={profile.handle}
+            status={profile.status}
+            contactText="联系我"
+            contactHref={`mailto:${profile.email}`}
+            avatarUrl={avatarUrl}
+            iconUrl={getAssetPath("profile/iconpattern.svg")}
+            grainUrl={grainUrl}
+            showUserInfo
+            enableTilt
+            enableMobileTilt={false}
+            behindGlowEnabled
+            behindGlowColor="rgba(255, 255, 255, 0.7)"
+            innerGradient="linear-gradient(180deg, #FF3E3E 0%, #FFD549 40%, #FFFFFF 65%, #D1E7FF 83%, #3C9AFF 100%)"
+          />
+        </div>
+      </section>
+
+      <section class="pb-16 lg:pb-24">
+        <TechLogoLoop client:load />
+      </section>
+
+      {
+        products.map((product, index) => (
+          <ProductSection product={product} flip={index % 2 === 1} />
+        ))
+      }
+
+      <section class="site-layout pb-24">
+        <div class="mb-8 flex items-end justify-between gap-4">
+          <h2 class="font-hand text-4xl sm:text-5xl"># Writing.</h2>
+          <a
+            href={getRelativeLocaleUrl(locale, "posts")}
+            class="text-muted-foreground hover:text-foreground text-sm"
+          >
+            {t.home.allPosts}
+          </a>
+        </div>
+        <ul>
+          {recentPosts.map(data => <Card {...data} />)}
         </ul>
-      </div>
-      <div class="flex justify-center lg:justify-end">
-        <ProfileCard />
-      </div>
-    </section>
+      </section>
+    </main>
 
-    {
-      products.map((product, index) => (
-        <ProductSection product={product} flip={index % 2 === 1} />
-      ))
-    }
+    <Footer />
+  </div>
 
-    <section class="site-layout pb-24">
-      <div class="mb-8 flex items-end justify-between gap-4">
-        <h2 class="font-hand text-4xl sm:text-5xl"># Writing.</h2>
-        <a
-          href={getRelativeLocaleUrl(locale, "posts")}
-          class="text-muted-foreground hover:text-foreground text-sm"
-        >
-          {t.home.allPosts}
-        </a>
-      </div>
-      <ul>
-        {recentPosts.map(data => <Card {...data} />)}
-      </ul>
-    </section>
-  </main>
-
-  <Footer />
+  <script>
+    import "@/scripts/home-galaxy";
+  </script>
 </Layout>

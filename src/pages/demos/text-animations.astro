@@ -1,0 +1,90 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import { TEXT_ANIMATIONS } from "@/data/textAnimations";
+import config from "@/config";
+import "@/styles/text-animations.css";
+
+const title = "Text Animations";
+const description = "100 种文字入场效果，输入一段文字就能套到全部卡片上。";
+---
+
+<Layout title={`${title} | ${config.site.title}`} description={description}>
+  <Header />
+
+  <main id="main-content" class="flex-1">
+    <section class="site-layout pt-8 pb-2 text-center sm:pt-12">
+      <h1 class="text-4xl font-semibold tracking-tight sm:text-5xl">{title}</h1>
+      <p class="text-muted-foreground mx-auto mt-5 max-w-2xl text-lg">
+        {description}
+      </p>
+      <input
+        type="text"
+        class="ta-input"
+        data-ta-input
+        maxlength="40"
+        placeholder="输入文字，应用到全部效果"
+        autocomplete="off"
+        spellcheck="false"
+      />
+      <div class="ta-filters" data-ta-filters>
+        <button type="button" class="ta-filter is-active" data-ta-filter="all">
+          全部
+        </button>
+        <button type="button" class="ta-filter" data-ta-filter="picked">
+          已选 <span class="ta-picked-count" data-ta-picked-count>0</span>
+        </button>
+      </div>
+    </section>
+
+    <section class="site-layout pt-10 pb-24">
+      <div class="ta-grid" data-ta-grid>
+        {
+          TEXT_ANIMATIONS.map((anim, index) => (
+            <article class="ta-card" data-anim-id={anim.id}>
+              <header class="ta-card-header">
+                <h2>
+                  {index + 1}. {anim.name}
+                </h2>
+                <button
+                  type="button"
+                  class="ta-pick"
+                  data-ta-pick
+                  title="加入对比"
+                  aria-label={`收藏 ${anim.name}`}
+                  aria-pressed="false"
+                >
+                  ☆
+                </button>
+              </header>
+              <div
+                class:list={["ta-stage", { "is-overflow": anim.overflow === "visible" }]}
+                data-ta-stage
+              />
+              <div class="ta-actions">
+                <button type="button" class="ta-btn" data-ta-restart>
+                  重播
+                </button>
+                <button type="button" class="ta-btn" data-ta-copy>
+                  复制代码
+                </button>
+              </div>
+            </article>
+          ))
+        }
+        <p class="ta-empty" data-ta-empty>还没有收藏。点卡片右上角的星标，方便对比。</p>
+      </div>
+    </section>
+  </main>
+
+  <div class="ta-toast" data-ta-toast role="status" aria-live="polite"></div>
+  <Footer />
+</Layout>
+
+<script>
+  import { initTextAnimations } from "@/scripts/text-animations";
+
+  initTextAnimations();
+  document.addEventListener("astro:after-swap", initTextAnimations);
+</script>

@@ -13,6 +13,8 @@ export type Product = {
   privacyHref: string;
   visual: "clipboard" | "jump";
   gradient: string;
+  /** Live App Store listing. `null` until the app is published. */
+  appStoreUrl?: string | null;
 };
 
 export const products: Product[] = [
@@ -57,6 +59,7 @@ export const products: Product[] = [
       "记录保存在本机",
     ],
     platforms: ["iPhone", "Apple Watch"],
+    appStoreUrl: null,
     supportHref: "/tiaotiao/support",
     privacyHref: "/tiaotiao/privacy",
     visual: "jump",

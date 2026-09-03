@@ -1,0 +1,23 @@
+.home-shell {
+  position: relative;
+  isolation: isolate;
+}
+
+.home-galaxy {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  width: 100vw;
+  height: 100vh;
+}
+
+.home-galaxy canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+[data-theme="light"] .home-galaxy {
+  visibility: hidden;
+}

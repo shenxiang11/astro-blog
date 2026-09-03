@@ -1,0 +1,26 @@
+.lanyard-page {
+  position: relative;
+  overflow: hidden;
+  min-height: 100svh;
+  margin-top: -6.5rem;
+}
+
+.lanyard-wrapper {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.lanyard-copy {
+  pointer-events: none;
+  position: absolute;
+  right: 0;
+  bottom: 1.75rem;
+  left: 0;
+  z-index: 1;
+  width: min(36rem, calc(100% - 2rem));
+  margin: 0 auto;
+  text-align: center;
+}

@@ -139,7 +139,7 @@ export const GET: APIRoute = async context => {
           },
         ],
       },
-    },
+    } as never,
     {
       width: 1200,
       height: 630,

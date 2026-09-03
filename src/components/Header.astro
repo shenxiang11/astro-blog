@@ -34,6 +34,11 @@ const links = [
     active: isActive(product.href),
   })),
   {
+    href: getRelativeLocaleUrl(locale, "libraries"),
+    label: t.nav.libraries,
+    active: isActive("/libraries"),
+  },
+  {
     href: getRelativeLocaleUrl(locale, "demos"),
     label: t.nav.demos,
     active: isActive("/demos"),
@@ -62,7 +67,7 @@ const links = [
       <div class="ios-glass-blur"></div>
       <div class="ios-glass-border"></div>
       <div
-        class="ios-glass-content flex h-[50px] items-center gap-4 px-4 whitespace-nowrap sm:gap-6 sm:px-6"
+        class="ios-glass-content flex h-[50px] items-center gap-3 px-3 whitespace-nowrap sm:gap-6 sm:px-6"
       >
         <a
           href={getRelativeLocaleUrl(locale, "")}
@@ -71,7 +76,7 @@ const links = [
         >
           <LogoXingyao class="size-8" />
         </a>
-        <ul class="flex items-center gap-3 sm:gap-8">
+        <ul class="flex items-center gap-2.5 sm:gap-6 lg:gap-8">
           {
             links.map(link => (
               <li>
@@ -86,7 +91,8 @@ const links = [
           }
         </ul>
         {
-          features.lightAndDarkMode && (
+          features.lightAndDarkMode &&
+            !currentPath.startsWith("/demos/s65") && (
             <button
               id="theme-btn"
               class="focus-outline relative size-7 shrink-0"

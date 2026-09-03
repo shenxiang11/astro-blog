@@ -1,0 +1,117 @@
+---
+import { Image } from "astro:assets";
+import { tiaotiaoPreviews } from "@/data/tiaotiaoPreviews";
+import "@/styles/tiaotiao.css";
+
+const slides = [...tiaotiaoPreviews, ...tiaotiaoPreviews];
+---
+
+<section class="tiaotiao-store" aria-label="App Store 预览">
+  <div
+    class="tiaotiao-carousel"
+    data-tiaotiao-carousel
+    data-count={tiaotiaoPreviews.length}
+  >
+    <div class="tiaotiao-carousel-scroller">
+      {
+        slides.map((preview, index) => (
+          <Image
+            src={preview.src}
+            alt={index < tiaotiaoPreviews.length ? preview.alt : ""}
+            class="tiaotiao-store-shot"
+            widths={[288, 576, 864]}
+            sizes="(min-width: 1024px) 20rem, 30vw"
+            aria-hidden={index >= tiaotiaoPreviews.length ? "true" : undefined}
+          />
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<script>
+  function initTiaoTiaoCarousel() {
+    const root = document.querySelector<HTMLElement>("[data-tiaotiao-carousel]");
+    const scrollerEl = root?.querySelector<HTMLElement>(
+      ".tiaotiao-carousel-scroller"
+    );
+    if (!root || !scrollerEl || root.dataset.ready) return;
+    root.dataset.ready = "1";
+    const scroller = scrollerEl;
+
+    const reduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+    const originals = Number(root.dataset.count) || scroller.children.length / 2;
+    const speed = 56;
+    let paused = reduceMotion;
+    let resumeAt = 0;
+    let last = performance.now();
+    let frame = 0;
+
+    function half() {
+      const shots = scroller.querySelectorAll<HTMLElement>(".tiaotiao-store-shot");
+      const start = shots[0];
+      const mid = shots[originals];
+      if (!start || !mid) return 0;
+      return mid.offsetLeft - start.offsetLeft;
+    }
+
+    function wrap() {
+      const midpoint = half();
+      if (midpoint <= 0) return;
+      if (scroller.scrollLeft >= midpoint) scroller.scrollLeft -= midpoint;
+      else if (scroller.scrollLeft < 0) scroller.scrollLeft += midpoint;
+    }
+
+    function tick(now: number) {
+      const delta = now - last;
+      last = now;
+      if (!paused && now >= resumeAt) {
+        scroller.scrollLeft += (speed * delta) / 1000;
+        wrap();
+      }
+      frame = window.requestAnimationFrame(tick);
+    }
+
+    function pause(ms = 0) {
+      paused = true;
+      resumeAt = ms > 0 ? performance.now() + ms : Number.POSITIVE_INFINITY;
+    }
+
+    function maybeResume() {
+      if (reduceMotion) return;
+      paused = false;
+    }
+
+    scroller.addEventListener("pointerenter", () => pause());
+    scroller.addEventListener("pointerleave", () => {
+      resumeAt = 0;
+      maybeResume();
+    });
+    scroller.addEventListener("pointerdown", () => pause());
+    scroller.addEventListener("focusin", () => pause());
+    scroller.addEventListener("focusout", maybeResume);
+    scroller.addEventListener(
+      "scroll",
+      () => {
+        wrap();
+      },
+      { passive: true }
+    );
+
+    if (!reduceMotion) frame = window.requestAnimationFrame(tick);
+
+    document.addEventListener(
+      "astro:before-swap",
+      () => {
+        window.cancelAnimationFrame(frame);
+        delete root.dataset.ready;
+      },
+      { once: true }
+    );
+  }
+
+  initTiaoTiaoCarousel();
+  document.addEventListener("astro:after-swap", initTiaoTiaoCarousel);
+</script>

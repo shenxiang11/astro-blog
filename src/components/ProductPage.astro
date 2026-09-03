@@ -4,6 +4,7 @@ import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
 import ProductVisual from "@/components/ProductVisual.astro";
+import { productCovers } from "@/data/productCovers";
 import config from "@/config";
 
 type Props = {
@@ -42,6 +43,7 @@ const { product } = Astro.props;
           visual={product.visual}
           name={product.name}
           nameEn={product.nameEn}
+          image={productCovers[product.id]}
         />
       </div>
     </section>

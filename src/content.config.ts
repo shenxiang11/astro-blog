@@ -46,6 +46,7 @@ const demos = defineCollection({
       cover: image().or(z.string()).optional(),
       video: z.string().optional(),
       preview: z.enum(DEMO_PREVIEWS).optional(),
+      page: z.boolean().optional(),
       order: z.number().optional(),
       draft: z.boolean().optional(),
     }),

@@ -1,0 +1,341 @@
+.ta-input {
+  width: 100%;
+  max-width: 36rem;
+  margin: 2rem auto 0;
+  padding: 0.75rem 0.25rem;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--border);
+  color: var(--foreground);
+  font-family: inherit;
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -0.021em;
+  text-align: center;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.ta-input::placeholder {
+  color: var(--muted-foreground);
+  font-weight: 400;
+}
+
+.ta-input:focus {
+  border-bottom-color: var(--foreground);
+}
+
+.ta-filters {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+}
+
+.ta-filter {
+  padding: 0.4rem 1rem;
+  background: transparent;
+  color: var(--muted-foreground);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 0.875rem;
+  font-family: inherit;
+  transition:
+    color 0.15s ease,
+    background 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.ta-filter:hover {
+  color: var(--foreground);
+  border-color: color-mix(in srgb, var(--foreground) 28%, transparent);
+}
+
+.ta-filter.is-active {
+  color: var(--accent-foreground);
+  background: var(--foreground);
+  border-color: var(--foreground);
+}
+
+.ta-picked-count {
+  display: inline-grid;
+  min-width: 1.15rem;
+  margin-left: 0.2rem;
+  padding: 0 0.3rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, currentColor 18%, transparent);
+  font-size: 0.7rem;
+  line-height: 1.35rem;
+  text-align: center;
+}
+
+.ta-filter.is-active .ta-picked-count {
+  background: color-mix(in srgb, var(--accent-foreground) 18%, transparent);
+}
+
+.ta-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+}
+
+@media (min-width: 640px) {
+  .ta-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .ta-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.ta-card {
+  display: flex;
+  flex-direction: column;
+  min-height: 13.5rem;
+  padding: 1.25rem 1.25rem 1rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  transition: border-color 0.2s ease;
+}
+
+.ta-card.is-picked {
+  border-color: color-mix(in srgb, var(--foreground) 32%, var(--border));
+}
+
+.ta-card.is-hidden {
+  display: none;
+}
+
+.ta-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.ta-card-header h2 {
+  margin: 0;
+  color: var(--muted-foreground);
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: -0.011em;
+}
+
+.ta-pick {
+  flex-shrink: 0;
+  padding: 0;
+  background: none;
+  border: none;
+  color: var(--muted-foreground);
+  font-size: 1.15rem;
+  line-height: 1;
+  transition:
+    color 0.15s ease,
+    transform 0.15s ease;
+}
+
+.ta-pick:hover {
+  color: var(--foreground);
+  transform: scale(1.12);
+}
+
+.ta-pick.is-picked {
+  color: var(--foreground);
+}
+
+.ta-stage {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  min-height: 5.25rem;
+  margin: 0.35rem 0 0.15rem;
+  overflow: hidden;
+  color: var(--foreground);
+  font-size: 1.35rem;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  perspective: 700px;
+}
+
+.ta-card:has(.ta-stage.is-overflow) {
+  overflow: visible;
+}
+
+.ta-stage.is-overflow {
+  overflow: visible;
+  line-height: 1.55;
+}
+
+.ta-char {
+  display: inline-block;
+  white-space: pre;
+}
+
+.ta-block-wrap {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+}
+
+.ta-block-text {
+  display: inline-block;
+  opacity: 0;
+}
+
+.ta-block-mask {
+  position: absolute;
+  inset: 0;
+  background: var(--foreground);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s cubic-bezier(0.86, 0, 0.07, 1);
+}
+
+.ta-spotlight {
+  color: transparent;
+  background: linear-gradient(
+    to right,
+    var(--muted-foreground) 0%,
+    var(--foreground) 50%,
+    var(--muted-foreground) 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: ta-spotlightSweep 2s linear forwards;
+}
+
+.ta-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1.1em;
+  margin-left: 4px;
+  background: currentColor;
+  vertical-align: middle;
+  animation: ta-blinkCursor 1s infinite;
+}
+
+.ta-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.ta-btn {
+  flex: 1;
+  padding: 0.45rem 0.75rem;
+  background: transparent;
+  color: var(--foreground);
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  font-family: inherit;
+  font-size: 0.8125rem;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.ta-btn:hover {
+  background: var(--foreground);
+  color: var(--accent-foreground);
+  border-color: var(--foreground);
+}
+
+.ta-btn.is-copied {
+  background: var(--foreground);
+  color: var(--accent-foreground);
+  border-color: var(--foreground);
+}
+
+.ta-empty {
+  display: none;
+  grid-column: 1 / -1;
+  padding: 3rem 1rem;
+  color: var(--muted-foreground);
+  text-align: center;
+}
+
+.ta-empty.is-visible {
+  display: block;
+}
+
+.ta-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 1.75rem;
+  z-index: 60;
+  padding: 0.7rem 1.1rem;
+  background: var(--foreground);
+  color: var(--accent-foreground);
+  border-radius: 999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  box-shadow: 0 10px 28px rgb(0 0 0 / 0.22);
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, 8px);
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+.ta-toast.is-on {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+.ta-credit {
+  margin-top: 1.25rem;
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+}
+
+.ta-credit a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+
+.ta-credit a:hover {
+  color: var(--foreground);
+}
+
+@keyframes ta-spotlightSweep {
+  0% {
+    background-position: 200% center;
+  }
+  100% {
+    background-position: -200% center;
+  }
+}
+
+@keyframes ta-blinkCursor {
+  0%,
+  50%,
+  100% {
+    opacity: 1;
+  }
+  25%,
+  75% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ta-char,
+  .ta-spotlight,
+  .ta-cursor,
+  .ta-block-mask {
+    animation: none !important;
+    filter: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    letter-spacing: 0.04em !important;
+    text-shadow: none !important;
+  }
+}

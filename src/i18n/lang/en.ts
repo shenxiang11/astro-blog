@@ -4,6 +4,7 @@ export default {
   nav: {
     home: "Home",
     demos: "Demos",
+    libraries: "Libraries",
     posts: "Posts",
     tags: "Tags",
     about: "About",
@@ -58,6 +59,9 @@ export default {
     demosTitle: "Demos",
     demosDesc: "Small interaction experiments, written in code.",
 
+    librariesTitle: "Libraries",
+    librariesDesc: "Open-source libraries written for other projects to use.",
+
     archivesTitle: "Archives",
     archivesDesc: "All the articles I've archived.",
 
@@ -88,5 +92,12 @@ export default {
     title: "404 Not Found",
     message: "Page Not Found",
     goHome: "Go back home",
+  },
+  store: {
+    downloadOnAppStore: "Download on the App Store",
+    downloadOnAppStoreLine1: "Download on the",
+    downloadOnAppStoreLine2: "App Store",
+    comingSoon: "Coming soon",
+    comingSoonHint: "TiaoTiao will be available on the App Store soon",
   },
 } satisfies UIStrings;

@@ -6,6 +6,8 @@
     "paths": {
       "@/*": ["./src/*"],
       "@/astro-paper.config": ["./astro-paper.config"]
-    }
+    },
+    "jsx": "react-jsx",
+    "jsxImportSource": "react"
   }
 }

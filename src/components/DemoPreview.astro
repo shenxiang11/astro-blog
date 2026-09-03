@@ -1,150 +1,118 @@
 ---
 import type { DemoKind } from "@/data/demoPreviews";
+import { Image } from "astro:assets";
 import LogoXingyao from "@/assets/icons/LogoXingyao.svg";
+import cardFront from "@/assets/lanyard/card-front.png";
+import { S65_SPEED_PATH, S65_SPEED_VIEWBOX } from "@/components/s65/speedPath";
 
 type Props = {
   kind: DemoKind;
 };
 
 const { kind } = Astro.props;
-
-const albums = [
-  "linear-gradient(135deg, #7c5cfc, #312e81)",
-  "linear-gradient(135deg, #22c55e, #14532d)",
-  "linear-gradient(135deg, #38bdf8, #1e3a8a)",
-  "linear-gradient(135deg, #fb7185, #9f1239)",
-  "linear-gradient(135deg, #fbbf24, #92400e)",
-  "linear-gradient(135deg, #a78bfa, #4c1d95)",
-];
-
-const pixelDelays = Array.from({ length: 36 }, (_, i) => {
-  const col = i % 6;
-  const row = Math.floor(i / 6);
-  return `${col * 70 + row * 55}ms`;
-});
 ---
 
 {
-  kind === "circular-reveal" && (
-    <div class="demo-screen">
-      <div class="demo-reveal-bg">
-        <LogoXingyao class="demo-reveal-star" />
-      </div>
-      <div class="demo-reveal-layer">
-        <LogoXingyao class="demo-reveal-star" />
+  kind === "s65" && (
+    <div class="demo-s65" aria-hidden="true">
+      <span class="demo-s65-glow" />
+      <svg class="demo-s65-svg" viewBox={S65_SPEED_VIEWBOX} fill="none">
+        <path class="demo-s65-bg" d={S65_SPEED_PATH} />
+        <path class="demo-s65-fill" d={S65_SPEED_PATH} />
+        <defs>
+          <linearGradient
+            id="demo-s65-shine"
+            x1="0%"
+            y1="50%"
+            x2="100%"
+            y2="50%"
+            gradientUnits="objectBoundingBox"
+          >
+            <stop offset="0" stop-color="#25d6e9" stop-opacity="0" />
+            <stop offset="0.38" stop-color="#ffffff" stop-opacity="0.55" />
+            <stop offset="0.52" stop-color="#ffffff" stop-opacity="1" />
+            <stop offset="0.66" stop-color="#7af0ff" stop-opacity="0.55" />
+            <stop offset="1" stop-color="#25d6e9" stop-opacity="0" />
+            <animateTransform
+              attributeName="gradientTransform"
+              type="translate"
+              values="-1 0; 1 0"
+              dur="2.6s"
+              repeatCount="indefinite"
+            />
+          </linearGradient>
+        </defs>
+      </svg>
+    </div>
+  )
+}
+
+{
+  kind === "lanyard" && (
+    <div class="demo-lanyard" aria-hidden="true">
+      <div class="demo-lanyard-hang">
+        <span class="demo-lanyard-strap">
+          <LogoXingyao class="demo-lanyard-mark" />
+          <LogoXingyao class="demo-lanyard-mark" />
+        </span>
+        <span class="demo-lanyard-clip" />
+        <div class="demo-lanyard-card">
+          <Image src={cardFront} alt="" class="demo-lanyard-face" />
+        </div>
       </div>
     </div>
   )
 }
 
 {
-  kind === "clip-stack" && (
-    <div class="demo-screen">
-      <div class="demo-clips">
-        <div class="demo-clip">
-          <small>刚刚复制</small>
-          <strong>xingyao.app</strong>
-        </div>
-        <div class="demo-clip">
-          <small>图片 · PNG</small>
-          <strong>色卡 12.png</strong>
-        </div>
-        <div class="demo-clip">
-          <small>文本</small>
-          <strong>会议纪要要点</strong>
-        </div>
+  kind === "text-animations" && (
+    <div class="demo-text-anim" aria-hidden="true">
+      <span>T</span>
+      <span>e</span>
+      <span>x</span>
+      <span>t</span>
+    </div>
+  )
+}
+
+{
+  kind === "height-slider" && (
+    <div class="demo-height" aria-hidden="true">
+      <span class="demo-height-value">175</span>
+      <span class="demo-height-unit">cm</span>
+      <div class="demo-height-ruler">
+        <span class="demo-height-pointer" />
+        <span class="demo-height-ticks" />
       </div>
     </div>
   )
 }
 
 {
-  kind === "jump-ring" && (
-    <div class="demo-screen">
-      <div class="demo-jump">
-        <svg viewBox="0 0 100 100" aria-hidden="true">
-          <circle class="track" cx="50" cy="50" r="40" />
-          <circle class="progress" cx="50" cy="50" r="40" />
+  kind === "weight-slider" && (
+    <div class="demo-weight" aria-hidden="true">
+      <span class="demo-weight-value">60</span>
+      <span class="demo-weight-unit">kg</span>
+      <div class="demo-weight-arc">
+        <span class="demo-weight-pointer" />
+        <span class="demo-weight-needle" />
+        <svg class="demo-weight-svg" viewBox="0 0 320 100">
+          {Array.from({ length: 21 }, (_, i) => {
+            const angle = ((i - 10) * 7 - 90) * (Math.PI / 180);
+            const radius = 280;
+            const cx = 160;
+            const cy = 292;
+            const len = i % 5 === 0 ? 18 : 10;
+            return (
+              <line
+                x1={cx + radius * Math.cos(angle)}
+                y1={cy + radius * Math.sin(angle)}
+                x2={cx + (radius - len) * Math.cos(angle)}
+                y2={cy + (radius - len) * Math.sin(angle)}
+              />
+            );
+          })}
         </svg>
-        <div class="demo-jump-count">
-          <b>128</b>
-          <span>jumps</span>
-        </div>
-      </div>
-    </div>
-  )
-}
-
-{
-  kind === "flip-card" && (
-    <div class="demo-screen">
-      <div class="demo-flip">
-        <div class="demo-flip-inner">
-          <div class="demo-flip-face demo-flip-front">星</div>
-          <div class="demo-flip-face demo-flip-back">曜</div>
-        </div>
-      </div>
-    </div>
-  )
-}
-
-{
-  kind === "ripple" && (
-    <div class="demo-screen">
-      <div class="demo-ripple">
-        <span class="demo-ripple-ring" />
-        <span class="demo-ripple-ring" />
-        <span class="demo-ripple-ring" />
-        <span class="demo-ripple-dot" />
-      </div>
-    </div>
-  )
-}
-
-{
-  kind === "streaming" && (
-    <div class="demo-screen">
-      <div class="demo-stream">
-        <p class="demo-stream-line">先记下刚才复制的那段</p>
-        <p class="demo-stream-line">圆环会跟着每一次跳跃走</p>
-        <p class="demo-stream-line">
-          星曜
-          <span class="demo-stream-cursor" />
-        </p>
-      </div>
-    </div>
-  )
-}
-
-{
-  kind === "carousel" && (
-    <div class="demo-screen">
-      <div class="demo-carousel">
-        {[...albums, ...albums].map(background => (
-          <div class="demo-album" style={`background: ${background}`} />
-        ))}
-      </div>
-    </div>
-  )
-}
-
-{
-  kind === "liquid-glass" && (
-    <div class="demo-screen">
-      <div class="demo-glass-scene">
-        <div class="demo-glass-btn">Open</div>
-      </div>
-    </div>
-  )
-}
-
-{
-  kind === "pixel-wave" && (
-    <div class="demo-screen">
-      <div class="demo-pixels">
-        {pixelDelays.map(delay => (
-          <span style={`animation-delay: ${delay}`} />
-        ))}
       </div>
     </div>
   )

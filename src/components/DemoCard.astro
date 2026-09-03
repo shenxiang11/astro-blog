@@ -1,8 +1,11 @@
 ---
 import type { CollectionEntry } from "astro:content";
 import { Image } from "astro:assets";
+import { getRelativeLocaleUrl } from "astro:i18n";
 import DemoPreview from "@/components/DemoPreview.astro";
+import { DEMO_PREVIEWS, type DemoKind } from "@/data/demoPreviews";
 import { resolveDemoVideo } from "@/utils/resolveDemoVideo";
+import config from "@/config";
 import "@/styles/demos.css";
 
 type Props = {
@@ -10,16 +13,25 @@ type Props = {
 };
 
 const { demo } = Astro.props;
-const { title, subtitle, cover, preview } = demo.data;
+const { title, subtitle, cover, preview, page } = demo.data;
+const locale = Astro.currentLocale ?? config.site.lang;
+const href = page ? getRelativeLocaleUrl(locale, `demos/${demo.id}`) : undefined;
 const videoSrc = resolveDemoVideo(demo);
 const hasMedia = Boolean(cover || videoSrc);
+const previewKind = (
+  preview && (DEMO_PREVIEWS as readonly string[]).includes(preview)
+    ? preview
+    : (DEMO_PREVIEWS as readonly string[]).includes(demo.id)
+      ? demo.id
+      : undefined
+) as DemoKind | undefined;
 ---
 
 <figure class="m-0">
   <div
     class:list={[
       "demo-stage border-border relative aspect-square w-full overflow-hidden rounded-2xl border p-6",
-      { "demo-stage-playable": videoSrc },
+      { "demo-stage-playable": videoSrc, "demo-stage-link": href },
     ]}
   >
     {
@@ -51,19 +63,30 @@ const hasMedia = Boolean(cover || videoSrc);
             </span>
           )}
         </div>
-      ) : preview ? (
-        <div class="relative grid h-full w-full place-items-center">
-          <div class="demo-phone relative" aria-hidden="true">
-            <div class="demo-island" />
-            <DemoPreview kind={preview} />
-            <div class="demo-home" />
-          </div>
-        </div>
+      ) : previewKind ? (
+        <DemoPreview kind={previewKind} />
       ) : null
+    }
+    {
+      href && (
+        <a href={href} class="absolute inset-0 z-10" aria-label={title}>
+          <span class="sr-only">{title}</span>
+        </a>
+      )
     }
   </div>
   <figcaption class="mt-4">
-    <h3 class="text-2xl font-semibold tracking-tight">{title}</h3>
+    {
+      href ? (
+        <h3 class="text-2xl font-semibold tracking-tight">
+          <a href={href} class="hover:text-muted-foreground transition-colors">
+            {title}
+          </a>
+        </h3>
+      ) : (
+        <h3 class="text-2xl font-semibold tracking-tight">{title}</h3>
+      )
+    }
     <p class="text-muted-foreground mt-2 text-base sm:text-lg">{subtitle}</p>
   </figcaption>
 </figure>

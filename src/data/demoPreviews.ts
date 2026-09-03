@@ -1,13 +1,9 @@
 export const DEMO_PREVIEWS = [
-  "circular-reveal",
-  "clip-stack",
-  "jump-ring",
-  "flip-card",
-  "ripple",
-  "streaming",
-  "carousel",
-  "liquid-glass",
-  "pixel-wave",
+  "s65",
+  "lanyard",
+  "text-animations",
+  "height-slider",
+  "weight-slider",
 ] as const;
 
 export type DemoKind = (typeof DEMO_PREVIEWS)[number];

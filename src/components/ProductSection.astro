@@ -2,6 +2,7 @@
 import type { Product } from "@/data/products";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import ProductVisual from "./ProductVisual.astro";
+import { productCovers } from "@/data/productCovers";
 import config from "@/config";
 
 type Props = {
@@ -12,6 +13,7 @@ type Props = {
 const { product, flip = false } = Astro.props;
 const locale = Astro.currentLocale ?? config.site.lang;
 const href = getRelativeLocaleUrl(locale, product.href.replace(/^\//, ""));
+const cover = productCovers[product.id];
 ---
 
 <section class="site-layout py-16 sm:py-24" id={product.id}>
@@ -55,6 +57,7 @@ const href = getRelativeLocaleUrl(locale, product.href.replace(/^\//, ""));
         visual={product.visual}
         name={product.name}
         nameEn={product.nameEn}
+        image={cover}
       />
     </div>
   </div>

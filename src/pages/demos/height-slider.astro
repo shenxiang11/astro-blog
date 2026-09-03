@@ -1,0 +1,18 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import HeightDemo from "@/components/height-slider/HeightSlider";
+import config from "@/config";
+import "@/styles/height-slider.css";
+---
+
+<Layout
+  title={`Height Slider | ${config.site.title}`}
+  description="左右拖动刻度尺，选出身高。"
+>
+  <Header />
+
+  <main id="main-content" class="hs-page flex-1">
+    <HeightDemo client:only="react" />
+  </main>
+</Layout>

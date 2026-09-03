@@ -1,0 +1,15 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Lanyard from "@/components/lanyard/Lanyard";
+import config from "@/config";
+import "@/styles/lanyard.css";
+---
+
+<Layout title={`Lanyard | ${config.site.title}`} description="拖动工牌，物理吊绳。">
+  <Header />
+
+  <main id="main-content" class="lanyard-page flex-1">
+    <Lanyard client:only="react" />
+  </main>
+</Layout>

@@ -1,0 +1,169 @@
+.s65-page {
+  position: relative;
+  overflow: hidden;
+  min-height: 100svh;
+  margin-top: -6.5rem;
+  background: #000;
+}
+
+.s65-root,
+.webgl-wrapper,
+.webgl-canvas {
+  width: 100%;
+  height: 100%;
+}
+
+.s65-root {
+  position: relative;
+  min-height: 100svh;
+  overflow: hidden;
+  user-select: none;
+  background: #000;
+}
+
+.webgl-wrapper {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.webgl-canvas {
+  display: block;
+  outline: none;
+  touch-action: none;
+}
+
+#preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: azure;
+  background: #000;
+}
+
+#preloader .progress-bar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+  height: 100%;
+}
+
+#preloader .progress-bar-svg {
+  position: relative;
+  top: -5vmin;
+  left: -5vmin;
+  height: 25vmin;
+}
+
+#preloader .speed-line-bg {
+  fill: none;
+  stroke: #ccc;
+  stroke-width: 8px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+#preloader .speed-line {
+  fill: url(#linear_0);
+}
+
+#preloader .progress-num {
+  position: absolute;
+  font-size: 5vmin;
+  color: #fff;
+}
+
+.Mute-container {
+  position: absolute;
+  top: 5vmin;
+  right: 2vmax;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+}
+
+.Mute-content {
+  display: flex;
+  margin-top: 1.4rem;
+  margin-right: 1rem;
+  pointer-events: all;
+  cursor: pointer;
+  border-radius: 0.8rem;
+  transition: transform 0.3s;
+}
+
+.Mute-content img {
+  width: 1.6rem;
+}
+
+.Mute-content:hover {
+  transform: scale(1.2);
+}
+
+.ColorBar-container {
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+  pointer-events: none;
+}
+
+.ColorBar-content {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 2.8rem;
+  margin-bottom: 5vmin;
+  overflow: hidden;
+  background: #ccc3;
+  border-radius: 1.5rem;
+}
+
+.ColorBar-content .Bar {
+  position: relative;
+  width: 2rem;
+  height: 2rem;
+  margin: 0.5rem;
+  pointer-events: all;
+  cursor: pointer;
+  background-size: 100% 100%;
+  border-radius: 50%;
+}
+
+.ColorBar-content .Bar-Line {
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  width: calc(2rem + 6px);
+  height: calc(2rem + 6px);
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px #fff;
+}
+
+.s65-hint {
+  position: absolute;
+  bottom: 9rem;
+  left: 50%;
+  z-index: 2;
+  margin: 0;
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  color: #ffffff80;
+  pointer-events: none;
+  transform: translateX(-50%);
+}
+
+@media (max-width: 700px) {
+  .ColorBar-content .Bar {
+    width: 1.45rem;
+    height: 1.45rem;
+    margin: 0.35rem;
+  }
+}

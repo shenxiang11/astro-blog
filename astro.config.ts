@@ -4,6 +4,7 @@ import {
   fontProviders,
   svgoOptimizer,
 } from "astro/config";
+import react from "@astrojs/react";
 import tailwindcss from "@tailwindcss/vite";
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
@@ -22,6 +23,7 @@ import config from "./astro-paper.config";
 export default defineConfig({
   site: config.site.url,
   integrations: [
+    react(),
     mdx(),
     sitemap({
       filter: page =>
@@ -57,7 +59,14 @@ export default defineConfig({
   },
   vite: {
     plugins: [tailwindcss()],
-    assetsInclude: ["**/*.mp4", "**/*.webm", "**/*.mov"],
+    assetsInclude: ["**/*.mp4", "**/*.webm", "**/*.mov", "**/*.glb"],
+    optimizeDeps: {
+      include: ["ogl", "gsap"],
+      exclude: ["@dimforge/rapier3d-compat"],
+    },
+    ssr: {
+      noExternal: ["@react-three/rapier"],
+    },
   },
   fonts: [
     {

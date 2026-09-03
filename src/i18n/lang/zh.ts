@@ -4,6 +4,7 @@ export default {
   nav: {
     home: "首页",
     demos: "Demos",
+    libraries: "开源",
     posts: "文章",
     tags: "标签",
     about: "关于",
@@ -58,6 +59,9 @@ export default {
     demosTitle: "Demos",
     demosDesc: "用代码做一点交互实验",
 
+    librariesTitle: "开源",
+    librariesDesc: "自己写的、可以给项目用的库",
+
     archivesTitle: "归档",
     archivesDesc: "按时间整理的全部文章。",
 
@@ -88,5 +92,12 @@ export default {
     title: "404 未找到",
     message: "页面不存在",
     goHome: "返回首页",
+  },
+  store: {
+    downloadOnAppStore: "在 App Store 中下载",
+    downloadOnAppStoreLine1: "在",
+    downloadOnAppStoreLine2: "App Store 中下载",
+    comingSoon: "即将上线",
+    comingSoonHint: "跳跳即将上架 App Store",
   },
 } satisfies UIStrings;
