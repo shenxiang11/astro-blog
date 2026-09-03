@@ -10,6 +10,16 @@ export type Library = {
 
 export const libraries: Library[] = [
   {
+    id: "vapkit",
+    name: "VAPKit",
+    description:
+      "iOS 上的 VAP 礼物动画播放器。读 MP4 里的 vapc，用 AVAssetReader 解码，Metal 把同一帧里的 RGB 和灰阶 Alpha 合成透明动画。",
+    platforms: ["SwiftUI", "UIKit", "Metal"],
+    repo: "https://github.com/shenxiang11/vapkit",
+    article: "posts/vapkit-same-frame-alpha",
+    order: 1,
+  },
+  {
     id: "nested-paging",
     name: "NestedPaging",
     description:
@@ -17,7 +27,7 @@ export const libraries: Library[] = [
     platforms: ["UIKit", "Swift"],
     repo: "https://github.com/shenxiang11/NestedPaging",
     article: "posts/nested-paging-offset-locking",
-    order: 1,
+    order: 2,
   },
 ];
 
