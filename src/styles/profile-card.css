@@ -260,14 +260,16 @@
 }
 
 .pc-avatar-content {
-  mix-blend-mode: luminosity;
+  mix-blend-mode: normal;
   overflow: visible;
   transform: translateZ(2px);
   backface-visibility: hidden;
 }
 
-.pc-avatar-content .avatar {
+.pc-card .pc-avatar-content img.avatar {
   width: 100%;
+  max-width: none;
+  border-radius: 0;
   position: absolute;
   left: 50%;
   transform-origin: 50% 100%;

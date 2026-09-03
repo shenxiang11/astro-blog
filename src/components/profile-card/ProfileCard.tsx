@@ -366,13 +366,14 @@ function ProfileCardComponent({
           <div className="pc-inside">
             <div className="pc-shine" />
             <div className="pc-glare" />
-            <div className="pc-content pc-avatar-content">
+            <div className="pc-content pc-avatar-content" style={{ mixBlendMode: "normal" }}>
               <img
                 className="avatar"
                 src={avatarUrl}
                 alt={`${name || "User"} avatar`}
                 loading="lazy"
                 onError={hideAvatar}
+                style={{ maxWidth: "none" }}
               />
               {showUserInfo && (
                 <div className="pc-user-info">
