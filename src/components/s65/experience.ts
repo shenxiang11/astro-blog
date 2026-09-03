@@ -226,10 +226,8 @@ export class S65Experience {
     dayHdr.dispose();
     pmrem.dispose();
 
-    const envData = this.nightEnv.source.data as { width?: number; height?: number };
-    const envWidth = envData.width || this.nightEnv.image.width;
-    const envHeight = envData.height || this.nightEnv.image.height;
-    this.envMix = new THREE.WebGLRenderTarget(envWidth, envHeight, {
+    const envSize = this.textureSize(this.nightEnv);
+    this.envMix = new THREE.WebGLRenderTarget(envSize.width, envSize.height, {
       magFilter: THREE.LinearFilter,
       minFilter: THREE.LinearFilter,
       generateMipmaps: false,
@@ -291,6 +289,18 @@ export class S65Experience {
     this.callbacks.onReady();
     this.playIntro();
     this.loop();
+  }
+
+  private textureSize(texture: THREE.Texture, fallback = 256) {
+    const read = (value: unknown) => {
+      if (!value || typeof value !== "object") return undefined;
+      const size = value as { width?: unknown; height?: unknown };
+      const width = typeof size.width === "number" ? size.width : undefined;
+      const height = typeof size.height === "number" ? size.height : undefined;
+      if (!width || !height) return undefined;
+      return { width, height };
+    };
+    return read(texture.source.data) ?? read(texture.image) ?? { width: fallback, height: fallback };
   }
 
   private makePixel(r: number, g: number, b: number) {
