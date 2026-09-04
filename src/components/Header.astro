@@ -177,7 +177,7 @@ const links = [
     return document.querySelector(".ios-glass");
   }
 
-  function overlayApps(open) {
+  function overlayApps(open: boolean) {
     const root = glass();
     const menu = appsMenu();
     if (!(root instanceof HTMLElement) || !(menu instanceof HTMLElement)) return;
@@ -285,7 +285,9 @@ const links = [
     kickGlass();
   }
 
-  const bag = window;
+  const bag = window as unknown as {
+    __xingyaoNavAbort?: AbortController;
+  };
   bag.__xingyaoNavAbort?.abort();
   const ac = new AbortController();
   bag.__xingyaoNavAbort = ac;
