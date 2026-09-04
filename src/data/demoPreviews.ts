@@ -6,6 +6,7 @@ export const DEMO_PREVIEWS = [
   "weight-slider",
   "elastic-slider",
   "glass-surface",
+  "dual-range-slider",
 ] as const;
 
 export type DemoKind = (typeof DEMO_PREVIEWS)[number];

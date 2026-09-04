@@ -1,0 +1,18 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import DualRangeDemo from "@/components/dual-range-slider/DualRangeSlider";
+import config from "@/config";
+import "@/styles/dual-range-slider.css";
+---
+
+<Layout
+  title={`Dual Range Slider | ${config.site.title}`}
+  description="拖动两端气泡，选出范围。"
+>
+  <Header />
+
+  <main id="main-content" class="drs-page flex-1">
+    <DualRangeDemo client:only="react" />
+  </main>
+</Layout>

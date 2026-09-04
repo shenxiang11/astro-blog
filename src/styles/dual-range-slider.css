@@ -1,0 +1,154 @@
+.drs-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100svh - 6.5rem);
+  padding: 1.5rem 1.25rem 4.5rem;
+}
+
+.drs-demo {
+  width: min(36rem, 100%);
+}
+
+.drs-title {
+  margin: 0 0 2rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  letter-spacing: -0.021em;
+}
+
+.drs-field + .drs-field {
+  margin-top: 2.25rem;
+}
+
+.drs-field-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.35rem;
+  padding-inline: 0.25rem;
+}
+
+.drs-field-title {
+  margin: 0;
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.drs-field-readout {
+  margin: 0;
+  color: var(--foreground);
+  font-size: 0.875rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.drs-slider {
+  --drs-brand: #9631fe;
+  --drs-track: #dbdbdf;
+  --drs-bubble-text: #ffffff;
+  --drs-bubble-border: #000000;
+  font-family: var(--font-app);
+  padding-inline: 2rem;
+}
+
+[data-theme="dark"] .drs-slider {
+  --drs-track: #3f3f46;
+  --drs-bubble-border: #0b0b0d;
+}
+
+.drs-body {
+  position: relative;
+  width: 100%;
+  overflow: visible;
+}
+
+.drs-track,
+.drs-selected {
+  position: absolute;
+  left: 0;
+  right: 0;
+  border-radius: 999px;
+  pointer-events: none;
+}
+
+.drs-track {
+  background: var(--drs-track);
+}
+
+.drs-selected {
+  right: auto;
+  background: var(--drs-brand);
+}
+
+.drs-bubble {
+  position: absolute;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 14px 12px;
+  margin: 0;
+  overflow: visible;
+  border: 0;
+  background: transparent;
+  color: var(--drs-bubble-text);
+  font: inherit;
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.25;
+  white-space: nowrap;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  transform: translate(-50%, -50%);
+}
+
+.drs-bubble.is-arrow-top {
+  padding: 12px 14px 6px;
+}
+
+.drs-bubble.is-dragging {
+  z-index: 2;
+  cursor: grabbing;
+}
+
+.drs-bubble:focus {
+  outline: none;
+}
+
+.drs-bubble:focus-visible {
+  outline: 2px dashed var(--accent);
+  outline-offset: 6px;
+}
+
+.drs-bubble-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.drs-bubble-svg path {
+  fill: var(--drs-brand);
+  stroke: var(--drs-bubble-border);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.drs-bubble-text {
+  position: relative;
+  z-index: 1;
+}
+
+.drs-hint {
+  margin: 2rem 0 0;
+  color: var(--muted-foreground);
+  font-size: 0.8125rem;
+  text-align: center;
+}

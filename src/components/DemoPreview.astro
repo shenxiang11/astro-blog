@@ -139,6 +139,18 @@ const { kind } = Astro.props;
 }
 
 {
+  kind === "dual-range-slider" && (
+    <div class="demo-dual" aria-hidden="true">
+      <div class="demo-dual-track">
+        <span class="demo-dual-range" />
+        <span class="demo-dual-bubble demo-dual-bubble-top">18</span>
+        <span class="demo-dual-bubble demo-dual-bubble-bot">26</span>
+      </div>
+    </div>
+  )
+}
+
+{
   kind === "glass-surface" && (
     <div class="demo-glass" aria-hidden="true">
       <Image src={glassSummer} alt="" class="demo-glass-photo" />

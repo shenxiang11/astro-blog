@@ -404,6 +404,113 @@
   }
 }
 
+.demo-dual {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: 1.5rem 1.75rem;
+}
+
+.demo-dual-track {
+  position: relative;
+  width: 100%;
+  height: 7px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--muted-foreground) 28%, transparent);
+}
+
+.demo-dual-range {
+  position: absolute;
+  top: 0;
+  left: 22%;
+  width: 36%;
+  height: 100%;
+  border-radius: 999px;
+  background: #9631fe;
+  animation: demo-dual-span 4.8s ease-in-out infinite;
+}
+
+.demo-dual-bubble {
+  position: absolute;
+  left: 22%;
+  display: grid;
+  place-items: center;
+  min-width: 2.4rem;
+  padding: 0.2rem 0.7rem 0.45rem;
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.2;
+  background: #9631fe;
+  border: 2px solid #111;
+  border-radius: 999px;
+  transform: translate(-50%, -118%);
+}
+
+.demo-dual-bubble::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -5px;
+  width: 10px;
+  height: 8px;
+  background: #9631fe;
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  transform: translateX(-50%);
+}
+
+.demo-dual-bubble-bot {
+  left: 58%;
+  padding: 0.45rem 0.7rem 0.2rem;
+  transform: translate(-50%, 48%);
+  animation: demo-dual-upper 4.8s ease-in-out infinite;
+}
+
+.demo-dual-bubble-bot::after {
+  top: -5px;
+  bottom: auto;
+  clip-path: polygon(50% 0, 0 100%, 100% 100%);
+}
+
+.demo-dual-bubble-top {
+  animation: demo-dual-lower 4.8s ease-in-out infinite;
+}
+
+@keyframes demo-dual-span {
+  0%,
+  100% {
+    left: 22%;
+    width: 36%;
+  }
+  50% {
+    left: 18%;
+    width: 52%;
+  }
+}
+
+@keyframes demo-dual-lower {
+  0%,
+  100% {
+    left: 22%;
+  }
+  50% {
+    left: 18%;
+  }
+}
+
+@keyframes demo-dual-upper {
+  0%,
+  100% {
+    left: 58%;
+  }
+  50% {
+    left: 70%;
+  }
+}
+
 .demo-glass {
   position: relative;
   display: grid;
@@ -532,6 +639,9 @@
   .demo-height-ticks,
   .demo-weight-svg,
   .demo-elastic-row,
+  .demo-dual-range,
+  .demo-dual-bubble-top,
+  .demo-dual-bubble-bot,
   .demo-glass-photo {
     animation: none;
   }
