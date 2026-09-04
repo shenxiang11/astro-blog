@@ -17,7 +17,7 @@ export const libraries: Library[] = [
       "Web 上的 VAP 礼物动画播放器。读 MP4 里的 vapc，用浏览器解码，WebGL 按同一帧里的 RGB 和灰阶 Alpha 合成透明动画。",
     platforms: ["TypeScript", "WebGL"],
     repo: "https://github.com/shenxiang11/vapkit-web",
-    demo: "demos/vapkit",
+    demo: "https://vapkit-web-demo.vercel.app/",
     order: 1,
   },
   {

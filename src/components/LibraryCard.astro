@@ -14,7 +14,12 @@ const locale = Astro.currentLocale ?? config.site.lang;
 const articleHref = article
   ? getRelativeLocaleUrl(locale, article)
   : undefined;
-const demoHref = demo ? getRelativeLocaleUrl(locale, demo) : undefined;
+const isExternalDemo = Boolean(demo?.startsWith("https://") || demo?.startsWith("http://"));
+const demoHref = demo
+  ? isExternalDemo
+    ? demo
+    : getRelativeLocaleUrl(locale, demo)
+  : undefined;
 ---
 
 <li class="border-border/50 border-b py-8 last:border-b-0">
@@ -51,6 +56,8 @@ const demoHref = demo ? getRelativeLocaleUrl(locale, demo) : undefined;
             <a
               href={demoHref}
               class="text-muted-foreground hover:text-foreground transition-colors"
+              target={isExternalDemo ? "_blank" : undefined}
+              rel={isExternalDemo ? "noopener noreferrer" : undefined}
             >
               演示
             </a>
