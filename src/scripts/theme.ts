@@ -123,10 +123,10 @@ async function applyTheme(
     const glass = document.querySelector(".ios-glass");
     if (glass instanceof HTMLElement) {
       glass.style.backdropFilter = "none";
-      glass.style.webkitBackdropFilter = "none";
+      glass.style.setProperty("-webkit-backdrop-filter", "none");
       void glass.offsetHeight;
       glass.style.backdropFilter = "";
-      glass.style.webkitBackdropFilter = "";
+      glass.style.removeProperty("-webkit-backdrop-filter");
     }
   }
 }
