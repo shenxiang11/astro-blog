@@ -71,7 +71,10 @@
 
 /* Chromium (Chrome/Edge) only blurs reliably when sticky + backdrop-filter
    share one element. A 0-height sticky parent breaks this after the
-   production CSS is extracted, especially on Windows. */
+   production CSS is extracted, especially on Windows.
+   Write -webkit- first. Lightning CSS drops the unprefixed property
+   when it comes first (parcel-bundler/lightningcss#785), and Chrome
+   ignores -webkit-backdrop-filter. */
 .site-nav,
 .ios-glass {
   view-transition-name: none;
@@ -88,8 +91,8 @@
   margin-top: 1.25rem;
   border-radius: 9999px;
   background: rgb(255 255 255 / 0.12);
-  backdrop-filter: blur(24px) saturate(180%);
   -webkit-backdrop-filter: blur(24px) saturate(180%);
+  backdrop-filter: blur(24px) saturate(180%);
 }
 
 @media (min-width: 40rem) {
