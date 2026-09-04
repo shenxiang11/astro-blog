@@ -120,6 +120,14 @@ async function applyTheme(
   } finally {
     style.remove();
     root.classList.remove("theme-transitioning");
+    const glass = document.querySelector(".ios-glass");
+    if (glass instanceof HTMLElement) {
+      glass.style.backdropFilter = "none";
+      glass.style.webkitBackdropFilter = "none";
+      void glass.offsetHeight;
+      glass.style.backdropFilter = "";
+      glass.style.webkitBackdropFilter = "";
+    }
   }
 }
 

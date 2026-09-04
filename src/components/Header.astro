@@ -60,14 +60,13 @@ const links = [
 </a>
 
 <header
-  class="site-nav pointer-events-none sticky top-0 left-0 z-50 h-0 w-full overflow-visible"
+  transition:persist="site-nav"
+  class="site-nav ios-glass"
 >
-  <nav class="relative top-5 flex justify-center sm:top-6">
-    <div class="ios-glass pointer-events-auto">
-      <div class="ios-glass-border"></div>
-      <div
-        class="ios-glass-content flex h-[50px] items-center gap-3 px-3 whitespace-nowrap sm:gap-6 sm:px-6"
-      >
+  <div class="ios-glass-border"></div>
+  <nav
+    class="ios-glass-content flex h-[50px] items-center gap-3 px-3 whitespace-nowrap sm:gap-6 sm:px-6"
+  >
         <a
           href={getRelativeLocaleUrl(locale, "")}
           class="ios-glass-brand grid size-8 shrink-0 place-items-center"
@@ -104,12 +103,39 @@ const links = [
             </button>
           )
         }
-      </div>
-    </div>
   </nav>
 </header>
 
 <script>
+  function kickGlass() {
+    const glass = document.querySelector(".ios-glass");
+    if (!(glass instanceof HTMLElement)) return;
+    glass.style.backdropFilter = "none";
+    glass.style.webkitBackdropFilter = "none";
+    void glass.offsetHeight;
+    glass.style.backdropFilter = "";
+    glass.style.webkitBackdropFilter = "";
+  }
+
+  function syncActiveNav() {
+    const nav = document.querySelector(".ios-glass-content");
+    if (!nav) return;
+    const current = location.pathname.replace(/\/+$/, "") || "/";
+    nav.querySelectorAll("a[href]").forEach(anchor => {
+      if (anchor.classList.contains("ios-glass-brand")) return;
+      const href =
+        new URL(anchor.getAttribute("href") || "", location.origin).pathname.replace(
+          /\/+$/,
+          ""
+        ) || "/";
+      const active =
+        href === "/"
+          ? current === "/"
+          : current === href || current.startsWith(`${href}/`);
+      anchor.classList.toggle("is-active", active);
+    });
+  }
+
   function handleSkipToContent() {
     const skipLink = document.getElementById("skip-to-content");
     if (!skipLink) return;
@@ -139,6 +165,13 @@ const links = [
     });
   }
 
-  handleSkipToContent();
-  document.addEventListener("astro:after-swap", handleSkipToContent);
+  function onPageReady() {
+    handleSkipToContent();
+    syncActiveNav();
+    kickGlass();
+  }
+
+  onPageReady();
+  document.addEventListener("astro:after-swap", onPageReady);
+  document.addEventListener("astro:page-load", kickGlass);
 </script>

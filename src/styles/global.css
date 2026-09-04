@@ -66,16 +66,37 @@
 }
 
 .site-nav ~ main {
-  padding-top: 6.5rem;
+  padding-top: 1.5rem;
+}
+
+/* Chromium (Chrome/Edge) only blurs reliably when sticky + backdrop-filter
+   share one element. A 0-height sticky parent breaks this after the
+   production CSS is extracted, especially on Windows. */
+.site-nav,
+.ios-glass {
+  view-transition-name: none;
 }
 
 .ios-glass {
-  position: relative;
+  position: sticky;
+  top: 1.25rem;
+  z-index: 50;
+  width: max-content;
+  max-width: calc(100vw - 1.5rem);
   min-width: 200px;
+  margin-inline: auto;
+  margin-top: 1.25rem;
   border-radius: 9999px;
   background: rgb(255 255 255 / 0.12);
   backdrop-filter: blur(24px) saturate(180%);
   -webkit-backdrop-filter: blur(24px) saturate(180%);
+}
+
+@media (min-width: 40rem) {
+  .ios-glass {
+    top: 1.5rem;
+    margin-top: 1.5rem;
+  }
 }
 
 .ios-glass-border {
