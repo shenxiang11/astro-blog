@@ -1,5 +1,6 @@
 export const DEMO_PREVIEWS = [
   "s65",
+  "vapkit",
   "lanyard",
   "text-animations",
   "height-slider",

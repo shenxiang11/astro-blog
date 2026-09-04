@@ -1,0 +1,21 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import config from "@/config";
+---
+
+<Layout
+  title={`VAPKit | ${config.site.title}`}
+  description="用 VAPKit Web 播 VAP 礼物。点超级火箭，同一帧里的 RGB 和灰阶 Alpha 合成透明动画。"
+>
+  <Header />
+
+  <main id="main-content" class="relative mt-[-6.5rem] min-h-svh flex-1 overflow-hidden bg-black">
+    <iframe
+      class="block h-svh w-full border-0 bg-black"
+      src="https://vapkit-web-demo.vercel.app/"
+      title="VAPKit 直播间"
+      allow="autoplay"
+    ></iframe>
+  </main>
+</Layout>

@@ -48,6 +48,16 @@ const { kind } = Astro.props;
 }
 
 {
+  kind === "vapkit" && (
+    <div class="demo-vapkit" aria-hidden="true">
+      <span class="demo-vapkit-glow" />
+      <span class="demo-vapkit-rocket">🚀</span>
+      <span class="demo-vapkit-chip">超级火箭</span>
+    </div>
+  )
+}
+
+{
   kind === "lanyard" && (
     <div class="demo-lanyard" aria-hidden="true">
       <div class="demo-lanyard-hang">
