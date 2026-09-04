@@ -79,6 +79,52 @@ function kickGlass(glass: Element | null): void {
   glass.style.removeProperty("-webkit-backdrop-filter");
 }
 
+function clickOrigin(event: MouseEvent): { x: number; y: number } {
+  if (event.detail > 0 || event.clientX !== 0 || event.clientY !== 0) {
+    return { x: event.clientX, y: event.clientY };
+  }
+  const btn = document.querySelector("#theme-btn");
+  if (!btn) return { x: pointerX, y: pointerY };
+  const rect = btn.getBoundingClientRect();
+  return {
+    x: rect.left + rect.width / 2,
+    y: rect.top + rect.height / 2,
+  };
+}
+
+/** Map a viewport point into ::view-transition-new(root) local space. */
+function mapToSnapshot(
+  clientX: number,
+  clientY: number
+): { x: number; y: number; width: number; height: number } {
+  const group = getComputedStyle(
+    document.documentElement,
+    "::view-transition-group(root)"
+  );
+  const layer = getComputedStyle(
+    document.documentElement,
+    "::view-transition-new(root)"
+  );
+  const width = parseFloat(layer.width) || parseFloat(group.width) || innerWidth;
+  const height =
+    parseFloat(layer.height) || parseFloat(group.height) || innerHeight;
+  const left = parseFloat(group.left) || 0;
+  const top = parseFloat(group.top) || 0;
+  let tx = 0;
+  let ty = 0;
+  if (group.transform && group.transform !== "none") {
+    const matrix = new DOMMatrix(group.transform);
+    tx = matrix.e;
+    ty = matrix.f;
+  }
+  return {
+    x: clientX - left - tx,
+    y: clientY - top - ty,
+    width,
+    height,
+  };
+}
+
 async function applyTheme(
   next: string,
   origin: { x: number; y: number }
@@ -96,12 +142,6 @@ async function applyTheme(
     return;
   }
 
-  const x = origin.x;
-  const y = origin.y;
-  const endRadius = Math.hypot(
-    Math.max(x, innerWidth - x),
-    Math.max(y, innerHeight - y)
-  );
   const style = document.createElement("style");
   style.setAttribute("data-theme-transition", "");
   style.textContent = themeTransitionCss();
@@ -122,6 +162,14 @@ async function applyTheme(
       switchTheme();
     });
     await transition.ready;
+    await new Promise<void>(resolve => {
+      requestAnimationFrame(() => resolve());
+    });
+    const { x, y, width, height } = mapToSnapshot(origin.x, origin.y);
+    const endRadius = Math.hypot(
+      Math.max(x, width - x),
+      Math.max(y, height - y)
+    );
     await document.documentElement.animate(
       {
         clipPath: [
@@ -176,20 +224,7 @@ document.addEventListener(
     const target = event.target;
     if (!(target instanceof Element) || !target.closest("#theme-btn")) return;
     if (isS65Demo()) return;
-    const keyboard =
-      event.detail === 0 && event.clientX === 0 && event.clientY === 0;
-    const origin = keyboard
-      ? (() => {
-          const btn = document.querySelector("#theme-btn");
-          if (!btn) return { x: innerWidth / 2, y: innerHeight / 2 };
-          const rect = btn.getBoundingClientRect();
-          return {
-            x: rect.left + rect.width / 2,
-            y: rect.top + rect.height / 2,
-          };
-        })()
-      : { x: pointerX, y: pointerY };
-    void applyTheme(themeValue === LIGHT ? DARK : LIGHT, origin);
+    void applyTheme(themeValue === LIGHT ? DARK : LIGHT, clickOrigin(event));
   },
   { capture: true, signal }
 );
