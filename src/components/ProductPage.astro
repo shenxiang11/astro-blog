@@ -4,7 +4,10 @@ import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
 import ProductVisual from "@/components/ProductVisual.astro";
+import ProductFeatureList from "@/components/ProductFeatureList.astro";
 import { productCovers } from "@/data/productCovers";
+import IconBrandGithub from "@/assets/icons/socials/github.svg";
+import { useTranslations } from "@/i18n";
 import config from "@/config";
 
 type Props = {
@@ -12,6 +15,7 @@ type Props = {
 };
 
 const { product } = Astro.props;
+const t = useTranslations(Astro.currentLocale ?? config.site.lang);
 ---
 
 <Layout
@@ -34,9 +38,23 @@ const { product } = Astro.props;
         <p class="text-muted-foreground mt-5 max-w-lg text-lg leading-relaxed">
           {product.description}
         </p>
+        <ProductFeatureList features={product.features} />
         <p class="text-muted-foreground mt-4 text-sm">
           {product.platforms.join(" · ")}
         </p>
+        {
+          product.downloadUrl && (
+            <a
+              href={product.downloadUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="bg-foreground text-background mt-8 inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium"
+            >
+              <IconBrandGithub class="size-4" />
+              {t.store.download}
+            </a>
+          )
+        }
       </div>
       <div class="flex lg:justify-end">
         <ProductVisual
@@ -46,19 +64,6 @@ const { product } = Astro.props;
           image={productCovers[product.id]}
         />
       </div>
-    </section>
-
-    <section class="site-layout pb-24">
-      <h2 class="font-hand text-4xl">Features.</h2>
-      <ul class="mt-8 grid gap-3 sm:grid-cols-2">
-        {
-          product.features.map(feature => (
-            <li class="border-border/80 bg-card/60 rounded-2xl border px-5 py-4">
-              {feature}
-            </li>
-          ))
-        }
-      </ul>
     </section>
   </main>
 

@@ -3,13 +3,14 @@ import { Image } from "astro:assets";
 import type { ImageMetadata } from "astro";
 
 type Props = {
-  visual: "clipboard" | "jump";
+  visual: "clipboard" | "jump" | "harbor";
   name: string;
   nameEn: string;
   image?: ImageMetadata;
 };
 
 const { visual, name, nameEn, image } = Astro.props;
+const wide = visual !== "jump";
 ---
 
 {
@@ -19,11 +20,11 @@ const { visual, name, nameEn, image } = Astro.props;
       alt={`${name} 预览`}
       class:list={[
         "h-auto w-full bg-transparent",
-        visual === "clipboard" ? "max-w-xl" : "max-w-md",
+        wide ? "max-w-xl" : "max-w-md",
       ]}
       widths={[400, 640, 800, 1120, 1400]}
       sizes={
-        visual === "clipboard"
+        wide
           ? "(min-width: 1024px) 36rem, 90vw"
           : "(min-width: 1024px) 28rem, 90vw"
       }

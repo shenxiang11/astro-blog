@@ -4,6 +4,7 @@ import { glob } from "astro/loaders";
 import config from "@/config";
 import { DEMO_PREVIEWS } from "./data/demoPreviews";
 
+
 export const BLOG_PATH = "src/content/posts";
 export const DEMOS_PATH = "src/content/demos";
 

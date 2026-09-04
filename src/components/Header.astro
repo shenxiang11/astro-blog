@@ -27,12 +27,16 @@ const isActive = (path: string) => {
   return currentPath === path || currentPathArray[0] === pathArray[0];
 };
 
+const appLinks = products.map(product => ({
+  href: getRelativeLocaleUrl(locale, product.href.replace(/^\//, "")),
+  label: product.navLabel,
+  kicker: product.kicker,
+  active: isActive(product.href),
+}));
+
+const appsActive = appLinks.some(link => link.active);
+
 const links = [
-  ...products.map(product => ({
-    href: getRelativeLocaleUrl(locale, product.href.replace(/^\//, "")),
-    label: product.navLabel,
-    active: isActive(product.href),
-  })),
   {
     href: getRelativeLocaleUrl(locale, "libraries"),
     label: t.nav.libraries,
@@ -64,46 +68,90 @@ const links = [
   class="site-nav ios-glass"
 >
   <div class="ios-glass-border"></div>
-  <nav
-    class="ios-glass-content flex h-[50px] items-center gap-3 px-3 whitespace-nowrap sm:gap-6 sm:px-6"
-  >
-        <a
-          href={getRelativeLocaleUrl(locale, "")}
-          class="ios-glass-brand grid size-8 shrink-0 place-items-center"
-          aria-label={site.title}
-        >
-          <LogoXingyao class="size-8" />
-        </a>
-        <ul class="flex items-center gap-2.5 sm:gap-6 lg:gap-8">
-          {
-            links.map(link => (
-              <li>
-                <a
-                  href={link.href}
-                  class:list={["text-[15px] font-normal", { "is-active": link.active }]}
-                >
-                  {link.label}
-                </a>
-              </li>
-            ))
-          }
-        </ul>
-        {
-          features.lightAndDarkMode &&
-            !currentPath.startsWith("/demos/s65") && (
-            <button
-              id="theme-btn"
-              class="focus-outline relative size-7 shrink-0"
-              title={t.a11y.toggleTheme}
-              aria-label="auto"
-              aria-live="polite"
+  <div class="ios-glass-content">
+    <nav
+      class="ios-glass-bar flex h-[50px] items-center gap-3 px-3 whitespace-nowrap sm:gap-6 sm:px-6"
+    >
+      <a
+        href={getRelativeLocaleUrl(locale, "")}
+        class="ios-glass-brand grid size-8 shrink-0 place-items-center"
+        aria-label={site.title}
+      >
+        <LogoXingyao class="size-8" />
+      </a>
+      <ul class="flex items-center gap-2.5 sm:gap-6 lg:gap-8">
+        <li class="nav-apps">
+          <button
+            id="apps-btn"
+            class:list={["nav-apps-btn text-[15px] font-normal", { "is-active": appsActive }]}
+            type="button"
+            aria-expanded="false"
+            aria-controls="apps-menu"
+            aria-haspopup="menu"
+          >
+            {t.nav.apps}
+            <svg
+              class="nav-apps-caret"
+              viewBox="0 0 12 12"
+              fill="none"
+              aria-hidden="true"
             >
-              <IconMoon class="absolute top-1/2 left-1/2 size-4 -translate-1/2 scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
-              <IconSunHigh class="absolute top-1/2 left-1/2 size-4 -translate-1/2 scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
-            </button>
-          )
+              <path
+                d="M3 4.5 6 8l3-3.5"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </button>
+        </li>
+        {
+          links.map(link => (
+            <li>
+              <a
+                href={link.href}
+                class:list={["text-[15px] font-normal", { "is-active": link.active }]}
+              >
+                {link.label}
+              </a>
+            </li>
+          ))
         }
-  </nav>
+      </ul>
+      {
+        features.lightAndDarkMode &&
+          !currentPath.startsWith("/demos/s65") && (
+          <button
+            id="theme-btn"
+            class="focus-outline relative size-7 shrink-0"
+            title={t.a11y.toggleTheme}
+            aria-label="auto"
+            aria-live="polite"
+          >
+            <IconMoon class="absolute top-1/2 left-1/2 size-4 -translate-1/2 scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
+            <IconSunHigh class="absolute top-1/2 left-1/2 size-4 -translate-1/2 scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
+          </button>
+        )
+      }
+    </nav>
+    <div id="apps-menu" class="nav-apps-menu" role="menu" hidden>
+      {
+        appLinks.map(link => (
+          <a
+            href={link.href}
+            role="menuitem"
+            data-nav-app
+            class:list={["nav-apps-item", { "is-active": link.active }]}
+            aria-current={link.active ? "page" : undefined}
+          >
+            <span class="nav-apps-name">{link.label}</span>
+            <span class="nav-apps-kicker">{link.kicker}</span>
+          </a>
+        ))
+      }
+    </div>
+  </div>
 </header>
 
 <script>
@@ -115,6 +163,66 @@ const links = [
     void glass.offsetHeight;
     glass.style.backdropFilter = "";
     glass.style.removeProperty("-webkit-backdrop-filter");
+  }
+
+  function appsMenu() {
+    return document.querySelector("#apps-menu");
+  }
+
+  function appsBtn() {
+    return document.querySelector("#apps-btn");
+  }
+
+  function glass() {
+    return document.querySelector(".ios-glass");
+  }
+
+  function overlayApps(open) {
+    const root = glass();
+    const menu = appsMenu();
+    if (!(root instanceof HTMLElement) || !(menu instanceof HTMLElement)) return;
+    root.style.setProperty(
+      "--apps-panel-height",
+      open ? `${menu.offsetHeight}px` : "0px"
+    );
+  }
+
+  function closeApps() {
+    const menu = appsMenu();
+    const btn = appsBtn();
+    const root = glass();
+    if (!(menu instanceof HTMLElement) || !(btn instanceof HTMLElement)) return;
+    menu.classList.remove("is-open");
+    menu.hidden = true;
+    overlayApps(false);
+    btn.setAttribute("aria-expanded", "false");
+    if (root instanceof HTMLElement) {
+      void root.offsetHeight;
+      root.classList.remove("is-apps-open");
+    }
+  }
+
+  function openApps() {
+    const menu = appsMenu();
+    const btn = appsBtn();
+    const root = glass();
+    if (!(menu instanceof HTMLElement) || !(btn instanceof HTMLElement)) return;
+    if (root instanceof HTMLElement) {
+      root.classList.add("is-apps-open");
+      void root.offsetHeight;
+    }
+    menu.hidden = false;
+    menu.classList.add("is-open");
+    overlayApps(true);
+    btn.setAttribute("aria-expanded", "true");
+    kickGlass();
+  }
+
+  function toggleApps() {
+    const btn = appsBtn();
+    if (!(btn instanceof HTMLElement)) return;
+    if (btn.getAttribute("aria-expanded") === "true") closeApps();
+    else openApps();
   }
 
   function syncActiveNav() {
@@ -133,7 +241,13 @@ const links = [
           ? current === "/"
           : current === href || current.startsWith(`${href}/`);
       anchor.classList.toggle("is-active", active);
+      if (anchor.hasAttribute("data-nav-app")) {
+        if (active) anchor.setAttribute("aria-current", "page");
+        else anchor.removeAttribute("aria-current");
+      }
     });
+    const onApp = Boolean(nav.querySelector("[data-nav-app].is-active"));
+    appsBtn()?.classList.toggle("is-active", onApp);
   }
 
   function handleSkipToContent() {
@@ -171,7 +285,38 @@ const links = [
     kickGlass();
   }
 
+  const bag = window;
+  bag.__xingyaoNavAbort?.abort();
+  const ac = new AbortController();
+  bag.__xingyaoNavAbort = ac;
+  const { signal } = ac;
+
+  document.addEventListener(
+    "click",
+    event => {
+      const target = event.target;
+      if (!(target instanceof Element)) return;
+      if (target.closest("#apps-btn")) {
+        toggleApps();
+        return;
+      }
+      if (!target.closest("#apps-menu")) closeApps();
+    },
+    { signal }
+  );
+
+  document.addEventListener(
+    "keydown",
+    event => {
+      if (event.key === "Escape") closeApps();
+    },
+    { signal }
+  );
+
+  window.addEventListener("resize", closeApps, { signal });
+
   onPageReady();
-  document.addEventListener("astro:after-swap", onPageReady);
-  document.addEventListener("astro:page-load", kickGlass);
+  document.addEventListener("astro:before-swap", closeApps, { signal });
+  document.addEventListener("astro:after-swap", onPageReady, { signal });
+  document.addEventListener("astro:page-load", kickGlass, { signal });
 </script>

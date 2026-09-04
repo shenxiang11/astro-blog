@@ -30,6 +30,18 @@
   }
 }
 
+.line-sidebar.product-features {
+  --font-size: 0.9375rem;
+  --item-gap: 28px;
+  --max-shift: 28px;
+}
+
+@media (min-width: 768px) {
+  .line-sidebar.product-features {
+    --font-size: 1.125rem;
+  }
+}
+
 .line-sidebar--markers {
   padding-left: calc(var(--marker-length) + var(--marker-gap));
   padding-right: calc(var(--max-shift) + 0.75rem);

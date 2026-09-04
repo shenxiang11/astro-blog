@@ -1,0 +1,8 @@
+---
+import ProductPage from "@/components/ProductPage.astro";
+import { getProduct } from "@/data/products";
+
+const product = getProduct("harbor");
+---
+
+<ProductPage {product} />

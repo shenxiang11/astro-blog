@@ -1,0 +1,30 @@
+---
+import LineSidebar from "@/components/line-sidebar/LineSidebar";
+import "@/styles/line-sidebar.css";
+
+type Props = {
+  features: string[];
+  class?: string;
+};
+
+const { features, class: className } = Astro.props;
+---
+
+<LineSidebar
+  client:idle
+  className={["product-features", "mt-6", className].filter(Boolean).join(" ")}
+  items={features}
+  accentColor="var(--foreground)"
+  textColor="var(--foreground)"
+  markerColor="color-mix(in srgb, var(--foreground) 45%, transparent)"
+  showIndex={false}
+  showMarker
+  maxShift={40}
+  markerLength={20}
+  markerGap={10}
+  tickScale={0.5}
+  scaleTick={false}
+  itemGap={50}
+  smoothing={320}
+  stickyActive={false}
+/>

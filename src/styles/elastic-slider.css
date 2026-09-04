@@ -4,13 +4,6 @@
   justify-content: center;
   min-height: calc(100svh - 6.5rem);
   padding: 1.5rem 1.25rem 4.5rem;
-  background:
-    radial-gradient(ellipse at 50% 28%, rgb(150 49 254 / 0.16), transparent 58%);
-}
-
-[data-theme="light"] .es-page {
-  background:
-    radial-gradient(ellipse at 50% 0%, rgb(209 196 250 / 0.62), transparent 62%);
 }
 
 .es-demo {

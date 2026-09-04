@@ -4,6 +4,7 @@ import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
 import AppStoreBadge from "@/components/AppStoreBadge.astro";
 import TiaoTiaoCarousel from "@/components/TiaoTiaoCarousel.astro";
+import ProductFeatureList from "@/components/ProductFeatureList.astro";
 import { getProduct } from "@/data/products";
 import config from "@/config";
 import "@/styles/tiaotiao.css";
@@ -26,6 +27,10 @@ const product = getProduct("tiaotiao");
         <p class="text-muted-foreground mx-auto mt-5 max-w-lg text-lg leading-relaxed">
           {product.description}
         </p>
+        <ProductFeatureList
+          features={product.features}
+          class="mx-auto max-w-md text-left"
+        />
         <p class="text-muted-foreground mt-4 text-sm">
           {product.platforms.join(" · ")}
         </p>
@@ -34,21 +39,6 @@ const product = getProduct("tiaotiao");
     </section>
 
     <TiaoTiaoCarousel />
-
-    <section class="tiaotiao-features">
-      <div class="site-layout pt-16 pb-24">
-        <h2 class="font-hand text-4xl">Features.</h2>
-        <ul class="mt-8 grid gap-3 sm:grid-cols-2">
-          {
-            product.features.map(feature => (
-              <li class="border-border/80 bg-card/60 rounded-2xl border px-5 py-4">
-                {feature}
-              </li>
-            ))
-          }
-        </ul>
-      </div>
-    </section>
   </main>
 
   <Footer />

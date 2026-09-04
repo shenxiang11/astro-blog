@@ -1,5 +1,5 @@
 export type Product = {
-  id: "miaotie" | "tiaotiao";
+  id: "miaotie" | "tiaotiao" | "harbor";
   name: string;
   nameEn: string;
   href: string;
@@ -11,10 +11,12 @@ export type Product = {
   platforms: string[];
   supportHref: string;
   privacyHref: string;
-  visual: "clipboard" | "jump";
+  visual: "clipboard" | "jump" | "harbor";
   gradient: string;
   /** Live App Store listing. `null` until the app is published. */
   appStoreUrl?: string | null;
+  /** Direct download, e.g. GitHub Releases. */
+  downloadUrl?: string;
 };
 
 export const products: Product[] = [
@@ -40,6 +42,7 @@ export const products: Product[] = [
     privacyHref: "/privacy",
     visual: "clipboard",
     gradient: "from-[#7c5cfc] via-[#5b4dff] to-[#1e1b4b]",
+    downloadUrl: "https://github.com/shenxiang11/MyPaste/releases",
   },
   {
     id: "tiaotiao",
@@ -64,6 +67,29 @@ export const products: Product[] = [
     privacyHref: "/tiaotiao/privacy",
     visual: "jump",
     gradient: "from-[#22c55e] via-[#16a34a] to-[#14532d]",
+  },
+  {
+    id: "harbor",
+    name: "Harbor",
+    nameEn: "Harbor",
+    href: "/harbor",
+    navLabel: "Harbor",
+    kicker: "科学上网",
+    title: "点一下，就出海",
+    description:
+      "Harbor 是给 Mac 和 iPhone 用的科学上网客户端。贴上订阅，选好节点，点中间那个按钮就能连上。规则、全局、直连三种模式，流量怎么走你自己定。",
+    features: [
+      "一键连接，状态和时长一眼能看清",
+      "规则 / 全局 / 直连，三种分流",
+      "订阅链接，节点随时换",
+      "实时上传、下载流量",
+      "Mac 和 iPhone 同一套用法",
+    ],
+    platforms: ["Mac", "iPhone"],
+    supportHref: "/support",
+    privacyHref: "/privacy",
+    visual: "harbor",
+    gradient: "from-[#22c55e] via-[#16a34a] to-[#052e16]",
   },
 ];
 

@@ -1,0 +1,18 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import { GlassSurfaceDemo } from "@/components/glass-surface/GlassSurfaceDemo";
+import config from "@/config";
+import "@/styles/glass-surface.css";
+---
+
+<Layout
+  title={`Glass Surface | ${config.site.title}`}
+  description="向下滚动，看玻璃折射。"
+>
+  <Header />
+
+  <main id="main-content" class="gs-page flex-1">
+    <GlassSurfaceDemo client:only="react" />
+  </main>
+</Layout>

@@ -3,6 +3,7 @@ import type { UIStrings } from "../types";
 export default {
   nav: {
     home: "Home",
+    apps: "Apps",
     demos: "Demos",
     libraries: "Libraries",
     posts: "Posts",
@@ -99,5 +100,6 @@ export default {
     downloadOnAppStoreLine2: "App Store",
     comingSoon: "Coming soon",
     comingSoonHint: "TiaoTiao will be available on the App Store soon",
+    download: "Download",
   },
 } satisfies UIStrings;

@@ -89,10 +89,16 @@
   min-width: 200px;
   margin-inline: auto;
   margin-top: 1.25rem;
-  border-radius: 9999px;
+  margin-bottom: calc(-1 * var(--apps-panel-height, 0px));
+  overflow: hidden;
+  border-radius: 1.5625rem;
   background: rgb(255 255 255 / 0.12);
   -webkit-backdrop-filter: blur(24px) saturate(180%);
   backdrop-filter: blur(24px) saturate(180%);
+}
+
+.ios-glass.is-apps-open {
+  border-radius: 1.35rem;
 }
 
 @media (min-width: 40rem) {
@@ -118,6 +124,8 @@
 .ios-glass-content {
   position: relative;
   z-index: 1;
+  display: flex;
+  flex-direction: column;
   color: rgb(255 255 255 / 0.6);
 }
 
@@ -161,6 +169,90 @@
 
 [data-theme="light"] .ios-glass-brand {
   color: rgb(28 25 23 / 0.9);
+}
+
+.nav-apps {
+  position: relative;
+}
+
+.nav-apps-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  line-height: inherit;
+}
+
+.nav-apps-caret {
+  width: 0.7rem;
+  height: 0.7rem;
+  opacity: 0.7;
+  transition: transform 0.2s ease;
+}
+
+.nav-apps-btn[aria-expanded="true"] .nav-apps-caret {
+  transform: rotate(180deg);
+}
+
+.nav-apps-menu {
+  display: none;
+  padding: 0.15rem 0.7rem 0.75rem;
+  border-top: 1px solid rgb(255 255 255 / 0.1);
+  white-space: normal;
+}
+
+.nav-apps-menu.is-open {
+  display: block;
+}
+
+.nav-apps-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  padding: 0.5rem 0.65rem;
+  border-radius: 0.75rem;
+}
+
+.nav-apps-name {
+  color: rgb(255 255 255 / 0.88);
+}
+
+.nav-apps-kicker {
+  font-size: 0.75rem;
+  color: rgb(255 255 255 / 0.4);
+}
+
+.nav-apps-item:hover,
+.nav-apps-item.is-active {
+  background: rgb(255 255 255 / 0.08);
+}
+
+.nav-apps-item.is-active .nav-apps-name {
+  color: rgb(255 255 255);
+}
+
+[data-theme="light"] .nav-apps-menu {
+  border-top-color: rgb(28 25 23 / 0.08);
+}
+
+[data-theme="light"] .nav-apps-name {
+  color: rgb(28 25 23 / 0.88);
+}
+
+[data-theme="light"] .nav-apps-kicker {
+  color: rgb(28 25 23 / 0.4);
+}
+
+[data-theme="light"] .nav-apps-item:hover,
+[data-theme="light"] .nav-apps-item.is-active {
+  background: rgb(28 25 23 / 0.06);
+}
+
+[data-theme="light"] .nav-apps-item.is-active .nav-apps-name {
+  color: rgb(28 25 23);
 }
 
 :target {

@@ -3,6 +3,7 @@ import type { UIStrings } from "../types";
 export default {
   nav: {
     home: "首页",
+    apps: "应用",
     demos: "Demos",
     libraries: "开源",
     posts: "文章",
@@ -99,5 +100,6 @@ export default {
     downloadOnAppStoreLine2: "App Store 中下载",
     comingSoon: "即将上线",
     comingSoonHint: "跳跳即将上架 App Store",
+    download: "下载",
   },
 } satisfies UIStrings;

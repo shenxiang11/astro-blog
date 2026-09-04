@@ -42,7 +42,7 @@ function reflect(): void {
     ?.setAttribute("content", bg);
 }
 
-function themeTransitionCss(): string {
+function themeTransitionCss(xPct: number, yPct: number): string {
   return `
 html.theme-transitioning {
   view-transition-name: root !important;
@@ -58,14 +58,17 @@ html.theme-transitioning * {
 ::view-transition-group(root) {
   animation: none !important;
 }
-/* animate="none" sets the old snapshot to opacity: 0. Keep it
-   visible so the new theme expands as a hard circle over it. */
 ::view-transition-old(root) {
   z-index: 1;
   opacity: 1 !important;
 }
 ::view-transition-new(root) {
   z-index: 2147483646;
+  animation: xingyao-theme-circle ${TRANSITION_MS}ms ease-in both !important;
+}
+@keyframes xingyao-theme-circle {
+  from { clip-path: circle(0% at ${xPct}% ${yPct}%); }
+  to { clip-path: circle(150% at ${xPct}% ${yPct}%); }
 }
 `;
 }
@@ -79,55 +82,39 @@ function kickGlass(glass: Element | null): void {
   glass.style.removeProperty("-webkit-backdrop-filter");
 }
 
-function clickOrigin(event: MouseEvent): { x: number; y: number } {
-  if (event.detail > 0 || event.clientX !== 0 || event.clientY !== 0) {
-    return { x: event.clientX, y: event.clientY };
-  }
-  const btn = document.querySelector("#theme-btn");
-  if (!btn) return { x: pointerX, y: pointerY };
-  const rect = btn.getBoundingClientRect();
+function viewportPoint(clientX: number, clientY: number): {
+  xPct: number;
+  yPct: number;
+} {
+  const vv = window.visualViewport;
+  const width = vv?.width || innerWidth;
+  const height = vv?.height || innerHeight;
+  const x = clientX - (vv?.offsetLeft ?? 0);
+  const y = clientY - (vv?.offsetTop ?? 0);
   return {
-    x: rect.left + rect.width / 2,
-    y: rect.top + rect.height / 2,
+    xPct: (x / width) * 100,
+    yPct: (y / height) * 100,
   };
 }
 
-/** Map a viewport point into ::view-transition-new(root) local space. */
-function mapToSnapshot(
-  clientX: number,
-  clientY: number
-): { x: number; y: number; width: number; height: number } {
-  const group = getComputedStyle(
-    document.documentElement,
-    "::view-transition-group(root)"
-  );
-  const layer = getComputedStyle(
-    document.documentElement,
-    "::view-transition-new(root)"
-  );
-  const width = parseFloat(layer.width) || parseFloat(group.width) || innerWidth;
-  const height =
-    parseFloat(layer.height) || parseFloat(group.height) || innerHeight;
-  const left = parseFloat(group.left) || 0;
-  const top = parseFloat(group.top) || 0;
-  let tx = 0;
-  let ty = 0;
-  if (group.transform && group.transform !== "none") {
-    const matrix = new DOMMatrix(group.transform);
-    tx = matrix.e;
-    ty = matrix.f;
+function clickOrigin(event: MouseEvent): { xPct: number; yPct: number } {
+  if (event.detail > 0 || event.clientX !== 0 || event.clientY !== 0) {
+    return viewportPoint(event.clientX, event.clientY);
   }
-  return {
-    x: clientX - left - tx,
-    y: clientY - top - ty,
-    width,
-    height,
-  };
+  const btn = document.querySelector("#theme-btn");
+  if (btn) {
+    const rect = btn.getBoundingClientRect();
+    return viewportPoint(
+      rect.left + rect.width / 2,
+      rect.top + rect.height / 2
+    );
+  }
+  return viewportPoint(pointerX, pointerY);
 }
 
 async function applyTheme(
   next: string,
-  origin: { x: number; y: number }
+  origin: { xPct: number; yPct: number }
 ): Promise<void> {
   const switchTheme = () => {
     themeValue = next;
@@ -144,16 +131,11 @@ async function applyTheme(
 
   const style = document.createElement("style");
   style.setAttribute("data-theme-transition", "");
-  style.textContent = themeTransitionCss();
+  style.textContent = themeTransitionCss(origin.xPct, origin.yPct);
   document.head.appendChild(style);
 
   const root = document.documentElement;
   const glass = document.querySelector(".ios-glass");
-  // backdrop-filter on the sticky nav makes Chrome abort the snapshot.
-  if (glass instanceof HTMLElement) {
-    glass.style.backdropFilter = "none";
-    glass.style.setProperty("-webkit-backdrop-filter", "none");
-  }
   root.classList.add("theme-transitioning");
   root.style.setProperty("view-transition-name", "root", "important");
 
@@ -161,29 +143,6 @@ async function applyTheme(
     const transition = document.startViewTransition(() => {
       switchTheme();
     });
-    await transition.ready;
-    await new Promise<void>(resolve => {
-      requestAnimationFrame(() => resolve());
-    });
-    const { x, y, width, height } = mapToSnapshot(origin.x, origin.y);
-    const endRadius = Math.hypot(
-      Math.max(x, width - x),
-      Math.max(y, height - y)
-    );
-    await document.documentElement.animate(
-      {
-        clipPath: [
-          `circle(0px at ${x}px ${y}px)`,
-          `circle(${endRadius}px at ${x}px ${y}px)`,
-        ],
-      },
-      {
-        duration: TRANSITION_MS,
-        easing: "ease-in",
-        fill: "both",
-        pseudoElement: "::view-transition-new(root)",
-      }
-    ).finished;
     await transition.finished;
   } catch {
     /* skipped or aborted */
@@ -260,10 +219,7 @@ window.matchMedia("(prefers-color-scheme: dark)").addEventListener(
   "change",
   ({ matches }) => {
     if (localStorage.getItem(THEME_KEY)) return;
-    void applyTheme(matches ? DARK : LIGHT, {
-      x: innerWidth / 2,
-      y: innerHeight / 2,
-    });
+    void applyTheme(matches ? DARK : LIGHT, { xPct: 50, yPct: 50 });
   },
   { signal }
 );
