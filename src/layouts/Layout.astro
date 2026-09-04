@@ -33,6 +33,7 @@ const rssHref = getRelativeLocaleUrl(
 <html
   dir={site.dir ?? "ltr"}
   lang={Astro.currentLocale ?? site.lang}
+  transition:name="root"
   transition:animate="none"
   class="overflow-y-auto scroll-smooth"
 >

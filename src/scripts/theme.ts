@@ -55,32 +55,44 @@ function circleOrigin(x: number, y: number): { xPct: number; yPct: number } {
   };
 }
 
-function themeTransitionCss(xPct: number, yPct: number): string {
+function themeTransitionCss(): string {
   return `
+/* Astro's transition:animate="none" renames <html> away from root
+   and zeros every ::view-transition-* animation. Put the name back
+   so the circle reveal can target ::view-transition-new(root). */
+html.theme-transitioning {
+  view-transition-name: root !important;
+}
 /* Titles, tags, cards use view-transition-name for page morphing.
    During a theme switch those names become separate layers that
    skip the root circle reveal — flatten them into root instead. */
 html.theme-transitioning * {
   view-transition-name: none !important;
 }
-::view-transition-old(root) {
+::view-transition-old(root),
+::view-transition-new(root) {
   animation: none !important;
   mix-blend-mode: normal;
-  z-index: 1;
 }
 ::view-transition-group(root) {
   animation: none !important;
 }
-::view-transition-new(root) {
-  mix-blend-mode: normal;
-  z-index: 2147483646;
-  animation: xingyao-theme-circle ${TRANSITION_MS}ms ease-in both !important;
+::view-transition-old(root) {
+  z-index: 1;
 }
-@keyframes xingyao-theme-circle {
-  from { clip-path: circle(0% at ${xPct}% ${yPct}%); }
-  to { clip-path: circle(150% at ${xPct}% ${yPct}%); }
+::view-transition-new(root) {
+  z-index: 2147483646;
 }
 `;
+}
+
+function kickGlass(glass: Element | null): void {
+  if (!(glass instanceof HTMLElement)) return;
+  glass.style.backdropFilter = "none";
+  glass.style.setProperty("-webkit-backdrop-filter", "none");
+  void glass.offsetHeight;
+  glass.style.backdropFilter = "";
+  glass.style.removeProperty("-webkit-backdrop-filter");
 }
 
 async function applyTheme(
@@ -103,31 +115,46 @@ async function applyTheme(
   const { xPct, yPct } = circleOrigin(origin.x, origin.y);
   const style = document.createElement("style");
   style.setAttribute("data-theme-transition", "");
-  style.textContent = themeTransitionCss(xPct, yPct);
+  style.textContent = themeTransitionCss();
   document.head.appendChild(style);
 
   const root = document.documentElement;
+  const glass = document.querySelector(".ios-glass");
+  // backdrop-filter on the sticky nav makes Chrome abort the snapshot.
+  if (glass instanceof HTMLElement) {
+    glass.style.backdropFilter = "none";
+    glass.style.setProperty("-webkit-backdrop-filter", "none");
+  }
   root.classList.add("theme-transitioning");
-
-  const transition = document.startViewTransition(() => {
-    switchTheme();
-  });
+  root.style.setProperty("view-transition-name", "root", "important");
 
   try {
+    const transition = document.startViewTransition(() => {
+      switchTheme();
+    });
+    await transition.ready;
+    await document.documentElement.animate(
+      {
+        clipPath: [
+          `circle(0% at ${xPct}% ${yPct}%)`,
+          `circle(150% at ${xPct}% ${yPct}%)`,
+        ],
+      },
+      {
+        duration: TRANSITION_MS,
+        easing: "ease-in",
+        fill: "both",
+        pseudoElement: "::view-transition-new(root)",
+      }
+    ).finished;
     await transition.finished;
   } catch {
     /* skipped or aborted */
   } finally {
     style.remove();
     root.classList.remove("theme-transitioning");
-    const glass = document.querySelector(".ios-glass");
-    if (glass instanceof HTMLElement) {
-      glass.style.backdropFilter = "none";
-      glass.style.setProperty("-webkit-backdrop-filter", "none");
-      void glass.offsetHeight;
-      glass.style.backdropFilter = "";
-      glass.style.removeProperty("-webkit-backdrop-filter");
-    }
+    root.style.removeProperty("view-transition-name");
+    kickGlass(glass);
   }
 }
 
