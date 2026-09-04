@@ -1,15 +1,20 @@
 .home-shell {
   position: relative;
-  isolation: isolate;
 }
 
 .home-galaxy {
   pointer-events: none;
   position: fixed;
   inset: 0;
-  z-index: -1;
+  z-index: 0;
   width: 100vw;
   height: 100vh;
+}
+
+.home-shell main,
+.home-shell footer {
+  position: relative;
+  z-index: 1;
 }
 
 .home-galaxy canvas {

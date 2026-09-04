@@ -71,29 +71,19 @@
 
 .ios-glass {
   position: relative;
-  isolation: isolate;
-  overflow: hidden;
   min-width: 200px;
   border-radius: 9999px;
+  background: rgb(255 255 255 / 0.12);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
 }
 
-.ios-glass-blur,
 .ios-glass-border {
   position: absolute;
   inset: 0;
+  z-index: 0;
   border-radius: inherit;
   pointer-events: none;
-}
-
-.ios-glass-blur {
-  z-index: 0;
-  background: rgb(221 221 221 / 0.05);
-  backdrop-filter: blur(12px) saturate(160%);
-  -webkit-backdrop-filter: blur(12px) saturate(160%);
-}
-
-.ios-glass-border {
-  z-index: 1;
   border: 1px solid rgb(255 255 255 / 0.16);
   box-shadow:
     inset 0 1px 0 rgb(255 255 255 / 0.28),
@@ -103,7 +93,7 @@
 
 .ios-glass-content {
   position: relative;
-  z-index: 2;
+  z-index: 1;
   color: rgb(255 255 255 / 0.6);
 }
 
@@ -123,8 +113,8 @@
   color: rgb(255 255 255 / 0.92);
 }
 
-[data-theme="light"] .ios-glass-blur {
-  background: rgb(255 255 255 / 0.42);
+[data-theme="light"] .ios-glass {
+  background: rgb(255 255 255 / 0.38);
 }
 
 [data-theme="light"] .ios-glass-border {
