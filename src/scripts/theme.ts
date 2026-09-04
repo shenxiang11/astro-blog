@@ -42,30 +42,11 @@ function reflect(): void {
     ?.setAttribute("content", bg);
 }
 
-/** Viewport-relative origin, as % of the view-transition snapshot (viewport). */
-function circleOrigin(x: number, y: number): { xPct: number; yPct: number } {
-  const vv = window.visualViewport;
-  const left = vv?.offsetLeft ?? 0;
-  const top = vv?.offsetTop ?? 0;
-  const width = vv?.width || innerWidth;
-  const height = vv?.height || innerHeight;
-  return {
-    xPct: ((x - left) / width) * 100,
-    yPct: ((y - top) / height) * 100,
-  };
-}
-
 function themeTransitionCss(): string {
   return `
-/* Astro's transition:animate="none" renames <html> away from root
-   and zeros every ::view-transition-* animation. Put the name back
-   so the circle reveal can target ::view-transition-new(root). */
 html.theme-transitioning {
   view-transition-name: root !important;
 }
-/* Titles, tags, cards use view-transition-name for page morphing.
-   During a theme switch those names become separate layers that
-   skip the root circle reveal — flatten them into root instead. */
 html.theme-transitioning * {
   view-transition-name: none !important;
 }
@@ -77,8 +58,11 @@ html.theme-transitioning * {
 ::view-transition-group(root) {
   animation: none !important;
 }
+/* animate="none" sets the old snapshot to opacity: 0. Keep it
+   visible so the new theme expands as a hard circle over it. */
 ::view-transition-old(root) {
   z-index: 1;
+  opacity: 1 !important;
 }
 ::view-transition-new(root) {
   z-index: 2147483646;
@@ -112,7 +96,12 @@ async function applyTheme(
     return;
   }
 
-  const { xPct, yPct } = circleOrigin(origin.x, origin.y);
+  const x = origin.x;
+  const y = origin.y;
+  const endRadius = Math.hypot(
+    Math.max(x, innerWidth - x),
+    Math.max(y, innerHeight - y)
+  );
   const style = document.createElement("style");
   style.setAttribute("data-theme-transition", "");
   style.textContent = themeTransitionCss();
@@ -136,8 +125,8 @@ async function applyTheme(
     await document.documentElement.animate(
       {
         clipPath: [
-          `circle(0% at ${xPct}% ${yPct}%)`,
-          `circle(150% at ${xPct}% ${yPct}%)`,
+          `circle(0px at ${x}px ${y}px)`,
+          `circle(${endRadius}px at ${x}px ${y}px)`,
         ],
       },
       {
