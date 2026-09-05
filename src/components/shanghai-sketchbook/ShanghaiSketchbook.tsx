@@ -349,7 +349,7 @@ export default function ShanghaiSketchbook() {
 
   const onPageDown = (event: React.PointerEvent<HTMLDivElement>) => {
     stopIntro();
-    if (turnRef.current) return;
+    cancelAnimationFrame(animRef.current);
     event.currentTarget.setPointerCapture(event.pointerId);
     dragRef.current = {
       kind: "page",
@@ -486,7 +486,12 @@ export default function ShanghaiSketchbook() {
                     />
                   </div>
                   {turn && (
-                    <div className="sh-turn-layer" style={{ opacity: turnFade }}>
+                    <div
+                      className="sh-turn-layer"
+                      style={
+                        turnFade < 1 ? { opacity: turnFade } : undefined
+                      }
+                    >
                       <div className="sh-half left">
                         <img
                           src={
@@ -495,6 +500,7 @@ export default function ShanghaiSketchbook() {
                           alt=""
                           draggable={false}
                         />
+                        <span className="sh-leaf-shade" aria-hidden="true" />
                       </div>
                       <div className="sh-half right">
                         <img
@@ -504,6 +510,7 @@ export default function ShanghaiSketchbook() {
                           alt=""
                           draggable={false}
                         />
+                        <span className="sh-leaf-shade" aria-hidden="true" />
                       </div>
                       <PaperCurl
                         dir={turn.dir}

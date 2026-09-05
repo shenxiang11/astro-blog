@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react";
 
-const STRIP_COUNT = 16;
+const STRIP_COUNT = 18;
 const SPAN = 0.449;
 const BETA = 0.6;
 
