@@ -3,6 +3,7 @@ import { resolveLocale } from "@/i18n/locales";
 const TAG_EN: Record<string, string> = {
   动画: "Animation",
   嵌套滚动: "Nested scrolling",
+  交互: "Interaction",
 };
 
 export function tagLabel(tagName: string, locale?: string | null): string {
