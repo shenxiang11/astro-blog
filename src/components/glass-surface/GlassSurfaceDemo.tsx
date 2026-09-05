@@ -1,4 +1,5 @@
 import GlassSurface from "./GlassSurface";
+import { getDemoUi } from "@/i18n/demoUi";
 import summerUrl from "@/assets/glass-surface/summer.jpg?url";
 import contentUrl from "@/assets/glass-surface/content.jpg?url";
 import fallbackUrl from "@/assets/glass-surface/fallback.jpg?url";
@@ -24,10 +25,10 @@ const glassProps = {
   blueOffset: 20,
 } as const;
 
-export function GlassSurfaceDemo() {
+export function GlassSurfaceDemo({ locale }: { locale?: string }) {
   return (
     <div className="gs-demo">
-      <p className="gs-hint">向下滚动</p>
+      <p className="gs-hint">{getDemoUi(locale).glassHint}</p>
 
       <GlassSurface
         className="gs-lens"

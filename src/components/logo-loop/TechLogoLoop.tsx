@@ -1,4 +1,5 @@
 import LogoLoop, { type LogoItem } from "./LogoLoop";
+import { getDemoUi } from "@/i18n/demoUi";
 
 type BrandIconProps = {
   title: string;
@@ -207,7 +208,7 @@ const techLogos: LogoItem[] = [
   },
 ];
 
-export default function TechLogoLoop() {
+export default function TechLogoLoop({ locale }: { locale?: string }) {
   return (
     <div className="tech-logo-loop">
       <LogoLoop
@@ -219,7 +220,7 @@ export default function TechLogoLoop() {
         hoverSpeed={0}
         scaleOnHover
         fadeOut
-        ariaLabel="我会的技术"
+        ariaLabel={getDemoUi(locale).techStack}
       />
     </div>
   );

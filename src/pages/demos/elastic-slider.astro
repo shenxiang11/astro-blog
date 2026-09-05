@@ -2,17 +2,18 @@
 import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/Header.astro";
 import { ElasticSliderDemo } from "@/components/elastic-slider/ElasticSlider";
+import { loadDemoPage } from "@/utils/loadDemoPage";
 import config from "@/config";
 import "@/styles/elastic-slider.css";
+
+const locale = Astro.currentLocale ?? config.site.lang;
+const { title, description } = await loadDemoPage("elastic-slider", locale);
 ---
 
-<Layout
-  title={`Elastic Slider | ${config.site.title}`}
-  description="拖过两端，看看回弹。"
->
+<Layout title={`${title} | ${config.site.title}`} {description}>
   <Header />
 
   <main id="main-content" class="es-page flex-1">
-    <ElasticSliderDemo client:only="react" />
+    <ElasticSliderDemo client:only="react" locale={locale} />
   </main>
 </Layout>

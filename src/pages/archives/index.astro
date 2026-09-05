@@ -7,7 +7,7 @@ import Breadcrumb from "@/components/Breadcrumb.astro";
 import Main from "@/components/Main.astro";
 import Footer from "@/components/Footer.astro";
 import Card from "@/components/Card.astro";
-import { postFilter } from "@/utils/postFilter";
+import { getPostsForLocale } from "@/utils/getLocalizedPosts";
 import { getPostsByGroupCondition } from "./_utils/getPostsByGroupCondition";
 import { useTranslations } from "@/i18n";
 import config from "@/config";
@@ -23,7 +23,7 @@ if (!config.features.showArchives && notFoundUrl) {
 const t = useTranslations(locale);
 
 const posts = await getCollection("posts");
-const filteredPosts = posts.filter(postFilter);
+const filteredPosts = getPostsForLocale(posts, locale);
 const monthFormatter = new Intl.DateTimeFormat(locale, { month: "long" });
 ---
 

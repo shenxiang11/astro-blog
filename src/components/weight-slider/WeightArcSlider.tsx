@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { getDemoUi } from "@/i18n/demoUi";
 
 const STEP_ANGLE = 2;
 const ARC_RADIUS = 320;
@@ -17,6 +18,7 @@ type WeightArcSliderProps = {
   max?: number;
   fallback?: number;
   unit?: string;
+  ariaLabel?: string;
 };
 
 function clamp(n: number, min: number, max: number) {
@@ -61,6 +63,7 @@ export function WeightArcSlider({
   max = 150,
   fallback = 60,
   unit = "kg",
+  ariaLabel = "Weight",
 }: WeightArcSliderProps) {
   const rootRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -407,7 +410,7 @@ export function WeightArcSlider({
         className="ws-arc-wrap"
         role="slider"
         tabIndex={0}
-        aria-label="体重"
+        aria-label={ariaLabel}
         aria-valuemin={min}
         aria-valuemax={max}
         aria-valuenow={display}
@@ -429,14 +432,15 @@ export function WeightArcSlider({
   );
 }
 
-export default function WeightDemo() {
+export default function WeightDemo({ locale }: { locale?: string }) {
   const [weight, setWeight] = useState(60);
+  const ui = getDemoUi(locale);
 
   return (
     <div className="ws-demo">
-      <h1 className="ws-title">你的体重</h1>
-      <WeightArcSlider value={weight} onChange={setWeight} />
-      <p className="ws-hint">拖动弧形刻度 · 滚轮或方向键微调</p>
+      <h1 className="ws-title">{ui.weightTitle}</h1>
+      <WeightArcSlider value={weight} onChange={setWeight} ariaLabel={ui.weightAria} />
+      <p className="ws-hint">{ui.weightHint}</p>
     </div>
   );
 }

@@ -2,17 +2,18 @@
 import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/Header.astro";
 import S65 from "@/components/s65/S65";
+import { loadDemoPage } from "@/utils/loadDemoPage";
 import config from "@/config";
 import "@/styles/s65.css";
+
+const locale = Astro.currentLocale ?? config.site.lang;
+const { title, description } = await loadDemoPage("s65", locale);
 ---
 
-<Layout
-  title={`S65 | ${config.site.title}`}
-  description="按住加速。Mercedes-Benz S65 W222，模型来自 Black Snow（CC BY 4.0）。"
->
+<Layout title={`${title} | ${config.site.title}`} {description}>
   <Header />
 
   <main id="main-content" class="s65-page flex-1">
-    <S65 client:only="react" />
+    <S65 client:only="react" locale={locale} />
   </main>
 </Layout>

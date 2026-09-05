@@ -2,17 +2,18 @@
 import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/Header.astro";
 import DualRangeDemo from "@/components/dual-range-slider/DualRangeSlider";
+import { loadDemoPage } from "@/utils/loadDemoPage";
 import config from "@/config";
 import "@/styles/dual-range-slider.css";
+
+const locale = Astro.currentLocale ?? config.site.lang;
+const { title, description } = await loadDemoPage("dual-range-slider", locale);
 ---
 
-<Layout
-  title={`Dual Range Slider | ${config.site.title}`}
-  description="拖动两端气泡，选出范围。"
->
+<Layout title={`${title} | ${config.site.title}`} {description}>
   <Header />
 
   <main id="main-content" class="drs-page flex-1">
-    <DualRangeDemo client:only="react" />
+    <DualRangeDemo client:only="react" locale={locale} />
   </main>
 </Layout>

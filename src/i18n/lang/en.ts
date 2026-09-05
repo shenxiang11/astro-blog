@@ -35,11 +35,28 @@ export default {
     pageWithNumber: "page {{n}}",
   },
   home: {
-    greeting: "Mingalaba",
+    greeting: "Hello",
     socialLinks: "Social Links",
     featured: "Featured",
     recentPosts: "Recent Posts",
     allPosts: "All Posts",
+    writing: "# Writing.",
+    techStack: "Technologies I use",
+  },
+  lang: {
+    label: "Language",
+    zh: "中",
+    en: "EN",
+  },
+  site: {
+    description: "Indie developer. I build apps and write.",
+  },
+  common: {
+    learnMore: "Learn more",
+    contactMe: "Contact me",
+    demo: "Demo",
+    notes: "Notes",
+    preview: "Preview",
   },
   footer: {
     copyright: "Copyright",

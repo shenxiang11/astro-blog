@@ -13,6 +13,7 @@ export type Plate = {
   title: string;
   english: string;
   place: string;
+  placeEn: string;
   src: string;
 };
 
@@ -22,6 +23,7 @@ export const PLATES: Plate[] = [
     title: "外滩",
     english: "The Bund",
     place: "黄浦江",
+    placeEn: "Huangpu River",
     src: theBund,
   },
   {
@@ -29,6 +31,7 @@ export const PLATES: Plate[] = [
     title: "豫园",
     english: "Yu Garden",
     place: "老城厢",
+    placeEn: "Old City",
     src: yuGarden,
   },
   {
@@ -36,6 +39,7 @@ export const PLATES: Plate[] = [
     title: "武康大楼",
     english: "Wukang Building",
     place: "徐汇",
+    placeEn: "Xuhui",
     src: wukang,
   },
   {
@@ -43,6 +47,7 @@ export const PLATES: Plate[] = [
     title: "外白渡桥",
     english: "Waibaidu Bridge",
     place: "苏州河",
+    placeEn: "Suzhou Creek",
     src: waibaidu,
   },
   {
@@ -50,6 +55,7 @@ export const PLATES: Plate[] = [
     title: "南京路",
     english: "Nanjing Road",
     place: "黄浦",
+    placeEn: "Huangpu",
     src: nanjingRoad,
   },
   {
@@ -57,6 +63,7 @@ export const PLATES: Plate[] = [
     title: "静安寺",
     english: "Jing'an Temple",
     place: "静安",
+    placeEn: "Jing'an",
     src: jingan,
   },
   {
@@ -64,6 +71,7 @@ export const PLATES: Plate[] = [
     title: "衡山路",
     english: "Hengshan Road",
     place: "衡复",
+    placeEn: "Hengfu",
     src: hengshan,
   },
   {
@@ -71,6 +79,7 @@ export const PLATES: Plate[] = [
     title: "田子坊",
     english: "Tianzifang",
     place: "石库门",
+    placeEn: "Shikumen",
     src: tianzifang,
   },
   {
@@ -78,6 +87,7 @@ export const PLATES: Plate[] = [
     title: "朱家角",
     english: "Zhujiajiao",
     place: "青浦",
+    placeEn: "Qingpu",
     src: zhujiajiao,
   },
 ];

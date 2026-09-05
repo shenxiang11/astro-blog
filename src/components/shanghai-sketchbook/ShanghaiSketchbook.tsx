@@ -2,6 +2,8 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import botanyLeft from "@/assets/shanghai/botany-left.png?url";
 import botanyRight from "@/assets/shanghai/botany-right.png?url";
 import { PLATES, type Plate } from "./plates";
+import { getDemoUi } from "@/i18n/demoUi";
+import { resolveLocale } from "@/i18n/locales";
 import PaperCurl, { type CurlDir } from "./PaperCurl";
 import { easeInOutCubic } from "./ease";
 
@@ -47,7 +49,11 @@ function riffleDurations(steps: number) {
   });
 }
 
-export default function ShanghaiSketchbook() {
+export default function ShanghaiSketchbook({ locale }: { locale?: string }) {
+  const ui = getDemoUi(locale);
+  const isEn = resolveLocale(locale) === "en";
+  const plateTitle = (plate: Plate) => (isEn ? plate.english : plate.title);
+  const platePlace = (plate: Plate) => (isEn ? plate.placeEn : plate.place);
   const [index, setIndex] = useState(0);
   const [turn, setTurn] = useState<TurnState | null>(null);
   const [zoomStep, setZoomStep] = useState(0);
@@ -444,7 +450,7 @@ export default function ShanghaiSketchbook() {
           <button
             className="sh-arrow left"
             type="button"
-            aria-label="上一页"
+            aria-label={ui.shanghaiPrev}
             onClick={() => flip("prev")}
           >
             <Chevron />
@@ -532,6 +538,8 @@ export default function ShanghaiSketchbook() {
                     x={loupe.x}
                     y={loupe.y}
                     book={bookSize}
+                    label={ui.shanghaiLoupe}
+                    valueText={ui.shanghaiLoupeValue}
                     onPointerDown={onLoupeDown}
                     onPointerMove={onPointerMove}
                     onPointerUp={onPointerUp}
@@ -544,20 +552,20 @@ export default function ShanghaiSketchbook() {
           <button
             className="sh-arrow right"
             type="button"
-            aria-label="下一页"
+            aria-label={ui.shanghaiNext}
             onClick={() => flip("next")}
           >
             <Chevron />
           </button>
         </div>
 
-        <h2 className="sh-caption">{visiblePlate.english}</h2>
+        <h2 className="sh-caption">{plateTitle(visiblePlate)}</h2>
 
-        <div className="sh-tools" role="toolbar" aria-label="速写本工具">
+        <div className="sh-tools" role="toolbar" aria-label={ui.shanghaiTools}>
           <button
             className="sh-tool"
             type="button"
-            aria-label="缩小"
+            aria-label={ui.shanghaiZoomOut}
             onClick={() => cycleZoom(-1)}
             disabled={zoomStep === 0}
           >
@@ -567,7 +575,7 @@ export default function ShanghaiSketchbook() {
           <button
             className="sh-tool"
             type="button"
-            aria-label="放大"
+            aria-label={ui.shanghaiZoomIn}
             onClick={() => cycleZoom(1)}
             disabled={zoomStep === ZOOM_STEPS.length - 1}
           >
@@ -577,7 +585,7 @@ export default function ShanghaiSketchbook() {
           <button
             className={`sh-tool${loupeOn ? " is-on" : ""}`}
             type="button"
-            aria-label={loupeOn ? "收起放大镜" : "打开放大镜"}
+            aria-label={loupeOn ? ui.shanghaiLoupeOff : ui.shanghaiLoupeOn}
             aria-pressed={loupeOn}
             onClick={() => {
               setLoupeOn(value => !value);
@@ -589,10 +597,10 @@ export default function ShanghaiSketchbook() {
         </div>
 
         <p className={`sh-hint${hintGone ? " is-gone" : ""}`}>
-          拖动纸页翻页 · 拖动放大镜细看
+          {ui.shanghaiHint}
         </p>
 
-        <a className="sh-down" href="#sh-about" aria-label="向下看简介">
+        <a className="sh-down" href="#sh-about" aria-label={ui.shanghaiDown}>
           <svg viewBox="0 0 18 20" width="16" height="18" fill="none">
             <polyline
               points="3,3 9,8 15,3"
@@ -615,8 +623,7 @@ export default function ShanghaiSketchbook() {
       <section className="sh-about" id="sh-about">
         <p className="sh-section-label">About</p>
         <p className="sh-bio">
-          这本速写看着上海。江面、石库门、法租界的梧桐，寺檐后面的玻璃塔，还有青浦的水巷。
-          用墨线把轮廓留下来，再铺一点点水色——城市就会慢下来。
+          {ui.shanghaiBio}
         </p>
       </section>
 
@@ -644,8 +651,8 @@ export default function ShanghaiSketchbook() {
                 }}
               >
                 <span className="n">{String(plateIndex + 1).padStart(2, "0")}</span>
-                <span className="t">{plate.english}</span>
-                <span className="p">{plate.place}</span>
+                <span className="t">{plateTitle(plate)}</span>
+                <span className="p">{platePlace(plate)}</span>
               </button>
             </li>
           ))}
@@ -662,6 +669,8 @@ function Loupe({
   x,
   y,
   book,
+  label,
+  valueText,
   onPointerDown,
   onPointerMove,
   onPointerUp,
@@ -670,6 +679,8 @@ function Loupe({
   x: number;
   y: number;
   book: { w: number; h: number };
+  label: string;
+  valueText: string;
   onPointerDown: (event: React.PointerEvent<HTMLDivElement>) => void;
   onPointerMove: (event: React.PointerEvent) => void;
   onPointerUp: (event: React.PointerEvent) => void;
@@ -682,8 +693,8 @@ function Loupe({
     <div
       className="sh-loupe"
       role="slider"
-      aria-label="放大镜"
-      aria-valuetext="拖动查看细节"
+      aria-label={label}
+      aria-valuetext={valueText}
       style={{
         width: size,
         height: size,

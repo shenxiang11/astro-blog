@@ -2,13 +2,14 @@ import { useEffect, useRef, useState } from "react";
 import { S65Experience } from "./experience";
 import { PAINTS, type PaintId } from "./colors";
 import { S65_SPEED_PATH, S65_SPEED_VIEWBOX } from "./speedPath";
+import { getDemoUi } from "@/i18n/demoUi";
 
 const asset = (path: string) => {
   const base = import.meta.env.BASE_URL.replace(/\/+$/, "");
   return `${base}/${path.replace(/^\/+/, "")}`;
 };
 
-export default function S65() {
+export default function S65({ locale }: { locale?: string }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const expRef = useRef<S65Experience | null>(null);
   const [progress, setProgress] = useState(0);
@@ -103,7 +104,7 @@ export default function S65() {
             </div>
           )}
 
-          {!rushing && <p className="s65-hint">按住加速</p>}
+          {!rushing && <p className="s65-hint">{getDemoUi(locale).s65Hint}</p>}
         </>
       )}
     </div>

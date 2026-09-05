@@ -6,14 +6,14 @@ import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
 import ProductSection from "@/components/ProductSection.astro";
 import Card from "@/components/Card.astro";
-import { getSortedPosts } from "@/utils/getSortedPosts";
+import { getPostsForLocale } from "@/utils/getLocalizedPosts";
 import { getAssetPath } from "@/utils/withBase";
 import { useTranslations } from "@/i18n";
 import LineSidebar from "@/components/line-sidebar/LineSidebar";
 import ProfileCard from "@/components/profile-card/ProfileCard";
 import TechLogoLoop from "@/components/logo-loop/TechLogoLoop";
-import { profile } from "@/data/profile";
-import { products } from "@/data/products";
+import { getProfile } from "@/data/profile";
+import { getLocalizedProducts } from "@/data/products";
 import config from "@/config";
 import avatarUrl from "@/assets/profile/person.webp?url";
 import grainUrl from "@/assets/profile/grain.webp?url";
@@ -24,9 +24,11 @@ import "@/styles/logo-loop.css";
 
 const locale = Astro.currentLocale ?? config.site.lang;
 const t = useTranslations(locale);
+const profile = getProfile(locale);
+const localizedProducts = getLocalizedProducts(locale);
 
 const posts = await getCollection("posts");
-const recentPosts = getSortedPosts(posts).slice(0, 4);
+const recentPosts = getPostsForLocale(posts, locale).slice(0, 4);
 ---
 
 <Layout>
@@ -96,7 +98,7 @@ const recentPosts = getSortedPosts(posts).slice(0, 4);
             title={profile.role}
             handle={profile.handle}
             status={profile.status}
-            contactText="联系我"
+            contactText={t.common.contactMe}
             contactHref={`mailto:${profile.email}`}
             avatarUrl={avatarUrl}
             iconUrl={getAssetPath("profile/iconpattern.svg")}
@@ -112,18 +114,18 @@ const recentPosts = getSortedPosts(posts).slice(0, 4);
       </section>
 
       <section class="pb-16 lg:pb-24">
-        <TechLogoLoop client:load />
+          <TechLogoLoop client:load locale={locale} />
       </section>
 
       {
-        products.map((product, index) => (
+        localizedProducts.map((product, index) => (
           <ProductSection product={product} flip={index % 2 === 1} />
         ))
       }
 
       <section class="site-layout pb-24">
         <div class="mb-8 flex items-end justify-between gap-4">
-          <h2 class="font-hand text-4xl sm:text-5xl"># Writing.</h2>
+          <h2 class="font-hand text-4xl sm:text-5xl">{t.home.writing}</h2>
           <a
             href={getRelativeLocaleUrl(locale, "posts")}
             class="text-muted-foreground hover:text-foreground text-sm"

@@ -1,12 +1,17 @@
 ---
 import { Image } from "astro:assets";
-import { tiaotiaoPreviews } from "@/data/tiaotiaoPreviews";
+import { getTiaoTiaoPreviews } from "@/data/tiaotiaoPreviews";
+import { useTranslations } from "@/i18n";
+import config from "@/config";
 import "@/styles/tiaotiao.css";
 
+const locale = Astro.currentLocale ?? config.site.lang;
+const t = useTranslations(locale);
+const tiaotiaoPreviews = getTiaoTiaoPreviews(locale);
 const slides = [...tiaotiaoPreviews, ...tiaotiaoPreviews];
 ---
 
-<section class="tiaotiao-store" aria-label="App Store 预览">
+<section class="tiaotiao-store" aria-label={t.common.preview}>
   <div
     class="tiaotiao-carousel"
     data-tiaotiao-carousel

@@ -19,7 +19,7 @@ let pointerX = innerWidth / 2;
 let pointerY = innerHeight / 2;
 
 function pageThemeLock(pathname = location.pathname): "dark" | "light" | null {
-  if (/(?:^|\/)demos\/s65\/?$/.test(pathname)) return "dark";
+  if (/(?:^|\/)demos\/(?:s65|drawn-together)\/?$/.test(pathname)) return "dark";
   if (/(?:^|\/)demos\/shanghai\/?$/.test(pathname)) return "light";
   return null;
 }
@@ -200,7 +200,7 @@ document.addEventListener(
   "astro:before-swap",
   event => {
     const next = (event as { newDocument: Document }).newDocument;
-    const nextLock = next.querySelector(".s65-page")
+    const nextLock = next.querySelector(".s65-page, .dt-page")
       ? "dark"
       : next.querySelector(".sh-page")
         ? "light"

@@ -9,6 +9,7 @@ import {
   useTransform,
 } from "motion/react";
 import { useEffect, useRef, useState, type ReactNode } from "react";
+import { getDemoUi } from "@/i18n/demoUi";
 
 const MAX_OVERFLOW = 50;
 
@@ -21,6 +22,7 @@ export type ElasticSliderProps = {
   stepSize?: number;
   leftIcon?: ReactNode;
   rightIcon?: ReactNode;
+  ariaLabel?: string;
 };
 
 function VolumeDownIcon() {
@@ -48,6 +50,7 @@ export default function ElasticSlider({
   stepSize = 1,
   leftIcon = <VolumeDownIcon />,
   rightIcon = <VolumeUpIcon />,
+  ariaLabel = "Volume",
 }: ElasticSliderProps) {
   return (
     <div className={`es-container ${className}`.trim()}>
@@ -59,6 +62,7 @@ export default function ElasticSlider({
         stepSize={stepSize}
         leftIcon={leftIcon}
         rightIcon={rightIcon}
+        ariaLabel={ariaLabel}
       />
     </div>
   );
@@ -72,6 +76,7 @@ function Slider({
   stepSize,
   leftIcon,
   rightIcon,
+  ariaLabel,
 }: Required<Omit<ElasticSliderProps, "className">>) {
   const [value, setValue] = useState(defaultValue);
   const sliderRef = useRef<HTMLDivElement>(null);
@@ -189,7 +194,7 @@ function Slider({
           className="es-root"
           role="slider"
           tabIndex={0}
-          aria-label="音量"
+          aria-label={ariaLabel}
           aria-valuemin={startingValue}
           aria-valuemax={maxValue}
           aria-valuenow={Math.round(value)}
@@ -243,10 +248,11 @@ function decay(value: number, max: number) {
   return sigmoid * max;
 }
 
-export function ElasticSliderDemo() {
+export function ElasticSliderDemo({ locale }: { locale?: string }) {
+  const ui = getDemoUi(locale);
   return (
     <div className="es-demo">
-      <h1 className="es-title">音量</h1>
+      <h1 className="es-title">{ui.elasticTitle}</h1>
       <ElasticSlider
         leftIcon={<VolumeDownIcon />}
         rightIcon={<VolumeUpIcon />}
@@ -255,8 +261,9 @@ export function ElasticSliderDemo() {
         maxValue={100}
         isStepped
         stepSize={1}
+        ariaLabel={ui.elasticAria}
       />
-      <p className="es-hint">拖过两端，看看回弹</p>
+      <p className="es-hint">{ui.elasticHint}</p>
     </div>
   );
 }

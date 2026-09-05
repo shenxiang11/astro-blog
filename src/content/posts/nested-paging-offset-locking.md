@@ -1,6 +1,7 @@
 ---
 title: NestedPaging：社交个人页的嵌套滚动，本质是在锁 contentOffset
 description: 拆 NestedPaging 源码。外层 table 和子列表同时识别同一条垂直手势，真正谁在滚由 offset 锁定决定；Header 可见性是唯一真相。
+lang: zh
 pubDatetime: 2026-08-19T10:21:00Z
 featured: true
 draft: false

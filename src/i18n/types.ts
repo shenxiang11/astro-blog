@@ -38,6 +38,23 @@ export interface UIStrings {
     featured: string;
     recentPosts: string;
     allPosts: string;
+    writing: string;
+    techStack: string;
+  };
+  lang: {
+    label: string;
+    zh: string;
+    en: string;
+  };
+  site: {
+    description: string;
+  };
+  common: {
+    learnMore: string;
+    contactMe: string;
+    demo: string;
+    notes: string;
+    preview: string;
   };
   footer: {
     copyright: string;

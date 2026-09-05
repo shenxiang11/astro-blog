@@ -1,6 +1,8 @@
 ---
 import { Image } from "astro:assets";
 import type { ImageMetadata } from "astro";
+import { resolveLocale, useTranslations } from "@/i18n";
+import config from "@/config";
 
 type Props = {
   visual: "clipboard" | "jump" | "harbor";
@@ -10,6 +12,24 @@ type Props = {
 };
 
 const { visual, name, nameEn, image } = Astro.props;
+const locale = resolveLocale(Astro.currentLocale ?? config.site.lang);
+const t = useTranslations(locale);
+const mock =
+  locale === "en"
+    ? {
+        justCopied: "Just copied",
+        imagePng: "Image · PNG",
+        swatchFile: "swatch-12.png",
+        text: "Text",
+        meetingNotes: "Meeting notes…",
+      }
+    : {
+        justCopied: "刚刚复制",
+        imagePng: "图片 · PNG",
+        swatchFile: "色卡 12.png",
+        text: "文本",
+        meetingNotes: "会议纪要要点…",
+      };
 const wide = visual !== "jump";
 ---
 
@@ -17,7 +37,7 @@ const wide = visual !== "jump";
   image ? (
     <Image
       src={image}
-      alt={`${name} 预览`}
+      alt={`${name} ${t.common.preview}`}
       class:list={[
         "h-auto w-full bg-transparent",
         wide ? "max-w-xl" : "max-w-md",
@@ -49,16 +69,16 @@ const wide = visual !== "jump";
         {visual === "clipboard" ? (
           <div class="mt-8 space-y-2 pb-8">
             <div class="rounded-2xl bg-white/95 p-4 text-zinc-900 shadow-lg">
-              <p class="text-xs text-zinc-500">刚刚复制</p>
+              <p class="text-xs text-zinc-500">{mock.justCopied}</p>
               <p class="mt-1 font-medium">https://xingyao.app</p>
             </div>
             <div class="rounded-2xl bg-white/80 p-4 text-zinc-800">
-              <p class="text-xs text-zinc-500">图片 · PNG</p>
-              <p class="mt-1 font-medium">色卡 12.png</p>
+              <p class="text-xs text-zinc-500">{mock.imagePng}</p>
+              <p class="mt-1 font-medium">{mock.swatchFile}</p>
             </div>
             <div class="rounded-2xl bg-white/60 p-4 text-zinc-700">
-              <p class="text-xs text-zinc-500">文本</p>
-              <p class="mt-1 font-medium">会议纪要要点…</p>
+              <p class="text-xs text-zinc-500">{mock.text}</p>
+              <p class="mt-1 font-medium">{mock.meetingNotes}</p>
             </div>
           </div>
         ) : (

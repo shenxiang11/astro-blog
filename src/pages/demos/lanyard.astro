@@ -2,11 +2,15 @@
 import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/Header.astro";
 import Lanyard from "@/components/lanyard/Lanyard";
+import { loadDemoPage } from "@/utils/loadDemoPage";
 import config from "@/config";
 import "@/styles/lanyard.css";
+
+const locale = Astro.currentLocale ?? config.site.lang;
+const { title, description } = await loadDemoPage("lanyard", locale);
 ---
 
-<Layout title={`Lanyard | ${config.site.title}`} description="拖动工牌，物理吊绳。">
+<Layout title={`${title} | ${config.site.title}`} {description}>
   <Header />
 
   <main id="main-content" class="lanyard-page flex-1">

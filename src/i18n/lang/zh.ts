@@ -4,7 +4,7 @@ export default {
   nav: {
     home: "首页",
     apps: "应用",
-    demos: "Demos",
+    demos: "实验",
     libraries: "开源",
     posts: "文章",
     tags: "标签",
@@ -40,6 +40,23 @@ export default {
     featured: "精选",
     recentPosts: "最近文章",
     allPosts: "全部文章",
+    writing: "# Writing.",
+    techStack: "我会的技术",
+  },
+  lang: {
+    label: "语言",
+    zh: "中",
+    en: "EN",
+  },
+  site: {
+    description: "独立开发者。做 App，写文章。",
+  },
+  common: {
+    learnMore: "了解更多",
+    contactMe: "联系我",
+    demo: "演示",
+    notes: "笔记",
+    preview: "预览",
   },
   footer: {
     copyright: "版权所有",
@@ -57,7 +74,7 @@ export default {
     postsTitle: "文章",
     postsDesc: "我发布过的全部文章。",
 
-    demosTitle: "Demos",
+    demosTitle: "实验",
     demosDesc: "用代码做一点交互实验",
 
     librariesTitle: "开源",

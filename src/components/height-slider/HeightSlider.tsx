@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { getDemoUi } from "@/i18n/demoUi";
 
 const STEP_WIDTH = 20;
 const RULER_HEIGHT = 80;
@@ -16,6 +17,7 @@ type HeightSliderProps = {
   fallback?: number;
   stepWidth?: number;
   unit?: string;
+  ariaLabel?: string;
 };
 
 function clamp(n: number, min: number, max: number) {
@@ -57,6 +59,7 @@ export function HeightSlider({
   fallback = 170,
   stepWidth = STEP_WIDTH,
   unit = "cm",
+  ariaLabel = "Height",
 }: HeightSliderProps) {
   const rootRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -386,7 +389,7 @@ export function HeightSlider({
         className="hs-ruler-wrap"
         role="slider"
         tabIndex={0}
-        aria-label="身高"
+        aria-label={ariaLabel}
         aria-valuemin={min}
         aria-valuemax={max}
         aria-valuenow={display}
@@ -408,14 +411,15 @@ export function HeightSlider({
   );
 }
 
-export default function HeightDemo() {
+export default function HeightDemo({ locale }: { locale?: string }) {
   const [height, setHeight] = useState(170);
+  const ui = getDemoUi(locale);
 
   return (
     <div className="hs-demo">
-      <h1 className="hs-title">你的身高</h1>
-      <HeightSlider value={height} onChange={setHeight} />
-      <p className="hs-hint">拖动刻度尺 · 滚轮或方向键微调</p>
+      <h1 className="hs-title">{ui.heightTitle}</h1>
+      <HeightSlider value={height} onChange={setHeight} ariaLabel={ui.heightAria} />
+      <p className="hs-hint">{ui.heightHint}</p>
     </div>
   );
 }

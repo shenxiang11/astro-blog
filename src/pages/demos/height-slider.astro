@@ -2,17 +2,18 @@
 import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/Header.astro";
 import HeightDemo from "@/components/height-slider/HeightSlider";
+import { loadDemoPage } from "@/utils/loadDemoPage";
 import config from "@/config";
 import "@/styles/height-slider.css";
+
+const locale = Astro.currentLocale ?? config.site.lang;
+const { title, description } = await loadDemoPage("height-slider", locale);
 ---
 
-<Layout
-  title={`Height Slider | ${config.site.title}`}
-  description="左右拖动刻度尺，选出身高。"
->
+<Layout title={`${title} | ${config.site.title}`} {description}>
   <Header />
 
   <main id="main-content" class="hs-page flex-1">
-    <HeightDemo client:only="react" />
+    <HeightDemo client:only="react" locale={locale} />
   </main>
 </Layout>

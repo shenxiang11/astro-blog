@@ -1,6 +1,7 @@
 ---
 title: VAPKit：礼物透明动画，本质是同一帧里采两次
 description: 拆 VAPKit 源码。H.264 带不走 Alpha，VAP 把灰阶透明度画进同一张图；播放器读 vapc、AVAssetReader 解码，Metal 按 rgbFrame / aFrame 合成。
+lang: zh
 pubDatetime: 2026-09-03T10:49:00Z
 featured: true
 draft: false

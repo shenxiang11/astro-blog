@@ -4,7 +4,6 @@ import { glob } from "astro/loaders";
 import config from "@/config";
 import { DEMO_PREVIEWS } from "./data/demoPreviews";
 
-
 export const BLOG_PATH = "src/content/posts";
 export const DEMOS_PATH = "src/content/demos";
 
@@ -16,6 +15,7 @@ const posts = defineCollection({
       pubDatetime: z.date(),
       modDatetime: z.date().optional().nullable(),
       title: z.string(),
+      lang: z.enum(["zh", "en"]).default("zh"),
       featured: z.boolean().optional(),
       draft: z.boolean().optional(),
       tags: z.array(z.string()).default(["others"]),
@@ -42,7 +42,11 @@ const demos = defineCollection({
   schema: ({ image }) =>
     z.object({
       title: z.string(),
+      titleEn: z.string().optional(),
       subtitle: z.string(),
+      subtitleEn: z.string().optional(),
+      description: z.string().optional(),
+      descriptionEn: z.string().optional(),
       pubDatetime: z.date(),
       cover: image().or(z.string()).optional(),
       video: z.string().optional(),

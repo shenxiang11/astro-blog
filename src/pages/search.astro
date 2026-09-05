@@ -37,6 +37,7 @@ const t = useTranslations(locale);
       transition:persist
       data-backurl={backUrl}
       data-bundle-path={pagefindBundlePath}
+      data-locale={locale}
       data-translations={JSON.stringify({
         placeholder: t.a11y.searchPlaceholder,
         clear_search: t.a11y.searchClear,
@@ -89,12 +90,15 @@ const t = useTranslations(locale);
         translations = {};
       }
 
+      const locale = pageFindSearch.dataset.locale ?? "zh";
+
       // Init pagefind ui
       const search = new PagefindUI({
         element: "#pagefind-search",
         bundlePath,
         showImages: false,
         showSubResults: true,
+        showEmptyFilters: false,
         translations,
         processTerm: function (term: string) {
           params.set("q", term); // Update the `q` parameter in the URL
@@ -107,6 +111,8 @@ const t = useTranslations(locale);
           return term;
         },
       });
+
+      search.triggerFilters({ lang: locale });
 
       // If search param exists (eg: search?q=astro), trigger search
       const query = params.get("q");
@@ -186,6 +192,11 @@ const t = useTranslations(locale);
 
     .pagefind-ui__result-nested .pagefind-ui__result-link:before {
       font-family: system-ui;
+    }
+
+    .pagefind-ui__filter-panel,
+    .pagefind-ui__drawer {
+      display: none;
     }
   }
 </style>

@@ -2,17 +2,18 @@
 import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/Header.astro";
 import WeightDemo from "@/components/weight-slider/WeightArcSlider";
+import { loadDemoPage } from "@/utils/loadDemoPage";
 import config from "@/config";
 import "@/styles/weight-slider.css";
+
+const locale = Astro.currentLocale ?? config.site.lang;
+const { title, description } = await loadDemoPage("weight-slider", locale);
 ---
 
-<Layout
-  title={`Weight Slider | ${config.site.title}`}
-  description="拖动弧形刻度，选出体重。"
->
+<Layout title={`${title} | ${config.site.title}`} {description}>
   <Header />
 
   <main id="main-content" class="ws-page flex-1">
-    <WeightDemo client:only="react" />
+    <WeightDemo client:only="react" locale={locale} />
   </main>
 </Layout>

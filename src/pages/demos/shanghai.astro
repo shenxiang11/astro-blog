@@ -2,14 +2,15 @@
 import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/Header.astro";
 import ShanghaiSketchbook from "@/components/shanghai-sketchbook/ShanghaiSketchbook";
+import { loadDemoPage } from "@/utils/loadDemoPage";
 import config from "@/config";
 import "@/styles/shanghai-sketchbook.css";
+
+const locale = Astro.currentLocale ?? config.site.lang;
+const { title, description } = await loadDemoPage("shanghai", locale);
 ---
 
-<Layout
-  title={`上海速写 | ${config.site.title}`}
-  description="翻开速写本，看看上海：外滩、豫园、武康大楼。"
->
+<Layout title={`${title} | ${config.site.title}`} {description}>
   <link
     slot="head"
     rel="stylesheet"
@@ -18,6 +19,6 @@ import "@/styles/shanghai-sketchbook.css";
   <Header />
 
   <main id="main-content" class="sh-page flex-1">
-    <ShanghaiSketchbook client:only="react" />
+    <ShanghaiSketchbook client:only="react" locale={locale} />
   </main>
 </Layout>

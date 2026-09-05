@@ -4,7 +4,10 @@ import { fontData, experimental_getFontFileURL } from "astro:assets";
 import satori from "satori";
 import sharp from "sharp";
 import { getFontPathByWeight } from "@/utils/getFontPathByWeight";
-import { getPostSlug } from "@/utils/getPostPaths";
+import {
+  groupPostsByKey,
+  pickPostForLocale,
+} from "@/utils/getLocalizedPosts";
 import config from "@/config";
 
 export async function getStaticPaths() {
@@ -15,15 +18,21 @@ export async function getStaticPaths() {
   const posts = await getCollection("posts").then(p =>
     p.filter(({ data }) => !data.draft && !data.ogImage)
   );
+  const groups = groupPostsByKey(posts);
 
-  return posts.map(post => ({
-    params: { slug: getPostSlug(post.id, post.filePath) },
-    props: post,
+  return [...groups.entries()].map(([key, versions]) => ({
+    params: { slug: key },
+    props: { versions },
   }));
 }
 
-export const GET: APIRoute = async ({ props, url }) => {
+export const GET: APIRoute = async ({ props, url, currentLocale }) => {
   if (!config.features.dynamicOgImage) {
+    return new Response(null, { status: 404, statusText: "Not found" });
+  }
+
+  const post = pickPostForLocale(props.versions, currentLocale);
+  if (!post) {
     return new Response(null, { status: 404, statusText: "Not found" });
   }
 
@@ -111,7 +120,7 @@ export const GET: APIRoute = async ({ props, url }) => {
                           maxHeight: "84%",
                           overflow: "hidden",
                         },
-                        children: props.data.title,
+                        children: post.data.title,
                       },
                     },
                     {
@@ -144,7 +153,7 @@ export const GET: APIRoute = async ({ props, url }) => {
                                       overflow: "hidden",
                                       fontWeight: "bold",
                                     },
-                                    children: props.data.author,
+                                    children: post.data.author,
                                   },
                                 },
                               ],

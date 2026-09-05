@@ -6,6 +6,7 @@ import {
   useState,
   type CSSProperties,
 } from "react";
+import { getDemoUi } from "@/i18n/demoUi";
 
 const TRACK_HEIGHT = 7;
 const SLIDER_HEIGHT = 94;
@@ -511,37 +512,48 @@ type DemoRow = {
   suffix: string;
 };
 
-const ROWS: DemoRow[] = [
-  {
-    title: "年龄范围",
-    noun: "年龄",
-    min: 18,
-    max: 80,
-    lower: 18,
-    upper: 26,
-    suffix: "岁",
-  },
-  {
-    title: "身高偏好",
-    noun: "身高",
-    min: 140,
-    max: 220,
-    lower: 160,
-    upper: 188,
-    suffix: "cm",
-  },
-  {
-    title: "体重偏好",
-    noun: "体重",
-    min: 30,
-    max: 150,
-    lower: 45,
-    upper: 80,
-    suffix: "kg",
-  },
-];
+function demoRows(locale?: string): DemoRow[] {
+  const ui = getDemoUi(locale);
+  return [
+    {
+      title: ui.dualAge,
+      noun: ui.dualAgeNoun,
+      min: 18,
+      max: 80,
+      lower: 18,
+      upper: 26,
+      suffix: ui.dualAgeSuffix,
+    },
+    {
+      title: ui.dualHeight,
+      noun: ui.dualHeightNoun,
+      min: 140,
+      max: 220,
+      lower: 160,
+      upper: 188,
+      suffix: "cm",
+    },
+    {
+      title: ui.dualWeight,
+      noun: ui.dualWeightNoun,
+      min: 30,
+      max: 150,
+      lower: 45,
+      upper: 80,
+      suffix: "kg",
+    },
+  ];
+}
 
-function DemoField({ row }: { row: DemoRow }) {
+function DemoField({
+  row,
+  minLabel,
+  maxLabel,
+}: {
+  row: DemoRow;
+  minLabel: string;
+  maxLabel: string;
+}) {
   const [lower, setLower] = useState(row.lower);
   const [upper, setUpper] = useState(row.upper);
 
@@ -559,8 +571,8 @@ function DemoField({ row }: { row: DemoRow }) {
         min={row.min}
         max={row.max}
         valueText={value => `${value}${row.suffix}`}
-        ariaLabelLower={`最小${row.noun}`}
-        ariaLabelUpper={`最大${row.noun}`}
+        ariaLabelLower={`${minLabel}${row.noun}`}
+        ariaLabelUpper={`${maxLabel}${row.noun}`}
         onChange={(nextLower, nextUpper) => {
           setLower(nextLower);
           setUpper(nextUpper);
@@ -570,14 +582,20 @@ function DemoField({ row }: { row: DemoRow }) {
   );
 }
 
-export default function DualRangeDemo() {
+export default function DualRangeDemo({ locale }: { locale?: string }) {
+  const ui = getDemoUi(locale);
   return (
     <div className="drs-demo">
-      <h1 className="drs-title">选出一个范围</h1>
-      {ROWS.map(row => (
-        <DemoField key={row.title} row={row} />
+      <h1 className="drs-title">{ui.dualTitle}</h1>
+      {demoRows(locale).map(row => (
+        <DemoField
+          key={row.title}
+          row={row}
+          minLabel={ui.dualMin}
+          maxLabel={ui.dualMax}
+        />
       ))}
-      <p className="drs-hint">拖动两端气泡 · 交叉会换边 · 方向键微调</p>
+      <p className="drs-hint">{ui.dualHint}</p>
     </div>
   );
 }

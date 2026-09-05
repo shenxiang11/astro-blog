@@ -1,0 +1,19 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import DrawnTogether from "@/components/drawn-together/DrawnTogether";
+import { loadDemoPage } from "@/utils/loadDemoPage";
+import config from "@/config";
+import "@/styles/drawn-together.css";
+
+const locale = Astro.currentLocale ?? config.site.lang;
+const { title, description } = await loadDemoPage("drawn-together", locale);
+---
+
+<Layout title={`${title} | ${config.site.title}`} {description}>
+  <Header />
+
+  <main id="main-content" class="dt-page flex-1">
+    <DrawnTogether client:only="react" />
+  </main>
+</Layout>

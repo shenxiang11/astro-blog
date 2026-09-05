@@ -3,6 +3,7 @@ import { ClientRouter } from "astro:transitions";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import { resolveDefaultOgImagePath } from "@/utils/resolveDefaultOgImagePath";
 import { getAssetPath } from "@/utils/withBase";
+import { localeAlternates, resolveLocale, useTranslations } from "@/i18n";
 import config from "@/config";
 import "@/styles/global.css";
 
@@ -14,25 +15,26 @@ type Props = {
 };
 
 const { site } = config;
+const locale = resolveLocale(Astro.currentLocale ?? site.lang);
+const t = useTranslations(locale);
+const htmlLang = locale === "zh" ? "zh-CN" : "en";
 
 const {
   title = site.title,
-  description = site.description,
+  description = t.site.description,
   ogImage = resolveDefaultOgImagePath(config),
   canonicalURL = new URL(Astro.url.pathname, Astro.site).href,
 } = Astro.props;
 
 const socialImageURL = new URL(ogImage, Astro.site ?? Astro.url);
-const rssHref = getRelativeLocaleUrl(
-  Astro.currentLocale ?? config.site.lang,
-  "rss.xml"
-);
+const rssHref = getRelativeLocaleUrl(locale, "rss.xml");
+const alternates = localeAlternates(Astro.url.pathname, locale);
 ---
 
 <!doctype html>
 <html
   dir={site.dir ?? "ltr"}
-  lang={Astro.currentLocale ?? site.lang}
+  lang={htmlLang}
   transition:name="root"
   transition:animate="none"
   class="overflow-y-auto scroll-smooth"
@@ -54,6 +56,23 @@ const rssHref = getRelativeLocaleUrl(
     <meta name="description" content={description} />
     <meta name="author" content={site.author} />
     <link rel="sitemap" href={getAssetPath("sitemap-index.xml")} />
+    {
+      alternates.map(item => (
+        <link
+          rel="alternate"
+          hreflang={item.locale === "zh" ? "zh-CN" : "en"}
+          href={new URL(item.href, Astro.site ?? Astro.url)}
+        />
+      ))
+    }
+    <link
+      rel="alternate"
+      hreflang="x-default"
+      href={new URL(
+        alternates.find(item => item.locale === "zh")?.href ?? "/",
+        Astro.site ?? Astro.url
+      )}
+    />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
@@ -104,7 +123,9 @@ const rssHref = getRelativeLocaleUrl(
           "(prefers-color-scheme: dark)"
         ).matches;
         const preferred = stored ?? (prefersDark ? "dark" : "light");
-        const forceDark = /(?:^|\/)demos\/s65\/?$/.test(location.pathname);
+        const forceDark = /(?:^|\/)demos\/(?:s65|drawn-together)\/?$/.test(
+          location.pathname
+        );
         const forceLight = /(?:^|\/)demos\/shanghai\/?$/.test(location.pathname);
         const theme = forceDark ? "dark" : forceLight ? "light" : preferred;
         const root = document.firstElementChild;

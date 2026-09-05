@@ -1,8 +1,9 @@
 ---
 import ProductPage from "@/components/ProductPage.astro";
-import { getProduct } from "@/data/products";
+import { getLocalizedProduct } from "@/data/products";
+import config from "@/config";
 
-const product = getProduct("miaotie");
+const product = getLocalizedProduct("miaotie", Astro.currentLocale ?? config.site.lang);
 ---
 
 <ProductPage {product} />

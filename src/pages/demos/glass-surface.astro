@@ -2,17 +2,18 @@
 import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/Header.astro";
 import { GlassSurfaceDemo } from "@/components/glass-surface/GlassSurfaceDemo";
+import { loadDemoPage } from "@/utils/loadDemoPage";
 import config from "@/config";
 import "@/styles/glass-surface.css";
+
+const locale = Astro.currentLocale ?? config.site.lang;
+const { title, description } = await loadDemoPage("glass-surface", locale);
 ---
 
-<Layout
-  title={`Glass Surface | ${config.site.title}`}
-  description="向下滚动，看玻璃折射。"
->
+<Layout title={`${title} | ${config.site.title}`} {description}>
   <Header />
 
   <main id="main-content" class="gs-page flex-1">
-    <GlassSurfaceDemo client:only="react" />
+    <GlassSurfaceDemo client:only="react" locale={locale} />
   </main>
 </Layout>

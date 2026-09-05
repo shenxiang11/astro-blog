@@ -1,0 +1,34 @@
+---
+import { localeHref, resolveLocale, useTranslations } from "@/i18n";
+import config from "@/config";
+
+const locale = resolveLocale(Astro.currentLocale ?? config.site.lang);
+const t = useTranslations(locale);
+const pathname = Astro.url.pathname;
+const zhHref = localeHref("zh", pathname, locale);
+const enHref = localeHref("en", pathname, locale);
+---
+
+<nav class="lang-switch" aria-label={t.lang.label}>
+  <a
+    href={zhHref}
+    class:list={["lang-switch-link", { "is-active": locale === "zh" }]}
+    lang="zh-CN"
+    hreflang="zh-CN"
+    data-astro-reload
+    aria-current={locale === "zh" ? "true" : undefined}
+  >
+    {t.lang.zh}
+  </a>
+  <span class="lang-switch-sep" aria-hidden="true">/</span>
+  <a
+    href={enHref}
+    class:list={["lang-switch-link", { "is-active": locale === "en" }]}
+    lang="en"
+    hreflang="en"
+    data-astro-reload
+    aria-current={locale === "en" ? "true" : undefined}
+  >
+    {t.lang.en}
+  </a>
+</nav>

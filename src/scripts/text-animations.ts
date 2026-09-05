@@ -581,12 +581,15 @@ async function copyCode(id: string, btn: HTMLButtonElement) {
     area.remove();
   }
 
+  const labels = document.getElementById("main-content");
+  const copied = labels?.dataset.taCopied || "Copied";
+  const copiedNamed = labels?.dataset.taCopiedNamed || "Copied {name}";
   const original = btn.textContent;
-  btn.textContent = "已复制";
+  btn.textContent = copied;
   btn.classList.add("is-copied");
   const toast = document.querySelector("[data-ta-toast]");
   if (toast) {
-    toast.textContent = `已复制 ${anim.name}`;
+    toast.textContent = copiedNamed.replace("{name}", anim.name);
     toast.classList.add("is-on");
   }
   window.setTimeout(() => {

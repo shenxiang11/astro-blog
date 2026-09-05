@@ -26,15 +26,26 @@ export default defineConfig({
     react(),
     mdx(),
     sitemap({
+      i18n: {
+        defaultLocale: "zh",
+        locales: {
+          zh: "zh-CN",
+          en: "en",
+        },
+      },
       filter: page =>
         config.features?.showArchives !== false || !page.endsWith("/archives/"),
     }),
   ],
   i18n: {
-    locales: ["zh"],
+    locales: ["zh", "en"],
     defaultLocale: "zh",
+    fallback: {
+      en: "zh",
+    },
     routing: {
       prefixDefaultLocale: false,
+      fallbackType: "rewrite",
     },
   },
   markdown: {

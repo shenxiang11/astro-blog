@@ -601,6 +601,59 @@
   background: rgb(255 252 246 / 0.12);
 }
 
+.demo-drawn {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  background: #05060a;
+  border-radius: 1rem;
+}
+
+.demo-drawn-svg {
+  width: 92%;
+  height: auto;
+  overflow: visible;
+}
+
+.demo-drawn-glow,
+.demo-drawn-tube {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 2600;
+  stroke-dashoffset: 2600;
+  animation: demo-drawn-write 4.4s ease-in-out infinite;
+}
+
+.demo-drawn-glow {
+  stroke: #8b5cff;
+  stroke-width: 22;
+  opacity: 0.55;
+  filter: blur(8px);
+}
+
+.demo-drawn-tube {
+  stroke: url(#demo-drawn-ink);
+  stroke-width: 8;
+}
+
+@keyframes demo-drawn-write {
+  0% {
+    stroke-dashoffset: 2600;
+    opacity: 0.35;
+  }
+  40%,
+  68% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+  100% {
+    stroke-dashoffset: 2600;
+    opacity: 0.2;
+  }
+}
+
 @keyframes demo-glass-pan {
   0%,
   100% {
@@ -697,8 +750,16 @@
   .demo-dual-range,
   .demo-dual-bubble-top,
   .demo-dual-bubble-bot,
-  .demo-glass-photo {
+  .demo-glass-photo,
+  .demo-drawn-glow,
+  .demo-drawn-tube {
     animation: none;
+  }
+
+  .demo-drawn-glow,
+  .demo-drawn-tube {
+    stroke-dashoffset: 0;
+    opacity: 1;
   }
 
   .demo-text-anim span {

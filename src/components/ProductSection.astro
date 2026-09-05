@@ -1,5 +1,5 @@
 ---
-import type { Product } from "@/data/products";
+import type { LocalizedProduct } from "@/data/products";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import ProductVisual from "./ProductVisual.astro";
 import ProductFeatureList from "./ProductFeatureList.astro";
@@ -9,7 +9,7 @@ import { useTranslations } from "@/i18n";
 import config from "@/config";
 
 type Props = {
-  product: Product;
+  product: LocalizedProduct;
   flip?: boolean;
 };
 
@@ -43,7 +43,7 @@ const cover = productCovers[product.id];
           href={href}
           class="bg-foreground text-background rounded-full px-5 py-2.5 text-sm font-medium"
         >
-          了解更多
+          {t.common.learnMore}
         </a>
         {
           product.downloadUrl && (

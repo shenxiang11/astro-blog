@@ -9,7 +9,7 @@ import config from "@/config";
 
 const locale = Astro.currentLocale ?? config.site.lang;
 const t = useTranslations(locale);
-const items = getSortedLibraries();
+const items = getSortedLibraries(locale);
 ---
 
 <Layout

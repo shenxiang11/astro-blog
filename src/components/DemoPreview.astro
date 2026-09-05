@@ -6,6 +6,7 @@ import cardFront from "@/assets/lanyard/card-front.png";
 import glassSummer from "@/assets/glass-surface/summer.jpg";
 import shanghaiBund from "@/assets/shanghai/the-bund.png";
 import { S65_SPEED_PATH, S65_SPEED_VIEWBOX } from "@/components/s65/speedPath";
+import { PATH_SVG } from "@/components/drawn-together/path";
 
 type Props = {
   kind: DemoKind;
@@ -13,6 +14,34 @@ type Props = {
 
 const { kind } = Astro.props;
 ---
+
+{
+  kind === "drawn-together" && (
+    <div class="demo-drawn" aria-hidden="true">
+      <svg class="demo-drawn-svg" viewBox="0 0 760 340" fill="none">
+        <path class="demo-drawn-glow" d={PATH_SVG} />
+        <path class="demo-drawn-tube" d={PATH_SVG} />
+        <defs>
+          <linearGradient
+            id="demo-drawn-ink"
+            x1="14"
+            y1="170"
+            x2="740"
+            y2="170"
+            gradientUnits="userSpaceOnUse"
+          >
+            <stop offset="0" stop-color="#00D4FF" />
+            <stop offset="0.22" stop-color="#2B5CFF" />
+            <stop offset="0.42" stop-color="#9B5EFF" />
+            <stop offset="0.62" stop-color="#FF2D9B" />
+            <stop offset="0.8" stop-color="#FF6B2B" />
+            <stop offset="1" stop-color="#B44AFF" />
+          </linearGradient>
+        </defs>
+      </svg>
+    </div>
+  )
+}
 
 {
   kind === "s65" && (

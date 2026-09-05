@@ -1,14 +1,16 @@
 ---
-import type { Library } from "@/data/libraries";
+import type { LocalizedLibrary } from "@/data/libraries";
+import { useTranslations } from "@/i18n";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import IconBrandGithub from "@/assets/icons/socials/github.svg";
 import config from "@/config";
 
 type Props = {
-  library: Library;
+  library: LocalizedLibrary;
 };
 
 const { library } = Astro.props;
+const t = useTranslations(Astro.currentLocale ?? config.site.lang);
 const { name, description, platforms, repo, article, demo } = library;
 const locale = Astro.currentLocale ?? config.site.lang;
 const articleHref = article
@@ -59,7 +61,7 @@ const demoHref = demo
               target={isExternalDemo ? "_blank" : undefined}
               rel={isExternalDemo ? "noopener noreferrer" : undefined}
             >
-              演示
+              {t.common.demo}
             </a>
           )
         }
@@ -69,7 +71,7 @@ const demoHref = demo
               href={articleHref}
               class="text-muted-foreground hover:text-foreground transition-colors"
             >
-              笔记
+              {t.common.notes}
             </a>
           )
         }
