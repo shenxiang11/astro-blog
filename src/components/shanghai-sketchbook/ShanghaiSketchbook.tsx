@@ -340,6 +340,9 @@ export default function ShanghaiSketchbook() {
       startY: event.clientY,
       originX: loupe.x,
       originY: loupe.y,
+      lastT: 0,
+      lastAt: 0,
+      velocity: 0,
     };
     dismissHint();
   };
