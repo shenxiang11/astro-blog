@@ -59,6 +59,7 @@ function Strip({
       className={`sh-strip${index === STRIP_COUNT - 1 ? " is-edge" : ""}`}
       style={
         {
+          "--i": String(index),
           "--lit": near.toFixed(3),
           "--a1": ((1 - near) * 0.62).toFixed(3),
           "--a2": ((1 - far) * 0.62).toFixed(3),
