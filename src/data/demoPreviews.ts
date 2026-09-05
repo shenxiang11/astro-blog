@@ -1,4 +1,5 @@
 export const DEMO_PREVIEWS = [
+  "shanghai",
   "s65",
   "lanyard",
   "text-animations",

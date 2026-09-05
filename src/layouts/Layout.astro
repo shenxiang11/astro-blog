@@ -105,12 +105,13 @@ const rssHref = getRelativeLocaleUrl(
         ).matches;
         const preferred = stored ?? (prefersDark ? "dark" : "light");
         const forceDark = /(?:^|\/)demos\/s65\/?$/.test(location.pathname);
-        const theme = forceDark ? "dark" : preferred;
+        const forceLight = /(?:^|\/)demos\/shanghai\/?$/.test(location.pathname);
+        const theme = forceDark ? "dark" : forceLight ? "light" : preferred;
         const root = document.firstElementChild;
         root?.setAttribute("data-theme", theme);
         root?.classList.toggle("dark", theme === "dark");
-        root?.classList.toggle("theme-locked", forceDark);
-        // Keep the user's real preference. S65 only paints dark for this page.
+        root?.classList.toggle("theme-locked", forceDark || forceLight);
+        // Keep the user's real preference. Some demos lock the paint.
         window.__theme = { value: preferred };
       })();
     </script>

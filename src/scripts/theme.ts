@@ -18,8 +18,14 @@ let themeValue: string =
 let pointerX = innerWidth / 2;
 let pointerY = innerHeight / 2;
 
-function isS65Demo(): boolean {
-  return /(?:^|\/)demos\/s65\/?$/.test(location.pathname);
+function pageThemeLock(pathname = location.pathname): "dark" | "light" | null {
+  if (/(?:^|\/)demos\/s65\/?$/.test(pathname)) return "dark";
+  if (/(?:^|\/)demos\/shanghai\/?$/.test(pathname)) return "light";
+  return null;
+}
+
+function isThemeLocked(): boolean {
+  return pageThemeLock() !== null;
 }
 
 function persist(): void {
@@ -28,12 +34,12 @@ function persist(): void {
 }
 
 function reflect(): void {
-  const locked = isS65Demo();
-  const shown = locked ? DARK : themeValue;
+  const locked = pageThemeLock();
+  const shown = locked ?? themeValue;
   const root = document.documentElement;
   root.setAttribute("data-theme", shown);
   root.classList.toggle("dark", shown === DARK);
-  root.classList.toggle("theme-locked", locked);
+  root.classList.toggle("theme-locked", Boolean(locked));
   document.querySelector("#theme-btn")?.setAttribute("aria-label", themeValue);
 
   const bg = window.getComputedStyle(document.body).backgroundColor;
@@ -182,7 +188,7 @@ document.addEventListener(
   event => {
     const target = event.target;
     if (!(target instanceof Element) || !target.closest("#theme-btn")) return;
-    if (isS65Demo()) return;
+    if (isThemeLocked()) return;
     void applyTheme(themeValue === LIGHT ? DARK : LIGHT, clickOrigin(event));
   },
   { capture: true, signal }
@@ -194,13 +200,17 @@ document.addEventListener(
   "astro:before-swap",
   event => {
     const next = (event as { newDocument: Document }).newDocument;
-    const nextIsS65 = Boolean(next.querySelector(".s65-page"));
-    const shown = nextIsS65 ? DARK : themeValue;
+    const nextLock = next.querySelector(".s65-page")
+      ? "dark"
+      : next.querySelector(".sh-page")
+        ? "light"
+        : null;
+    const shown = nextLock ?? themeValue;
     next.documentElement.setAttribute("data-theme", shown);
     next.documentElement.classList.toggle("dark", shown === DARK);
-    next.documentElement.classList.toggle("theme-locked", nextIsS65);
+    next.documentElement.classList.toggle("theme-locked", Boolean(nextLock));
 
-    const currentShown = isS65Demo() ? DARK : themeValue;
+    const currentShown = pageThemeLock() ?? themeValue;
     if (shown === currentShown) {
       const color = document
         .querySelector("meta[name='theme-color']")

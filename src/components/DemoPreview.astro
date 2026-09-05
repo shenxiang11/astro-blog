@@ -4,6 +4,7 @@ import { Image } from "astro:assets";
 import LogoXingyao from "@/assets/icons/LogoXingyao.svg";
 import cardFront from "@/assets/lanyard/card-front.png";
 import glassSummer from "@/assets/glass-surface/summer.jpg";
+import shanghaiBund from "@/assets/shanghai/the-bund.png";
 import { S65_SPEED_PATH, S65_SPEED_VIEWBOX } from "@/components/s65/speedPath";
 
 type Props = {
@@ -155,6 +156,18 @@ const { kind } = Astro.props;
     <div class="demo-glass" aria-hidden="true">
       <Image src={glassSummer} alt="" class="demo-glass-photo" />
       <span class="demo-glass-lens" />
+    </div>
+  )
+}
+
+{
+  kind === "shanghai" && (
+    <div class="demo-shanghai" aria-hidden="true">
+      <div class="demo-shanghai-book">
+        <Image src={shanghaiBund} alt="" class="demo-shanghai-plate" />
+        <span class="demo-shanghai-gutter" />
+        <span class="demo-shanghai-loupe" />
+      </div>
     </div>
   )
 }

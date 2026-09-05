@@ -1,0 +1,23 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import ShanghaiSketchbook from "@/components/shanghai-sketchbook/ShanghaiSketchbook";
+import config from "@/config";
+import "@/styles/shanghai-sketchbook.css";
+---
+
+<Layout
+  title={`上海速写 | ${config.site.title}`}
+  description="翻开速写本，看看上海：外滩、豫园、武康大楼。"
+>
+  <link
+    slot="head"
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;500;600&display=swap"
+  />
+  <Header />
+
+  <main id="main-content" class="sh-page flex-1">
+    <ShanghaiSketchbook client:only="react" />
+  </main>
+</Layout>
