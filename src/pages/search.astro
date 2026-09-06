@@ -34,7 +34,7 @@ const t = useTranslations(locale);
     <Breadcrumb slot="lead" class="mb-6" />
     <div
       id="pagefind-search"
-      transition:persist
+      transition:persist={locale}
       data-backurl={backUrl}
       data-bundle-path={pagefindBundlePath}
       data-locale={locale}
@@ -194,8 +194,7 @@ const t = useTranslations(locale);
       font-family: system-ui;
     }
 
-    .pagefind-ui__filter-panel,
-    .pagefind-ui__drawer {
+    .pagefind-ui__filter-panel {
       display: none;
     }
   }

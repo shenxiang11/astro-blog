@@ -6,6 +6,7 @@
   --sh-serif: "Source Serif 4", "Iowan Old Style", Palatino, "Songti SC", serif;
   position: relative;
   margin-top: -6.5rem;
+  overflow-x: clip;
   color: var(--sh-ink);
   background: var(--sh-paper);
 }
@@ -91,13 +92,13 @@
 
 .sh-wrap.is-intro .sh-spread img,
 .sh-wrap.is-intro .sh-half img,
-.sh-wrap.is-intro .sh-face {
+.sh-wrap.is-intro .sh-face img {
   filter: url(#sh-mblur-1);
 }
 
 .sh-wrap.is-intro.is-rush .sh-spread img,
 .sh-wrap.is-intro.is-rush .sh-half img,
-.sh-wrap.is-intro.is-rush .sh-face {
+.sh-wrap.is-intro.is-rush .sh-face img {
   filter: url(#sh-mblur-2);
 }
 
@@ -124,7 +125,8 @@
 }
 
 .sh-stage {
-  width: min(900px, calc(100vw - 5.5rem));
+  flex: 0 0 auto;
+  width: min(900px, calc(100% - 4.5rem));
 }
 
 .sh-3d {
@@ -138,6 +140,10 @@
   position: relative;
   transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 6deg)) scale(var(--zoom, 1));
   transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.sh-tilt.is-turning {
+  transition: none;
 }
 
 .sh-cast {
@@ -218,8 +224,9 @@
   position: absolute;
   inset: 0;
   z-index: 6;
-  perspective: 980px;
+  perspective: 1750px;
   perspective-origin: 50% 46%;
+  transform-style: preserve-3d;
 }
 
 .sh-half {
@@ -424,9 +431,8 @@
   bottom: 0;
   left: 0;
   right: -1.1px;
+  overflow: hidden;
   background-color: #f4efe6;
-  background-repeat: no-repeat;
-  background-size: var(--bw) 100%;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
   mask-image: var(--leaf-mask);
@@ -437,6 +443,17 @@
   -webkit-mask-size: var(--leaf-w) 100%;
   -webkit-mask-repeat: no-repeat;
   -webkit-mask-position: var(--leaf-pos);
+}
+
+.sh-face img {
+  position: absolute;
+  top: 0;
+  width: var(--bw);
+  height: var(--bh, 100%);
+  max-width: none;
+  object-fit: cover;
+  object-position: center;
+  pointer-events: none;
 }
 
 .sh-curl.next .sh-face {
@@ -826,7 +843,7 @@
   }
 
   .sh-stage {
-    width: min(900px, calc(100vw - 1.6rem));
+    width: min(900px, 100%);
   }
 
   .sh-caption {

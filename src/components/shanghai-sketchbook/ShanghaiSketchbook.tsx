@@ -182,6 +182,12 @@ export default function ShanghaiSketchbook({ locale }: { locale?: string }) {
         setIndex(to);
         return;
       }
+      const book = bookRef.current;
+      if (book) {
+        const width = book.clientWidth;
+        const height = book.clientHeight;
+        if (width && height) setBookSize({ w: width, h: height });
+      }
       writeTurn({ dir: direction, from, to, t });
     },
     [dismissHint, stopIntro, writeTurn]
@@ -245,6 +251,7 @@ export default function ShanghaiSketchbook({ locale }: { locale?: string }) {
     };
 
     const observe = () => {
+      if (turnRef.current) return;
       const width = book.clientWidth;
       const height = book.clientHeight;
       if (!width || !height) return;
@@ -308,6 +315,7 @@ export default function ShanghaiSketchbook({ locale }: { locale?: string }) {
   }, [stopIntro]);
 
   const onStageMove = (event: React.PointerEvent<HTMLDivElement>) => {
+    if (turnRef.current) return;
     const rect = event.currentTarget.getBoundingClientRect();
     const nx = (event.clientX - rect.left) / rect.width;
     const ny = (event.clientY - rect.top) / rect.height;
@@ -318,6 +326,7 @@ export default function ShanghaiSketchbook({ locale }: { locale?: string }) {
   };
 
   const onStageLeave = () => {
+    if (turnRef.current) return;
     setTilt({ rx: 0, ry: 6 });
   };
 
@@ -472,13 +481,18 @@ export default function ShanghaiSketchbook({ locale }: { locale?: string }) {
                 } as React.CSSProperties
               }
             >
-              <div className="sh-tilt">
+              <div className={`sh-tilt${turning ? " is-turning" : ""}`}>
                 <div className="sh-cast ambient" aria-hidden="true" />
                 <div className="sh-cast contact" aria-hidden="true" />
                 <div className="sh-cast hair" aria-hidden="true" />
                 <div
                   ref={bookRef}
                   className={`sh-book${turning ? " is-turning" : ""}`}
+                  style={
+                    turning && bookSize.w && bookSize.h
+                      ? { width: bookSize.w, height: bookSize.h }
+                      : undefined
+                  }
                   onPointerDown={onPageDown}
                   onPointerMove={onPointerMove}
                   onPointerUp={onPointerUp}
@@ -524,6 +538,7 @@ export default function ShanghaiSketchbook({ locale }: { locale?: string }) {
                         toSrc={PLATES[turn.to].src}
                         t={turn.t}
                         bookWidth={bookSize.w || 900}
+                        bookHeight={bookSize.h || 0}
                       />
                     </div>
                   )}

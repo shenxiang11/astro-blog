@@ -1,7 +1,7 @@
 import type { CSSProperties } from "react";
 
 const STRIP_COUNT = 18;
-const SPAN = 0.449;
+const SPAN = 0.5;
 const BETA = 0.6;
 
 export type CurlDir = "next" | "prev";
@@ -12,6 +12,7 @@ type PaperCurlProps = {
   toSrc: string;
   t: number;
   bookWidth: number;
+  bookHeight: number;
 };
 
 export function curlAngles(t: number) {
@@ -66,23 +67,23 @@ function Strip({
         } as CSSProperties
       }
     >
-      <div
-        className="sh-face front"
-        style={{
-          backgroundImage: `url(${fromSrc})`,
-          backgroundPositionX: `${frontX}px`,
-        }}
-      >
+      <div className="sh-face front">
+        <img
+          src={fromSrc}
+          alt=""
+          draggable={false}
+          style={{ left: frontX }}
+        />
         <span className="sh-face-shade" />
         <span className="sh-face-glint" />
       </div>
-      <div
-        className="sh-face back"
-        style={{
-          backgroundImage: `url(${toSrc})`,
-          backgroundPositionX: `${backX}px`,
-        }}
-      >
+      <div className="sh-face back">
+        <img
+          src={toSrc}
+          alt=""
+          draggable={false}
+          style={{ left: backX }}
+        />
         <span className="sh-face-shade" />
         <span className="sh-face-glint" />
       </div>
@@ -107,6 +108,7 @@ export default function PaperCurl({
   toSrc,
   t,
   bookWidth,
+  bookHeight,
 }: PaperCurlProps) {
   const { turnDeg, deltaDeg, shade, turn, delta } = curlAngles(t);
 
@@ -118,6 +120,7 @@ export default function PaperCurl({
           "--n": STRIP_COUNT,
           "--span": SPAN,
           "--bw": `${bookWidth}px`,
+          "--bh": bookHeight ? `${bookHeight}px` : "100%",
           "--tt": `${turnDeg.toFixed(2)}deg`,
           "--td": `${deltaDeg.toFixed(3)}deg`,
           "--shade": shade.toFixed(3),
