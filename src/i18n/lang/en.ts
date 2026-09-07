@@ -4,6 +4,7 @@ export default {
   nav: {
     home: "Home",
     apps: "Apps",
+    tools: "Tools",
     demos: "Demos",
     libraries: "Libraries",
     posts: "Posts",
@@ -57,6 +58,7 @@ export default {
     demo: "Demo",
     notes: "Notes",
     preview: "Preview",
+    open: "Open",
   },
   footer: {
     copyright: "Copyright",
@@ -79,6 +81,9 @@ export default {
 
     librariesTitle: "Libraries",
     librariesDesc: "Open-source libraries written for other projects to use.",
+
+    toolsTitle: "Tools",
+    toolsDesc: "Small tools I built. Open them and use them.",
 
     archivesTitle: "Archives",
     archivesDesc: "All the articles I've archived.",

@@ -2,6 +2,7 @@ export interface UIStrings {
   nav: {
     home: string;
     apps: string;
+    tools: string;
     demos: string;
     libraries: string;
     posts: string;
@@ -55,6 +56,7 @@ export interface UIStrings {
     demo: string;
     notes: string;
     preview: string;
+    open: string;
   };
   footer: {
     copyright: string;
@@ -77,6 +79,9 @@ export interface UIStrings {
 
     librariesTitle: string;
     librariesDesc: string;
+
+    toolsTitle: string;
+    toolsDesc: string;
 
     archivesTitle: string;
     archivesDesc: string;

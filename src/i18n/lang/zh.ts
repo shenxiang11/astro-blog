@@ -4,6 +4,7 @@ export default {
   nav: {
     home: "首页",
     apps: "应用",
+    tools: "工具",
     demos: "实验",
     libraries: "开源",
     posts: "文章",
@@ -57,6 +58,7 @@ export default {
     demo: "演示",
     notes: "笔记",
     preview: "预览",
+    open: "打开",
   },
   footer: {
     copyright: "版权所有",
@@ -79,6 +81,9 @@ export default {
 
     librariesTitle: "开源",
     librariesDesc: "自己写的、可以给项目用的库",
+
+    toolsTitle: "工具",
+    toolsDesc: "自己做的小工具，打开就能用",
 
     archivesTitle: "归档",
     archivesDesc: "按时间整理的全部文章。",

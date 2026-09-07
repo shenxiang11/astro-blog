@@ -40,6 +40,11 @@ const appsActive = appLinks.some(link => link.active);
 
 const links = [
   {
+    href: getRelativeLocaleUrl(locale, "tools"),
+    label: t.nav.tools,
+    active: isActive("/tools"),
+  },
+  {
     href: getRelativeLocaleUrl(locale, "libraries"),
     label: t.nav.libraries,
     active: isActive("/libraries"),
