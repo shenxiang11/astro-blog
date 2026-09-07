@@ -9,4 +9,5 @@ description: "关于星曜。"
 
 - [妙贴](/miaotie)：Mac / iPhone 剪贴板历史
 - [跳跳](/tiaotiao)：跳绳计数
+- [Push Tester](/pushtester)：给真机发测试推送
 - [开源](/libraries)：[VAPKit](https://github.com/shenxiang11/vapkit)、[VAPKit Android](https://github.com/shenxiang11/vapkit-android)、[VAPKit Web](https://github.com/shenxiang11/vapkit-web)、[NestedPaging](https://github.com/shenxiang11/NestedPaging)

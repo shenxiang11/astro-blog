@@ -10,6 +10,7 @@ import config from "@/config";
 
 const locale = Astro.currentLocale ?? config.site.lang;
 const english = locale === "en";
+const pushtesterHref = getRelativeLocaleUrl(locale, "pushtester");
 const miaotieHref = getRelativeLocaleUrl(locale, "miaotie");
 const tiaotiaoHref = getRelativeLocaleUrl(locale, "tiaotiao");
 const librariesHref = getRelativeLocaleUrl(locale, "libraries");
@@ -49,6 +50,10 @@ const Content = rendered?.Content;
             </li>
             <li>
               <a href={tiaotiaoHref}>TiaoTiao</a>: jump-rope counter
+            </li>
+            <li>
+              <a href={pushtesterHref}>Push Tester</a>: send test pushes from
+              Mac to real devices
             </li>
             <li>
               <a href={librariesHref}>Libraries</a>:{" "}

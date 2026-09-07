@@ -5,7 +5,7 @@ import { resolveLocale, useTranslations } from "@/i18n";
 import config from "@/config";
 
 type Props = {
-  visual: "clipboard" | "jump" | "harbor";
+  visual: "clipboard" | "jump" | "harbor" | "push";
   name: string;
   nameEn: string;
   image?: ImageMetadata;
@@ -41,6 +41,8 @@ const wide = visual !== "jump";
       class:list={[
         "h-auto w-full bg-transparent",
         wide ? "max-w-xl" : "max-w-md",
+        visual === "push" &&
+          "rounded-xl shadow-[0_24px_80px_rgb(0_0_0_/_0.28)]",
       ]}
       widths={[400, 640, 800, 1120, 1400]}
       sizes={

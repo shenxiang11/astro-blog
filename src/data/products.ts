@@ -9,7 +9,7 @@ export type ProductCopy = {
 };
 
 export type Product = {
-  id: "miaotie" | "tiaotiao" | "harbor";
+  id: "miaotie" | "tiaotiao" | "harbor" | "pushtester";
   name: string;
   nameEn: string;
   href: string;
@@ -17,7 +17,7 @@ export type Product = {
   platforms: string[];
   supportHref: string;
   privacyHref: string;
-  visual: "clipboard" | "jump" | "harbor";
+  visual: "clipboard" | "jump" | "harbor" | "push";
   gradient: string;
   /** Live App Store listing. `null` until the app is published. */
   appStoreUrl?: string | null;
@@ -152,6 +152,48 @@ export const products: Product[] = [
     privacyHref: "/privacy",
     visual: "harbor",
     gradient: "from-[#22c55e] via-[#16a34a] to-[#052e16]",
+  },
+  {
+    id: "pushtester",
+    name: "Push Tester",
+    nameEn: "Push Tester",
+    href: "/pushtester",
+    copy: {
+      zh: {
+        navLabel: "Push Tester",
+        kicker: "推送测试",
+        title: "发一条，就知道通不通",
+        description:
+          "Push Tester 是给真机发测试推送的 macOS 工具。直连 APNs、FCM 和华为 / 小米 / OPPO / vivo，没有自建后端。私钥和服务账号只进本机钥匙串。",
+        features: [
+          "APNs、FCM、华为、小米、OPPO、vivo",
+          "JSON 载荷编辑，旁边就能预览通知",
+          "历史可重放，令牌和密钥会遮罩",
+          "凭证留在钥匙串，不经过自建服务器",
+          "仓库里带 iOS / Android 示例收件 App",
+        ],
+      },
+      en: {
+        navLabel: "Push Tester",
+        kicker: "Push testing",
+        title: "Send one. You'll know it landed.",
+        description:
+          "Push Tester is a macOS app for sending test pushes to real devices. It talks to APNs, FCM, and Huawei / Xiaomi / OPPO / vivo — no backend of yours in the middle. Keys and service accounts stay in the Keychain.",
+        features: [
+          "APNs, FCM, Huawei, Xiaomi, OPPO, vivo",
+          "Edit JSON payloads with a live notification preview",
+          "Replay history; tokens and secrets are masked",
+          "Credentials stay in Keychain, never hit a first-party server",
+          "iOS and Android sample apps in the repo",
+        ],
+      },
+    },
+    platforms: ["Mac"],
+    supportHref: "/support",
+    privacyHref: "/privacy",
+    visual: "push",
+    gradient: "from-[#6366f1] via-[#4f46e5] to-[#1e1b4b]",
+    downloadUrl: "https://github.com/shenxiang11/PushTester",
   },
 ];
 
