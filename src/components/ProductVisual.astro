@@ -35,14 +35,21 @@ const wide = visual !== "jump";
 
 {
   image ? (
+    visual === "push" ? (
+      <img
+        src={image.src}
+        alt={`${name} ${t.common.preview}`}
+        width={image.width}
+        height={image.height}
+        class="h-auto w-full max-w-xl"
+      />
+    ) : (
     <Image
       src={image}
       alt={`${name} ${t.common.preview}`}
       class:list={[
         "h-auto w-full bg-transparent",
         wide ? "max-w-xl" : "max-w-md",
-        visual === "push" &&
-          "rounded-xl shadow-[0_24px_80px_rgb(0_0_0_/_0.28)]",
       ]}
       widths={[400, 640, 800, 1120, 1400]}
       sizes={
@@ -52,6 +59,7 @@ const wide = visual !== "jump";
       }
       format="webp"
     />
+    )
   ) : (
     <div class="border-border/60 relative flex aspect-4/5 w-full max-w-sm items-end overflow-hidden rounded-[2rem] border px-6 pt-8 pb-0 shadow-[0_24px_80px_rgb(0_0_0_/_0.35)]">
       {visual === "clipboard" ? (

@@ -1,5 +1,4 @@
 ---
-import { Image } from "astro:assets";
 import { getPushTesterPreviews } from "@/data/pushtesterPreviews";
 import { useTranslations } from "@/i18n";
 import config from "@/config";
@@ -7,42 +6,21 @@ import "@/styles/pushtester.css";
 
 const locale = Astro.currentLocale ?? config.site.lang;
 const t = useTranslations(locale);
-const previews = getPushTesterPreviews(locale);
-const [composer, payload, providers] = previews;
+const preview = getPushTesterPreviews(locale)[0];
 ---
 
 {
-  composer && payload && providers && (
+  preview && (
     <section class="pushtester-shots site-layout" aria-label={t.common.preview}>
-      <figure class="pushtester-shot pushtester-shot-hero">
-        <Image
-          src={composer.src}
-          alt={composer.alt}
-          widths={[640, 960, 1400, 2000, 2400]}
-          sizes="(min-width: 1024px) 72rem, 92vw"
+      <figure class="pushtester-shot">
+        <img
+          src={preview.src.src}
+          alt={preview.alt}
+          width={preview.src.width}
+          height={preview.src.height}
         />
-        <figcaption>{composer.alt}</figcaption>
+        <figcaption>{preview.alt}</figcaption>
       </figure>
-      <div class="pushtester-shots-split">
-        <figure class="pushtester-shot">
-          <Image
-            src={payload.src}
-            alt={payload.alt}
-            widths={[400, 720, 1100, 1600]}
-            sizes="(min-width: 768px) 36rem, 92vw"
-          />
-          <figcaption>{payload.alt}</figcaption>
-        </figure>
-        <figure class="pushtester-shot">
-          <Image
-            src={providers.src}
-            alt={providers.alt}
-            widths={[280, 480, 720]}
-            sizes="(min-width: 768px) 18rem, 50vw"
-          />
-          <figcaption>{providers.alt}</figcaption>
-        </figure>
-      </div>
     </section>
   )
 }
