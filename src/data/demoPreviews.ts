@@ -1,4 +1,5 @@
 export const DEMO_PREVIEWS = [
+  "softie",
   "drawn-together",
   "shanghai",
   "s65",

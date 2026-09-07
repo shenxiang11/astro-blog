@@ -16,6 +16,51 @@ const { kind } = Astro.props;
 ---
 
 {
+  kind === "softie" && (
+    <div class="demo-softie" aria-hidden="true">
+      <svg class="demo-softie-slime" viewBox="0 0 48 48" fill="none">
+        <defs>
+          <linearGradient
+            id="demo-softie-fill"
+            x1="24"
+            y1="5"
+            x2="24"
+            y2="43"
+            gradientUnits="userSpaceOnUse"
+          >
+            <stop offset="0%" stop-color="#ffd5e5" stop-opacity="0.95" />
+            <stop offset="100%" stop-color="#f17fa9" stop-opacity="0.88" />
+          </linearGradient>
+        </defs>
+        <path
+          d="M24 5c-5.9 0-6.3 7.2-10.3 9.8C7.6 18.7 5 24.2 5 30.3 5 38.8 12.6 43 24 43s19-4.2 19-12.7c0-6.1-2.6-11.6-8.7-15.5C30.3 12.2 29.9 5 24 5Z"
+          stroke="#221d20"
+          stroke-width="2.2"
+          stroke-linejoin="round"
+          fill="url(#demo-softie-fill)"
+        />
+        <circle cx="13.2" cy="31.2" r="2.4" fill="#f87aa5" opacity="0.55" />
+        <circle cx="34.8" cy="31.2" r="2.4" fill="#f87aa5" opacity="0.55" />
+        <g class="demo-softie-eyes">
+          <circle cx="17.2" cy="27.8" r="2.3" fill="#221d20" />
+          <circle cx="18" cy="27" r="0.75" fill="#ffffff" />
+          <circle cx="30.8" cy="27.8" r="2.3" fill="#221d20" />
+          <circle cx="31.6" cy="27" r="0.75" fill="#ffffff" />
+        </g>
+        <path
+          class="demo-softie-mouth"
+          d="M21.2 31.5q2.8 3.2 5.6 0"
+          stroke="#221d20"
+          stroke-width="2.2"
+          stroke-linecap="round"
+        />
+      </svg>
+      <span class="demo-softie-shadow" />
+    </div>
+  )
+}
+
+{
   kind === "drawn-together" && (
     <div class="demo-drawn" aria-hidden="true">
       <svg class="demo-drawn-svg" viewBox="0 0 760 340" fill="none">
