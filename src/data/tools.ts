@@ -43,6 +43,20 @@ export const tools: Tool[] = [
     url: "https://jsonview-tau.vercel.app/",
     order: 2,
   },
+  {
+    id: "svg2any",
+    name: {
+      zh: "SVG 转原生代码",
+      en: "SVG to Native Code",
+    },
+    description: {
+      zh: "把 SVG 转成 SwiftUI、UIKit、Android、Compose、Flutter、RN 和 Web 代码。免费，无广告，本地转换。",
+      en: "Turn SVG into SwiftUI, UIKit, Android, Compose, Flutter, RN, and Web code. Free, no ads, converted locally.",
+    },
+    tags: ["SVG"],
+    url: "https://svg2any.vercel.app/",
+    order: 3,
+  },
 ];
 
 export function getSortedTools(locale?: string | null): LocalizedTool[] {
