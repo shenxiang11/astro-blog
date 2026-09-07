@@ -29,6 +29,20 @@ export const tools: Tool[] = [
     url: "https://markdown2pdf-murex.vercel.app/",
     order: 1,
   },
+  {
+    id: "jsonview",
+    name: {
+      zh: "JSON 查看器",
+      en: "JSON Viewer",
+    },
+    description: {
+      zh: "超大 JSON 也不卡。免费，无广告，本地解析不上传。树形折叠、搜索、格式化与压缩。",
+      en: "Browse huge JSON without freezing. Free, no ads, parsed locally. Tree view, search, format, and minify.",
+    },
+    tags: ["JSON"],
+    url: "https://jsonview-tau.vercel.app/",
+    order: 2,
+  },
 ];
 
 export function getSortedTools(locale?: string | null): LocalizedTool[] {
