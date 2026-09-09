@@ -106,7 +106,7 @@ export const products: Product[] = [
       },
     },
     platforms: ["iPhone", "Apple Watch"],
-    appStoreUrl: null,
+    appStoreUrl: "https://apps.apple.com/cn/app/%E8%B7%B3%E8%B7%B3tiao/id6806107222",
     supportHref: "/tiaotiao/support",
     privacyHref: "/tiaotiao/privacy",
     visual: "jump",
