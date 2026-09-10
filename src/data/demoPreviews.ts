@@ -3,6 +3,7 @@ export const DEMO_PREVIEWS = [
   "drawn-together",
   "shanghai",
   "s65",
+  "iphone-duo",
   "lanyard",
   "text-animations",
   "height-slider",

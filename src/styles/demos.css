@@ -152,6 +152,44 @@
   fill: url(#demo-s65-shine);
 }
 
+.demo-duo {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  background: #f6f6f3;
+}
+
+.demo-duo-phone {
+  width: 38%;
+  max-width: 118px;
+  aspect-ratio: 0.69 / 1;
+  padding: 5px;
+  border-radius: 1.15rem 1.15rem 1.15rem 0.28rem;
+  background: #1c1c1e;
+  box-shadow: 0 10px 24px rgb(36 38 34 / 0.12);
+}
+
+.demo-duo-screen {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 0.92rem 0.92rem 0.92rem 0.18rem;
+  background:
+    radial-gradient(circle at 70% 18%, rgb(255 236 210 / 0.55), transparent 38%),
+    linear-gradient(180deg, #d7c3a4 0%, #c4b18c 42%, #9a8668 100%);
+}
+
+.demo-duo-clock {
+  color: #fff;
+  font-size: 1.7rem;
+  font-weight: 200;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
 .demo-lanyard {
   position: relative;
   display: grid;

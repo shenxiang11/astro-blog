@@ -1,0 +1,285 @@
+.duo-page {
+  position: relative;
+  overflow: hidden;
+  min-height: 100svh;
+  margin-top: -6.5rem;
+  color: #242622;
+  background: #f6f6f3;
+}
+
+.duo-root {
+  position: relative;
+  min-height: 100svh;
+  user-select: none;
+}
+
+.duo-viewport {
+  position: absolute;
+  inset: 0 0 154px;
+  touch-action: none;
+}
+
+.duo-viewport canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  outline: none;
+}
+
+.duo-status {
+  pointer-events: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 1;
+  margin: 0;
+  color: #6a7264;
+  font-size: 0.95rem;
+  transform: translate(-50%, -50%);
+}
+
+.duo-dock {
+  position: absolute;
+  bottom: 28px;
+  left: 50%;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  width: min(700px, calc(100% - 56px));
+  padding: 20px 24px;
+  background: rgb(255 255 255 / 0.86);
+  border: 1px solid rgb(216 220 210 / 0.8);
+  border-radius: 25px;
+  box-shadow: 0 16px 50px -26px #7c83773d;
+  backdrop-filter: blur(16px);
+  transform: translateX(-50%);
+}
+
+.duo-screen {
+  width: 188px;
+  flex-shrink: 0;
+}
+
+.duo-screen h2 {
+  margin: 0 0 12px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.duo-themes {
+  display: flex;
+  gap: 4px;
+  padding: 3px;
+  background: #ecefe6;
+  border-radius: 9px;
+}
+
+.duo-themes button {
+  flex: 1;
+  padding: 7px 4px;
+  border: 0;
+  border-radius: 6px;
+  color: #818974;
+  font: inherit;
+  font-size: 10px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.duo-themes button[aria-selected="true"] {
+  color: #45533b;
+  background: #fff;
+  box-shadow: 0 1px 3px #53624712;
+}
+
+.duo-uploads {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.duo-uploads[hidden] {
+  display: none;
+}
+
+.duo-upload {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  border-radius: 8px;
+  background: #dfe4d6;
+  cursor: pointer;
+}
+
+.duo-upload img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+
+.duo-upload span {
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
+  left: 5px;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 500;
+  text-align: left;
+  text-shadow: 0 1px 2px rgb(0 0 0 / 0.45);
+}
+
+.duo-root.is-custom .duo-viewport {
+  inset: 0 0 232px;
+}
+
+.duo-themes button:disabled,
+.duo-play:disabled,
+.duo-upload:disabled,
+.duo-controls input:disabled {
+  cursor: wait;
+  opacity: 0.35;
+}
+
+.duo-controls {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: 26px;
+  min-width: 0;
+  padding-left: 24px;
+  border-left: 1px solid #e5e8df;
+}
+
+.duo-play {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  border: 0;
+  border-radius: 50%;
+  color: #f7faf4;
+  background: #262c24;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.duo-play:hover:not(:disabled) {
+  background: #4e5e44;
+}
+
+.duo-play svg {
+  width: 19px;
+  height: 19px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.duo-play .duo-play-icon {
+  fill: currentColor;
+  stroke: none;
+}
+
+.duo-controls input[type="range"] {
+  display: block;
+  width: 100%;
+  height: 36px;
+  margin: 0;
+  appearance: none;
+  background: transparent;
+  cursor: ew-resize;
+  touch-action: none;
+}
+
+.duo-controls input[type="range"]::-webkit-slider-runnable-track {
+  height: 9px;
+  background: linear-gradient(
+    to right,
+    #6a795c var(--progress, 100%),
+    #e6e9e0 var(--progress, 100%)
+  );
+  border-radius: 9px;
+}
+
+.duo-controls input[type="range"]::-moz-range-track {
+  height: 9px;
+  background: linear-gradient(
+    to right,
+    #6a795c var(--progress, 100%),
+    #e6e9e0 var(--progress, 100%)
+  );
+  border-radius: 9px;
+}
+
+.duo-controls input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  margin-top: -7.5px;
+  background: #fff;
+  border: 3px solid #67775b;
+  border-radius: 50%;
+  box-shadow: 0 1px 4px #0002;
+}
+
+.duo-controls input[type="range"]::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  background: #fff;
+  border: 3px solid #67775b;
+  border-radius: 50%;
+}
+
+@media (max-width: 700px) {
+  .duo-viewport {
+    inset: env(safe-area-inset-top) 0 calc(220px + env(safe-area-inset-bottom));
+  }
+
+  .duo-dock {
+    bottom: calc(16px + env(safe-area-inset-bottom));
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+    width: calc(100% - 32px);
+    padding: 16px;
+  }
+
+  .duo-screen {
+    width: auto;
+  }
+
+  .duo-screen h2 {
+    margin-bottom: 8px;
+  }
+
+  .duo-themes button {
+    min-height: 40px;
+    font-size: 12px;
+  }
+
+  .duo-controls {
+    flex: none;
+    gap: 16px;
+    padding: 16px 0 0;
+    border-left: 0;
+    border-top: 1px solid #e5e8df;
+  }
+
+  .duo-play {
+    width: 44px;
+    height: 44px;
+  }
+
+  .duo-root.is-custom .duo-viewport {
+    inset: env(safe-area-inset-top) 0 calc(300px + env(safe-area-inset-bottom));
+  }
+}

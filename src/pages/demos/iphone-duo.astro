@@ -1,0 +1,19 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import IPhoneDuo from "@/components/iphone-duo/IPhoneDuo";
+import { loadDemoPage } from "@/utils/loadDemoPage";
+import config from "@/config";
+import "@/styles/iphone-duo.css";
+
+const locale = Astro.currentLocale ?? config.site.lang;
+const { title, description } = await loadDemoPage("iphone-duo", locale);
+---
+
+<Layout title={`${title} | ${config.site.title}`} {description}>
+  <Header />
+
+  <main id="main-content" class="duo-page flex-1">
+    <IPhoneDuo client:only="react" locale={locale} />
+  </main>
+</Layout>

@@ -124,6 +124,18 @@ const { kind } = Astro.props;
 }
 
 {
+  kind === "iphone-duo" && (
+    <div class="demo-duo" aria-hidden="true">
+      <div class="demo-duo-phone">
+        <span class="demo-duo-screen">
+          <span class="demo-duo-clock">9:41</span>
+        </span>
+      </div>
+    </div>
+  )
+}
+
+{
   kind === "lanyard" && (
     <div class="demo-lanyard" aria-hidden="true">
       <div class="demo-lanyard-hang">
