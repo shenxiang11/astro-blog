@@ -1,0 +1,23 @@
+---
+import { getEntry, render } from "astro:content";
+import LegalLayout from "@/layouts/LegalLayout.astro";
+
+const support = await getEntry("pages", "tidy-support");
+
+if (!support) {
+  throw new Error(
+    "Missing content entry: `tidy-support.md` in `src/content/pages/`"
+  );
+}
+
+const { Content } = await render(support);
+---
+
+<LegalLayout
+  title={support.data.title}
+  description={support.data.description}
+  ogImage={support.data.ogImage}
+  canonicalURL={support.data.canonicalURL}
+>
+  <Content />
+</LegalLayout>

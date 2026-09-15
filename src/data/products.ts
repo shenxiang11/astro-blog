@@ -9,7 +9,7 @@ export type ProductCopy = {
 };
 
 export type Product = {
-  id: "miaotie" | "tiaotiao" | "harbor" | "pushtester";
+  id: "miaotie" | "tiaotiao" | "harbor" | "pushtester" | "tidy";
   name: string;
   nameEn: string;
   href: string;
@@ -17,7 +17,7 @@ export type Product = {
   platforms: string[];
   supportHref: string;
   privacyHref: string;
-  visual: "clipboard" | "jump" | "harbor" | "push";
+  visual: "clipboard" | "jump" | "harbor" | "push" | "tidy";
   gradient: string;
   /** Live App Store listing. `null` until the app is published. */
   appStoreUrl?: string | null;
@@ -28,6 +28,48 @@ export type Product = {
 export type LocalizedProduct = Omit<Product, "copy"> & ProductCopy;
 
 export const products: Product[] = [
+  {
+    id: "tidy",
+    name: "相册清理",
+    nameEn: "Tidy",
+    href: "/tidy",
+    copy: {
+      zh: {
+        navLabel: "相册清理",
+        kicker: "相册整理",
+        title: "左滑删除，右滑保留",
+        description:
+          "相册清理从未审阅的照片和视频里抽出 15 个，让你决定去留。没有账号，没有上传，审阅记录只留在你的设备上。",
+        features: [
+          "照片左滑删除、右滑保留",
+          "视频全屏预览后再决定",
+          "删除前再确认，可进最近删除",
+          "统计已审进度和腾出空间",
+          "无需登录，无隐私收集",
+        ],
+      },
+      en: {
+        navLabel: "Tidy",
+        kicker: "Photo cleanup",
+        title: "Swipe left to delete, right to keep",
+        description:
+          "Tidy picks 15 unreviewed photos or videos each session so you can keep or delete them. No account, no upload — review records stay on your device.",
+        features: [
+          "Swipe photos left to delete, right to keep",
+          "Preview videos full screen, then decide",
+          "Confirm before delete; items go to Recently Deleted",
+          "Track reviewed progress and space freed",
+          "No sign-in, no data collection",
+        ],
+      },
+    },
+    platforms: ["iPhone", "iPad"],
+    appStoreUrl: null,
+    supportHref: "/tidy/support",
+    privacyHref: "/tidy/privacy",
+    visual: "tidy",
+    gradient: "from-[#9982FB] via-[#7C6AE8] to-[#2E2158]",
+  },
   {
     id: "miaotie",
     name: "妙贴",
@@ -106,7 +148,8 @@ export const products: Product[] = [
       },
     },
     platforms: ["iPhone", "Apple Watch"],
-    appStoreUrl: "https://apps.apple.com/cn/app/%E8%B7%B3%E8%B7%B3tiao/id6806107222",
+    appStoreUrl:
+      "https://apps.apple.com/cn/app/%E8%B7%B3%E8%B7%B3tiao/id6806107222",
     supportHref: "/tiaotiao/support",
     privacyHref: "/tiaotiao/privacy",
     visual: "jump",
@@ -223,6 +266,8 @@ export function getLocalizedProduct(
   return localizeProduct(getProduct(id), locale);
 }
 
-export function getLocalizedProducts(locale?: string | null): LocalizedProduct[] {
+export function getLocalizedProducts(
+  locale?: string | null
+): LocalizedProduct[] {
   return products.map(product => localizeProduct(product, locale));
 }

@@ -121,7 +121,7 @@ export default {
     downloadOnAppStoreLine1: "在",
     downloadOnAppStoreLine2: "App Store 中下载",
     comingSoon: "即将上线",
-    comingSoonHint: "跳跳即将上架 App Store",
+    comingSoonHint: "即将上架 App Store",
     download: "下载",
   },
 } satisfies UIStrings;

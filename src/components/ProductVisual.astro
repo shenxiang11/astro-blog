@@ -5,7 +5,7 @@ import { resolveLocale, useTranslations } from "@/i18n";
 import config from "@/config";
 
 type Props = {
-  visual: "clipboard" | "jump" | "harbor" | "push";
+  visual: "clipboard" | "jump" | "harbor" | "push" | "tidy";
   name: string;
   nameEn: string;
   image?: ImageMetadata;
@@ -30,7 +30,7 @@ const mock =
         text: "文本",
         meetingNotes: "会议纪要要点…",
       };
-const wide = visual !== "jump";
+const wide = visual !== "jump" && visual !== "tidy";
 ---
 
 {
@@ -44,21 +44,23 @@ const wide = visual !== "jump";
         class="h-auto w-full max-w-xl"
       />
     ) : (
-    <Image
-      src={image}
-      alt={`${name} ${t.common.preview}`}
-      class:list={[
-        "h-auto w-full bg-transparent",
-        wide ? "max-w-xl" : "max-w-md",
-      ]}
-      widths={[400, 640, 800, 1120, 1400]}
-      sizes={
-        wide
-          ? "(min-width: 1024px) 36rem, 90vw"
-          : "(min-width: 1024px) 28rem, 90vw"
-      }
-      format="webp"
-    />
+      <Image
+        src={image}
+        alt={`${name} ${t.common.preview}`}
+        class:list={[
+          "h-auto w-full bg-transparent",
+          wide ? "max-w-xl" : "max-w-md",
+          visual === "tidy" &&
+            "rounded-[2rem] shadow-[0_24px_80px_rgb(0_0_0_/_0.22)]",
+        ]}
+        widths={[400, 640, 800, 1120, 1400]}
+        sizes={
+          wide
+            ? "(min-width: 1024px) 36rem, 90vw"
+            : "(min-width: 1024px) 28rem, 90vw"
+        }
+        format="webp"
+      />
     )
   ) : (
     <div class="border-border/60 relative flex aspect-4/5 w-full max-w-sm items-end overflow-hidden rounded-[2rem] border px-6 pt-8 pb-0 shadow-[0_24px_80px_rgb(0_0_0_/_0.35)]">

@@ -121,7 +121,7 @@ export default {
     downloadOnAppStoreLine1: "Download on the",
     downloadOnAppStoreLine2: "App Store",
     comingSoon: "Coming soon",
-    comingSoonHint: "TiaoTiao will be available on the App Store soon",
+    comingSoonHint: "Coming soon to the App Store",
     download: "Download",
   },
 } satisfies UIStrings;
