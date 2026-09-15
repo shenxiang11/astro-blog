@@ -15,8 +15,8 @@ export type Product = {
   href: string;
   copy: Localized<ProductCopy>;
   platforms: string[];
-  supportHref: string;
-  privacyHref: string;
+  supportHref?: string;
+  privacyHref?: string;
   visual: "clipboard" | "jump" | "harbor" | "push" | "tidy";
   gradient: string;
   /** Live App Store listing. `null` until the app is published. */
@@ -191,8 +191,6 @@ export const products: Product[] = [
       },
     },
     platforms: ["Mac", "iPhone"],
-    supportHref: "/support",
-    privacyHref: "/privacy",
     visual: "harbor",
     gradient: "from-[#22c55e] via-[#16a34a] to-[#052e16]",
   },
@@ -232,8 +230,6 @@ export const products: Product[] = [
       },
     },
     platforms: ["Mac"],
-    supportHref: "/support",
-    privacyHref: "/privacy",
     visual: "push",
     gradient: "from-[#6366f1] via-[#4f46e5] to-[#1e1b4b]",
     downloadUrl: "https://github.com/shenxiang11/PushTester",

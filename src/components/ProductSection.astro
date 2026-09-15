@@ -3,6 +3,7 @@ import type { LocalizedProduct } from "@/data/products";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import ProductVisual from "./ProductVisual.astro";
 import ProductFeatureList from "./ProductFeatureList.astro";
+import ProductLegalLinks from "./ProductLegalLinks.astro";
 import { productCovers } from "@/data/productCovers";
 import IconBrandGithub from "@/assets/icons/socials/github.svg";
 import { useTranslations } from "@/i18n";
@@ -59,6 +60,7 @@ const cover = productCovers[product.id];
           )
         }
       </div>
+      <ProductLegalLinks product={product} class="mt-5" />
     </div>
     <div class:list={["flex", flip ? "lg:justify-start" : "lg:justify-end"]}>
       <ProductVisual
