@@ -6,6 +6,85 @@
   background: rgb(255 255 255 / 0.48);
 }
 
+.demo-dust {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #ebe4d6;
+  border-radius: 1rem;
+}
+
+.demo-dust-frame {
+  position: relative;
+  width: 88%;
+  aspect-ratio: 4 / 3;
+}
+
+.demo-dust-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 0 12px 24px rgb(60 40 16 / 0.16);
+  animation: demo-dust-wipe 3.4s ease-in-out infinite;
+}
+
+.demo-dust-specks {
+  pointer-events: none;
+  position: absolute;
+  inset: 8% 6% 10% 8%;
+  border-radius: inherit;
+  background:
+    radial-gradient(1.2px 1.2px at 12% 38%, #8aa070 0 55%, transparent 60%),
+    radial-gradient(1.4px 1.4px at 22% 62%, #c47a4a 0 55%, transparent 60%),
+    radial-gradient(1px 1px at 34% 28%, #d8c4a0 0 55%, transparent 60%),
+    radial-gradient(1.3px 1.3px at 48% 72%, #6a8aa0 0 55%, transparent 60%),
+    radial-gradient(1.1px 1.1px at 61% 24%, #c9b089 0 55%, transparent 60%),
+    radial-gradient(1.5px 1.5px at 73% 58%, #7a5a3a 0 55%, transparent 60%),
+    radial-gradient(1.2px 1.2px at 84% 41%, #d2c2a4 0 55%, transparent 60%);
+  opacity: 0;
+  animation: demo-dust-specks 3.4s ease-in-out infinite;
+}
+
+@keyframes demo-dust-wipe {
+  0%,
+  16% {
+    clip-path: inset(0 0 0 0);
+    opacity: 1;
+  }
+  72% {
+    clip-path: inset(0 0 0 100%);
+    opacity: 1;
+  }
+  84%,
+  100% {
+    clip-path: inset(0 0 0 100%);
+    opacity: 0;
+  }
+}
+
+@keyframes demo-dust-specks {
+  0%,
+  18% {
+    opacity: 0;
+    transform: translate(0, 0);
+  }
+  42% {
+    opacity: 0.9;
+    transform: translate(6%, 4%);
+  }
+  78% {
+    opacity: 0.35;
+    transform: translate(18%, 16%);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(24%, 22%);
+  }
+}
+
 .demo-softie {
   position: relative;
   display: grid;
@@ -900,8 +979,19 @@
   .demo-softie-slime,
   .demo-softie-eyes,
   .demo-softie-mouth,
-  .demo-softie-shadow {
+  .demo-softie-shadow,
+  .demo-dust-photo,
+  .demo-dust-specks {
     animation: none;
+  }
+
+  .demo-dust-photo {
+    clip-path: none;
+    opacity: 1;
+  }
+
+  .demo-dust-specks {
+    opacity: 0;
   }
 
   .demo-drawn-glow,

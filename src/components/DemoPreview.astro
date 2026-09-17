@@ -5,6 +5,7 @@ import LogoXingyao from "@/assets/icons/LogoXingyao.svg";
 import cardFront from "@/assets/lanyard/card-front.png";
 import glassSummer from "@/assets/glass-surface/summer.jpg";
 import shanghaiBund from "@/assets/shanghai/the-bund.png";
+import yuGarden from "@/assets/shanghai/yu-garden.png";
 import { S65_SPEED_PATH, S65_SPEED_VIEWBOX } from "@/components/s65/speedPath";
 import { PATH_SVG } from "@/components/drawn-together/path";
 
@@ -14,6 +15,17 @@ type Props = {
 
 const { kind } = Astro.props;
 ---
+
+{
+  kind === "dust-effect" && (
+    <div class="demo-dust" aria-hidden="true">
+      <div class="demo-dust-frame">
+        <Image src={yuGarden} alt="" class="demo-dust-photo" />
+        <span class="demo-dust-specks" />
+      </div>
+    </div>
+  )
+}
 
 {
   kind === "softie" && (

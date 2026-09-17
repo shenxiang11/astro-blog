@@ -4,6 +4,10 @@ const demoUi = {
   zh: {
     techStack: "我会的技术",
     s65Hint: "按住加速",
+    dustHint: "点一下图片",
+    dustReplay: "再来一次",
+    dustAria: "将图片碎成尘埃",
+    dustUnsupported: "这个浏览器没法跑粒子效果",
     elasticTitle: "音量",
     elasticHint: "拖过两端，看看回弹",
     elasticAria: "音量",
@@ -67,6 +71,10 @@ const demoUi = {
   en: {
     techStack: "Technologies I use",
     s65Hint: "Hold to accelerate",
+    dustHint: "Tap the picture",
+    dustReplay: "Replay",
+    dustAria: "Turn the picture to dust",
+    dustUnsupported: "This browser can't run the particle effect",
     elasticTitle: "Volume",
     elasticHint: "Drag past the ends and watch it snap back",
     elasticAria: "Volume",
